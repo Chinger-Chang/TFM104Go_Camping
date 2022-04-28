@@ -1,7 +1,25 @@
 ﻿
-@{
-    ViewData["Title"] = "Chart";
-}
+<div id="c1"></div>
 
-<h1>Chart</h1>
+
+<script>
+	var chart = new Vue({
+		el: '#c1',
+		data: {
+			roomlist: {}
+		},
+		methods: {
+			
+
+		},
+		mounted: function () {
+			var self = this;
+			axios.get("/Chart/RoomChart").then(function (res) {
+				self.roomlist = res.data;
+				console.log(res.data);
+			});
+
+		}
+	});
+</script>
 
