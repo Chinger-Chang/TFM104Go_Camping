@@ -2,211 +2,416 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<style>
-		.a {
-			background-color: #212121;
-		}
+    <style>
+        .a {
+            background-color: #60656C;
+            border: 1px solid #60656C;
+            border-top-right-radius: 20px;
+            border-top-left-radius: 20px;
+        }
 
-		body {
-			background-color: #212121;
-		}
+        .aaa {
+            background-color: #586D80;
+            border-radius: 20px;
+        }
 
-		* {
-			color: white;
-		}
+        .c {
+            background-color: #60656C;
+            border: 1px solid #60656C;
+            border-bottom-right-radius: 20px;
+            border-bottom-left-radius: 20px;
+        }
 
-		label {
-			color: #BDBDBD !important;
-		}
+        .cc {
+            background-color: #60656C;
+            border: 1px solid #60656C;
+            border-radius: 20px;
+        }
 
-		textarea {
-			color: #BDBDBD !important;
-		}
+        .aa {
+            background-color: #212121;
+        }
 
-		.v-card__actions {
-			display: flex;
-			justify-content: space-between;
-			position: relative;
-			top: -10px;
-		}
-		/*img
-		@@media screen and (min-width: 1260px) {
-			.myimg {
-				width: 2000px;
-				height: 2000px; 能改高
-			}
-		}*/
+        .d {
+            background-color: #212121;
+            /*border-radius: 20px;*/
+        }
+
+        .b {
+            background-color: #212121;
+        }
+
+        .v-application--wrap {
+            background-color: #212121;
+        }
+
+        body {
+            background-color: #212121;
+        }
 
 
-	</style>
+        * {
+            color: #E0DFE4;
+        }
+
+        label {
+            color: #BDBDBD !important;
+        }
+
+        textarea {
+            color: #BDBDBD !important;
+        }
+
+        .v-card__actions {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            top: -10px;
+        }
+        /*img
+        @@media screen and (min-width: 1260px) {
+            .myimg {
+                width: 2000px;
+                height: 2000px; 能改高
+            }
+        }*/
+
+
+    </style>
 </head>
 <body>
-	<div id="mika">
-		<v-app>
-			<template>
-				<v-row class="a">
-					<v-col v-for="(x,index) in RoomInfo.cApicPath" class="d-flex child-flex" cols="4">
-						<v-img :src="'/Camping_Area_Picture/'+ x"
-							   lazy-src="https://picsum.photos/id/11/10/6"
-							   aspect-ratio="1"
-							   class="grey lighten-2">
-							@*<p>{{x}}</p>*@
-							<template v-slot:placeholder>
-								<v-row class="fill-height ma-0"
-									   align="center"
-									   justify="center">
-									<v-progress-circular indeterminate
-														 color="grey lighten-5"></v-progress-circular>
-								</v-row>
-							</template>
-						</v-img>
-					</v-col>
-				</v-row>
-			</template>
-			<template>
-				<v-form>
-					<v-container class="a">
-						<v-row>
-							<v-col cols="12"
-								   sm="6"
-								   md="3">
-								<h3>
-									電話@*<v-icon>mdi-phone-classic</v-icon>*@<v-icon color="#BDBDBD">mdi-cellphone</v-icon>
-									<v-text-field readonly :label="RoomInfo.cAphone"></v-text-field>
-								</h3>
-							</v-col>
-							<v-col cols="12"
-								   sm="6"
-								   md="3">
-								<h3>
-									地址<v-icon color="#BDBDBD">mdi-map-marker</v-icon>@*<v-icon>mdi-home</v-icon><v-icon>mdi-home-flood</v-icon>*@
-									<v-text-field readonly :label="RoomInfo.cAaddress"></v-text-field>
-								</h3>
-							</v-col>
-						</v-row>
-					</v-container>
-				</v-form>
-			</template>
-			@*<p>電話 : {{RoomInfo.cAphone}}</p>
-				<p>地址 : {{RoomInfo.cAaddress}}</p>*@
-			<template>
-				<v-container fluid class="a">
-					<h3>概述@*<v-icon>mdi-tooltip-text</v-icon>*@<v-icon color="#BDBDBD">mdi-tooltip-text-outline</v-icon>@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h3>
-					<v-row style="padding-top:10px">
-						<v-col cols="12" md="6">
-							<v-textarea readonly outlined name="input-7-4" label="概述"
-										:value="RoomInfo.cAdescription"></v-textarea>
-						</v-col>
-					</v-row>
-				</v-container>
-			</template>
+    <div id="mika">
+        <v-app>
+            <template>
+                <!--<v-row class="a">
+                <v-col v-for="(x,index) in RoomInfo.cApicPath" class="d-flex child-flex" cols="4">
+                    <v-img :src="'/Camping_Area_Picture/'+ x"
+                           lazy-src="https://picsum.photos/id/11/10/6"
+                           aspect-ratio="1"
+                           class="grey lighten-2">-->
+                @*<p>{{x}}</p>*@
+                <!--<template v-slot:placeholder>
+                                <v-row class="fill-height ma-0"
+                                       align="center"
+                                       justify="center">
+                                    <v-progress-circular indeterminate
+                                                         color="grey lighten-5"></v-progress-circular>
+                                </v-row>
+                            </template>
+                        </v-img>
+                    </v-col>
+                </v-row>-->
+            </template>
+            <template>
+                <v-form>
+                    <v-container class="a">
+                        <v-row>
 
-			@*<label>服務設施</label>
-				<ul class="list-group list-group-horizontal-sm">
-					<li v-for="(x,key) in RoomInfo" v-show="x == true" class="list-group-item">{{key}}</li>
-				</ul>*@
-			<template>
-				@*<h3 style="padding-top:15px">服務設施<v-icon>mdi-script-text</v-icon></h3>
-					<div style="padding-top:10px" class="text-md-left">
-						<v-chip v-for="(x,key) in roominfo" v-show="x == true" class="ma-2" color="black" text-color="white">
-							{{key}}
-							<v-icon right>
-								mdi-star
-							</v-icon>
-						</v-chip>
-					</div>*@
-			</template>
-			<template>
-				<v-container fluid class="a">
-					<h3 style="padding-top:15px">服務設施<v-icon color="#BDBDBD">mdi-script-text</v-icon></h3>
-					<div style="padding-top:10px" class="text-md-left">
-						<v-chip v-show="RoomInfo.wifi" class="ma-2" color="#757575" text-color="#E0E0E0"><v-icon left> mdi-wifi </v-icon>WIFI</v-chip>
-						<v-chip v-show="RoomInfo.breakfast" class="ma-2" color="#757575" text-color="#BF360C"><v-icon left> mdi-coffee </v-icon>早餐</v-chip>
-						<v-chip v-show="RoomInfo.canopy" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-umbrella-beach </v-icon>雨棚</v-chip>
-						<v-chip v-show="RoomInfo.canteen" class="ma-2" color="#757575" text-color="#F2DBD5"><v-icon left> mdi-liquor </v-icon>食堂</v-chip>
-						<v-chip v-show="RoomInfo.dinner" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-food-turkey </v-icon>晚餐</v-chip>
-						<v-chip v-show="RoomInfo.isCancel" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-cash-100 </v-icon>退訂</v-chip>
-						<v-chip v-show="RoomInfo.kitchen_Utensils" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-silverware-fork-knife </v-icon>廚具</v-chip>
-						<v-chip v-show="RoomInfo.lunch" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-noodles </v-icon>午餐</v-chip>
-						<v-chip v-show="RoomInfo.mattress" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-bed-empty </v-icon>床墊</v-chip>
-						<v-chip v-show="RoomInfo.night_Lighting" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-flashlight </v-icon>夜間照明</v-chip>
-						<v-chip v-show="RoomInfo.no_Equipment" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-home-group </v-icon>豪華露營</v-chip>
-						<v-chip v-show="RoomInfo.outdoor_Tables_Chairs" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-table-chair </v-icon>戶外桌椅</v-chip>
-						<v-chip v-show="RoomInfo.power_Supply" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-power-plug </v-icon>供電設備</v-chip>
-						<v-chip v-show="RoomInfo.public_Refrigerator" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-fridge-outline </v-icon>公共冰箱</v-chip>
-						<v-chip v-show="RoomInfo.tent_Equipment" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-tent </v-icon>帳篷設備</v-chip>
-					</div>
-				</v-container>
-			</template>
+                        </v-row>
+                        <v-row>
+                            <v-col cols="12"
+                                   sm="6"
+                                   md="6">
+                                <v-carousel style="margin-left: 50px; margin-top: 50px; "
+                                            :continuous="false"
+                                            :cycle="cycle"
+                                            :show-arrows="false"
+                                            hide-delimiter-background
+                                            delimiter-icon="mdi-minus"
+                                            height="400">
+                                    <v-carousel-item v-for="(x,i) in RoomInfo.cApicPath" :key="i" :src="'/Camping_Area_Picture/'+ x">
 
-			<div class="row">
-				@*<div class="col-1"><v-icon>mdi-rss</v-icon></div>
-					<div class="col-1"><v-icon>mdi-rss-box</v-icon></div>
-					<div class="col-1"><v-icon>mdi-silverware</v-icon></div>
-					<div class="col-1"><v-icon>mdi-silverware-fork-knife</v-icon></div>
-					<div class="col-1"><v-icon>mdi-sleep</v-icon></div>
-					<div class="col-1"><v-icon>mdi-smoking</v-icon></div>
-					<div class="col-1"><v-icon>mdi-smoking-off</v-icon></div>
-					<div class="col-1"><v-icon>mdi-wifi</v-icon></div>
-					<div class="col-1"><v-icon>mdi-fire</v-icon></div>
-					<div class="col-1"><v-icon>mdi-noodles</v-icon></div>
-					<div class="col-1"><v-icon>mdi-robot-outline</v-icon></div>
-					<div class="col-1"><v-icon>mdi-thumb-up</v-icon></div>
-					<div class="col-1"><v-icon>mdi-trash-can</v-icon></div>
-					<div class="col-1"><v-icon>mdi-fridge-outline</v-icon></div>
-					<div class="col-1"><v-icon>mdi-power-plug</v-icon></div>
-					<div class="col-1"><v-icon>mdi-power-plug-outline</v-icon></div>
-					<div class="col-1"><v-icon>mdi-chair-school</v-icon></div>
-					<div class="col-1"><v-icon>mdi-lamp</v-icon></div>
-					<div class="col-1"><v-icon>mdi-lamp-outline</v-icon></div>*@
-			</div>
+                                    </v-carousel-item>
+                                </v-carousel>
+                            </v-col>
+                            <v-col cols="12"
+                                   sm="6"
+                                   md="6">
+                                <h1 style="margin-top: 50px; margin-left: 100px; ">
+                                    <v-icon large color="white">mdi-fire</v-icon>{{RoomInfo.cAname}}
+                                </h1>
+                                <h3 style="margin-left: 120px; margin-top: 60px; margin-right: 120px; ">
+                                    <v-icon color="white">mdi-cellphone</v-icon>電話@*<v-icon>mdi-phone-classic</v-icon>*@
+                                    <v-text-field readonly :label="RoomInfo.cAphone"></v-text-field>
+                                </h3>
+                                <h3 style="margin-right: 120px; margin-left: 120px; margin-top: 60px; ">
+                                    <v-icon color="white">mdi-map-marker</v-icon>地址@*<v-icon>mdi-home</v-icon><v-icon>mdi-home-flood</v-icon>*@
+                                    <v-text-field readonly :label="RoomInfo.cAaddress"></v-text-field>
+                                </h3>
+                            </v-col>
 
-			<template>
-				<v-container fluid class="a">
-					<div style="padding-top:50px" class="row">
-						@*<div class="" style="height:490px;">*@
-						<div v-for="x in RoomInfo.rooms" class="col-lg-3 col-md-4 col-sm-12">
-							<v-card color="#BDBDBD" class="mx-auto" max-width="400">
-								<v-img class="white--text align-end myimg" height="200px" :src="'/Room_Picture/'+ x.room_Path[0]">
-									<v-card-title>{{x.roomType}}</v-card-title>
-								</v-img>
-								<v-card-title class="text-black text-h6 font-weight-bold"><v-icon>mdi-fire</v-icon>{{x.roomName}}</v-card-title>
-								<v-card-subtitle class="text-black font-weight-bold">
-									<v-icon>mdi-star-face</v-icon>{{x.room_Des}}
-								</v-card-subtitle>
-								<v-card-text class="text-danger text-h6 text-right font-weight-bold">平日價格 : TWD {{x.priceOfWeekDay}}</v-card-text>
+                        </v-row>
 
-								<v-card-actions>
-									@*<v-btn v-if="!showHeart" v-on:click="changeHeart" icon color="#EF5350">
-											<v-icon>mdi-heart</v-icon>
-										</v-btn>
-										<v-btn v-if="showHeart" v-on:click="changeHeart" icon color="#EF5350">
-											<v-icon color="#EF5350">mdi-heart-outline</v-icon>
-										</v-btn>*@
+                    </v-container>
+                </v-form>
+            </template>
+            @*<p>電話 : {{RoomInfo.cAphone}}</p>
+                <p>地址 : {{RoomInfo.cAaddress}}</p>*@
+            <template>
+                <v-container fluid class="c">
+                    <h3 style="margin-left: 50px; margin-top: 30px; "><v-icon color="white">mdi-tooltip-text-outline</v-icon>概述@*<v-icon>mdi-tooltip-text</v-icon>*@@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h3>
+                    <v-row style="padding-top: 10px; margin-left: 45px; margin-right: 120px; margin-bottom: 10px; ">
+                        <v-col cols="12" md="12">
+                            <v-textarea readonly outlined name="input-7-4" label="概述"
+                                        :value="RoomInfo.cAdescription"></v-textarea>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </template>
 
-									<v-btn v-on:click="sendFavoriteRoomID(x.roomId)" icon color="#EF5350">
-										<v-icon v-if="x.roomStatus == 'Favority'">mdi-heart</v-icon>
-										<v-icon v-if="x.roomStatus == null">mdi-heart-outline</v-icon>
-									</v-btn>
+            @*<label>服務設施</label>
+                <ul class="list-group list-group-horizontal-sm">
+                    <li v-for="(x,key) in RoomInfo" v-show="x == true" class="list-group-item">{{key}}</li>
+                </ul>*@
+            <template>
+                @*<h3 style="padding-top:15px">服務設施<v-icon>mdi-script-text</v-icon></h3>
+                    <div style="padding-top:10px" class="text-md-left">
+                        <v-chip v-for="(x,key) in roominfo" v-show="x == true" class="ma-2" color="black" text-color="white">
+                            {{key}}
+                            <v-icon right>
+                                mdi-star
+                            </v-icon>
+                        </v-chip>
+                    </div>*@
+            </template>
+            <template>
+                <v-container fluid class="b">
+                    <h3 style="margin-top: 30px;">服務設施<v-icon color="#BDBDBD">mdi-script-text</v-icon></h3>
+                    <div style="padding-top:10px" class="text-md-left">
+                        <v-chip v-show="RoomInfo.wifi" class="ma-2" color="#757575" text-color="#E0E0E0"><v-icon left> mdi-wifi </v-icon>WIFI</v-chip>
+                        <v-chip v-show="RoomInfo.breakfast" class="ma-2" color="#757575" text-color="#BF360C"><v-icon left> mdi-coffee </v-icon>早餐</v-chip>
+                        <v-chip v-show="RoomInfo.canopy" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-umbrella-beach </v-icon>雨棚</v-chip>
+                        <v-chip v-show="RoomInfo.canteen" class="ma-2" color="#757575" text-color="#F2DBD5"><v-icon left> mdi-liquor </v-icon>食堂</v-chip>
+                        <v-chip v-show="RoomInfo.dinner" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-food-turkey </v-icon>晚餐</v-chip>
+                        <v-chip v-show="RoomInfo.isCancel" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-cash-100 </v-icon>退訂</v-chip>
+                        <v-chip v-show="RoomInfo.kitchen_Utensils" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-silverware-fork-knife </v-icon>廚具</v-chip>
+                        <v-chip v-show="RoomInfo.lunch" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-noodles </v-icon>午餐</v-chip>
+                        <v-chip v-show="RoomInfo.mattress" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-bed-empty </v-icon>床墊</v-chip>
+                        <v-chip v-show="RoomInfo.night_Lighting" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-flashlight </v-icon>夜間照明</v-chip>
+                        <v-chip v-show="RoomInfo.no_Equipment" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-home-group </v-icon>豪華露營</v-chip>
+                        <v-chip v-show="RoomInfo.outdoor_Tables_Chairs" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-table-chair </v-icon>戶外桌椅</v-chip>
+                        <v-chip v-show="RoomInfo.power_Supply" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-power-plug </v-icon>供電設備</v-chip>
+                        <v-chip v-show="RoomInfo.public_Refrigerator" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-fridge-outline </v-icon>公共冰箱</v-chip>
+                        <v-chip v-show="RoomInfo.tent_Equipment" class="ma-2" color="#757575" text-color="#BDBDBD"><v-icon left> mdi-tent </v-icon>帳篷設備</v-chip>
+                    </div>
+                </v-container>
+            </template>
+
+            @*<div class="row">
+                    <div class="col-1"><v-icon>mdi-rss</v-icon></div>
+                <div class="col-1"><v-icon>mdi-rss-box</v-icon></div>
+                <div class="col-1"><v-icon>mdi-silverware</v-icon></div>
+                <div class="col-1"><v-icon>mdi-silverware-fork-knife</v-icon></div>
+                <div class="col-1"><v-icon>mdi-sleep</v-icon></div>
+                <div class="col-1"><v-icon>mdi-smoking</v-icon></div>
+                <div class="col-1"><v-icon>mdi-smoking-off</v-icon></div>
+                <div class="col-1"><v-icon>mdi-wifi</v-icon></div>
+                <div class="col-1"><v-icon>mdi-fire</v-icon></div>
+                <div class="col-1"><v-icon>mdi-noodles</v-icon></div>
+                <div class="col-1"><v-icon>mdi-robot-outline</v-icon></div>
+                <div class="col-1"><v-icon>mdi-thumb-up</v-icon></div>
+                <div class="col-1"><v-icon>mdi-trash-can</v-icon></div>
+                <div class="col-1"><v-icon>mdi-fridge-outline</v-icon></div>
+                <div class="col-1"><v-icon>mdi-power-plug</v-icon></div>
+                <div class="col-1"><v-icon>mdi-power-plug-outline</v-icon></div>
+                <div class="col-1"><v-icon>mdi-chair-school</v-icon></div>
+                <div class="col-1"><v-icon>mdi-lamp</v-icon></div>
+                <div class="col-1"><v-icon>mdi-lamp-outline</v-icon></div>
+                </div>*@
+            <template>
+                @*<v-card elevation="24"
+                            max-width="444"
+                            class="mx-auto">
+                        <v-carousel :continuous="false"
+                                    :cycle="cycle"
+                                    :show-arrows="false"
+                                    hide-delimiter-background
+                                    delimiter-icon="mdi-minus"
+                                    height="300">
+                            <v-carousel-item v-for="(x, i) in RoomInfo.rooms" :key="i" :src="'/Room_Picture/'+ x.room_Path[i]">
+
+                            </v-carousel-item>
+                        </v-carousel>
+
+                    </v-card>*@
+            </template>
+            <template>
+                <v-container fluid class="d">
+                    <div style="padding-top:50px" class="row">
+                        @*<div class="" style="height:490px;">*@
+                        <div v-for="x in RoomInfo.rooms" class="col-lg-4 col-md-6 col-sm-12">
+                            <v-card color="#BDBDBD" class="mx-auto" max-width="450">
+                                <v-carousel :continuous="false"
+                                            :cycle="cycle"
+                                            :show-arrows="false"
+                                            hide-delimiter-background
+                                            delimiter-icon="mdi-minus"
+                                            height="250">
+                                    <v-carousel-item v-for="(y,i) in x.room_Path" :key="i" :src="'/Room_Picture/'+ y">
+
+                                    </v-carousel-item>
+                                </v-carousel>
+                                @*<v-img class="white--text align-end myimg" height="200px" :src="'/Room_Picture/'+ x.room_Path[0]">
+                                        <v-card-title>{{x.roomType}}</v-card-title>
+                                    </v-img>*@
+                                <v-card-title class="text-black text-h6 font-weight-bold"><v-icon>mdi-fire</v-icon>{{x.roomName}}</v-card-title>
+                                <v-card-subtitle class="text-black font-weight-bold">
+                                    <v-icon>mdi-star-face</v-icon>{{x.room_Des}}
+                                </v-card-subtitle>
+                                <v-card-text class="text-danger text-h6 text-right font-weight-bold">平日價格 : TWD {{x.priceOfWeekDay}}</v-card-text>
+
+                                <v-card-actions>
+                                    @*<v-btn v-if="!showHeart" v-on:click="changeHeart" icon color="#EF5350">
+                                            <v-icon>mdi-heart</v-icon>
+                                        </v-btn>
+                                        <v-btn v-if="showHeart" v-on:click="changeHeart" icon color="#EF5350">
+                                            <v-icon color="#EF5350">mdi-heart-outline</v-icon>
+                                        </v-btn>*@
+
+                                    <v-btn icon color="#EF5350">
+                                        <v-icon v-on:click="sendFavoriteRoomID(x.roomId)" v-if="x.roomStatus == 'Favority'">mdi-heart</v-icon>
+                                        <v-icon v-on:click="sendFavoriteRoomID(x.roomId)" v-if="x.roomStatus == null">mdi-heart-outline</v-icon>
+                                        <v-icon @@click="snackbar = true" color="#EF5350" v-if="x.roomStatus == 'noUserId'">mdi-heart-outline</v-icon>
+                                    </v-btn>
+                                    @*<v-btn icon color="#EF5350">
+                                            <v-icon color="#EF5350" v-if="x.roomStatus == 'noUserId'">mdi-heart-outline</v-icon>
+                                        </v-btn>*@
 
 
-									<v-btn v-on:click="sendRoomId(x.roomId)" color="#212121" dark> 訂房 <v-icon>mdi-cursor-pointer</v-icon></v-btn>
-									@*<v-btn color="orange" text> 更多 </v-btn>*@
-									@*<v-btn v-on:click="sendFavoriteRoomID(x.roomId)" icon color="#EF5350">
-											<v-icon>mdi-heart-outline</v-icon>
-										</v-btn>*@
-								</v-card-actions>
-							</v-card>
-						</div>
+                                    <v-btn v-if="x.userId != 0" v-on:click="sendRoomId(x.roomId)" color="#212121" dark>
+                                        訂房 <v-icon>mdi-cursor-pointer</v-icon>
+                                    </v-btn>
+                                    @*<v-btn v-else color="#212121" dark>
+                                            訂房 <v-icon>mdi-cursor-pointer</v-icon>
+                                        </v-btn>*@
+                                    <v-btn dark v-else color="#212121" @@click="snackbar = true">
+                                        訂房<v-icon>mdi-cursor-pointer</v-icon>
+                                    </v-btn>
 
-					</div>
-					@*<p>{{RoomInfo}}</p>*@
-				</v-container>
-			</template>
-		</v-app>
-	</div>
+                                    @*<v-btn color="orange" text> 更多 </v-btn>*@
+                                    @*<v-btn v-on:click="sendFavoriteRoomID(x.roomId)" icon color="#EF5350">
+                                            <v-icon>mdi-heart-outline</v-icon>
+                                        </v-btn>*@
 
-	<script>
+                                </v-card-actions>
+                                <template>
+                                    <div class="text-center">
+                                        @*<v-btn dark
+                                                   color="red darken-2"
+                                                   @@click="snackbar = true">
+                                                訂房<v-icon>mdi-cursor-pointer</v-icon>
+                                            </v-btn>*@
+
+                                        <v-snackbar v-model="snackbar"
+                                                    :multi-line="multiLine">
+                                            {{ text }}
+
+                                            <template v-slot:action="{ attrs }">
+                                                <v-btn color="red"
+                                                       text
+                                                       v-bind="attrs"
+                                                       @@click="snackbar = false">
+                                                    Close
+                                                </v-btn>
+                                            </template>
+                                        </v-snackbar>
+                                    </div>
+                                </template>
+                            </v-card>
+                        </div>
+
+                    </div>
+                    @*<p>{{RoomInfo}}</p>*@
+                </v-container>
+            </template>
+            <template>
+                <v-container fluid class="cc" style="margin-top: 30px; ">
+                    <v-row style="padding-top: 10px; margin-left: 45px; margin-right: 45px; margin-bottom: 10px; ">
+                        <v-col cols="12" md="6">
+                            <p>
+                                <div class="aaa" style="padding-top: 25px; padding-bottom: 50px; padding-left: 50px; padding-right:50px;">
+
+                                    <h3 style="margin-bottom: 30px;"><v-icon large color="white">mdi-alert-octagram-outline</v-icon>入住守則@*<v-icon>mdi-tooltip-text</v-icon>*@@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h3>
+
+                                    入住時間<br>
+                                    15:00 - 18:00<br>
+                                    退房時間<br>
+                                    11:00<br>
+                                    專人/ 櫃檯服務<br>
+                                    17:00 - 19:00<br>
+                                    賠償金額參考<br>
+                                    延遲退房額外收費 (每小時): TWD 500<br>
+                                    發票 / 收據<br>
+                                    如有需要，旅宿現場將提供收據。
+                                </div>
+
+                            </p>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                            <p>
+                                <div class="aaa" style="padding-top: 25px; padding-bottom: 50px; padding-left: 50px; padding-right:50px;">
+                                    <h3 style="margin-bottom: 30px;"><v-icon left large color="white">mdi-alert-octagram-outline</v-icon>住房守則@*<v-icon>mdi-tooltip-text</v-icon>*@@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h3>
+
+                                    【露營注意事項】<br>
+                                    ．禁止吸菸。<br>
+                                    ．禁止攜帶寵物。<br>
+                                    ．入營時間：15:00。<br>
+                                    ．離營時間：11:00。<br>
+                                    ．營本部服務時間：17:00～19:00。(15:00開始會有服務人員協助入住)<br>
+                                </div>
+
+                            </p>
+                        </v-col>
+                    </v-row>
+                    <v-row style="padding-top: 10px; margin-left: 45px; margin-right: 45px; margin-bottom: 10px; ">
+                        <v-col cols="12" md="12">
+                            <p>
+                                <div class="aaa" style="padding-top: 25px; padding-bottom: 50px; padding-left: 50px; padding-right:50px;">
+
+                                    <h3 style="margin-top: 30px; margin-bottom: 30px;"><v-icon left large color="white">mdi-campfire</v-icon>營地須知@*<v-icon>mdi-tooltip-text</v-icon>*@@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h3>
+
+                                    ．免搭帳懶人露營區禁寵，不開放攜帶寵物入住。若有發現偷渡情況，營區可立即要求離場，住宿費用將不予退款。<br>
+                                    ．帳棚內全面禁止吸煙、禁止炊煮食物。若有發現上述行為，將會向你收取最少$100美元賠償費，屢勸不聽者營區可立即要求離場，住宿費用將不予退款。<br>
+                                    ．為維護住宿品質，請依營地規定之人數入住，如需加人，請事先告知。（入住人數如超出預訂時所告知人數，營主將有權拒絕多出之人數進入帳篷所有範圍）<br>
+                                    ．訪客來訪請事先告知，並酌收入園費(包含清潔費、人員及車輛保險)一車收費$50元，成人、國中生150cm以上收費$50元/人、全車最多收費$150元。車子請依管理員指揮停車,訪客請於 20:00 前離營，敬請配合。<br>
+                                    ．全面禁止吸煙。若發現有吸菸行為，將會向您收取最少$100美元賠償費。<br>
+                                    ．請勿延遲退房。若延遲退房，則會有賠償費用產生。<br>
+                                    ．逾時入住時請事先來電告知，逾時且無事先來電告知，恕不退費及保留營地。<br>
+                                    ．入住時提供身份相關證明文件或護照，以便登記入住。<br>
+                                    ．禁止酗酒、嚼檳榔、放鞭炮、高分貝音響設備、嚴禁轟趴、吸毒、賭博及聚眾滋事等違法行為，若經發現一律報警處理。<br>
+                                    ．為維持環境品質，禁止祼地生火，營區內指定區域才可生火。<br>
+                                    ．帳篷內之傢俱、電器、擺設、器具等為營地財產，折損或遺失，敬請照價賠償。如果有任何毀損或無法使用的情形，請及時通知，以便我們可以為下一個客人做準備。<br>
+                                    ．為響應環保，請自備個人盥洗用品。<br>
+                                    ．個人貴重物品、請自行妥善保管、如有遺失，恕不負責，敬請見諒。<br>
+                                </div>
+
+                            </p>
+                        </v-col>
+                    </v-row>
+                    <v-row style="padding-top: 10px; margin-left: 45px; margin-right: 45px; margin-bottom: 10px; ">
+                        <v-col cols="12" md="12">
+                            <p>
+                                <div class="aaa" style="padding-top: 25px; padding-bottom: 50px; padding-left: 50px; padding-right:50px;">
+
+                                    <h3 style="margin-top: 30px; margin-bottom: 20px;"><v-icon left large color="white">mdi-pin-outline</v-icon>退訂政策@*<v-icon>mdi-tooltip-text</v-icon>*@@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h3>
+
+                                    <h5><v-icon left color="white">mdi-numeric-1-circle-outline</v-icon>如何知道該房型的退訂政策？</h5><br>
+                                    每個房型會有不同的取消規定，點擊房型資訊中的查看退訂政策或免費取消文字，可以看到詳細的相關規定。<br>
+                                    <h5 style="margin-top: 30px;"><v-icon left color="white">mdi-numeric-2-circle-outline</v-icon>如果我想要修改或取消這個預訂該怎麼辦？</h5><br>
+                                    預訂完成後，您所收到的訂房成功電子郵件上會附有直接前往會員中心的連結，在會員中心您可以自行查詢/列印訂單明細，或取消訂房。如需修改訂單內容，須先取消原訂單，再重新成立新訂單。<br>
+                                    <h5 style="margin-top: 30px;"><v-icon left color="white">mdi-numeric-3-circle-outline</v-icon>退款相關資訊</h5><br>
+                                    所有因取消預訂或提前退房所產生的退費，只要符合退款規定，AsiaYo將依照您原先選擇的付款方式進行退款 (包括 : 信用卡、ATM轉帳與電子支付)。退款皆採取人工流程，作業不含六日及國定假日。 信用卡退款約 3-14 工作天退至您原消費卡，實際仍依各發卡行工作日數為準。ATM 退款約 3-5 工作天退至您指定帳戶。電子錢包或其他支付方法，實際退款時間依各支付退款辦法辦理。<br>
+                                </div>
+
+                            </p>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </template>
+        </v-app>
+    </div>
+
+    <script>
         var v = new Vue({
             el: '#mika',
             vuetify: new Vuetify(),
@@ -220,7 +425,14 @@
                 b: {
                     why: 8787
                 },
-                show: false
+                show: false,
+                //----------------------
+                multiLine: true,
+                snackbar: false,
+                text: '尚未登入',
+
+                cycle: true,
+
             },
             methods: {
                 sendRoomId: function (rid) {
@@ -285,6 +497,6 @@
                 })
             },
         })
-	</script>
+    </script>
 </body>
 </html>

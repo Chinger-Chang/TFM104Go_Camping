@@ -68,38 +68,43 @@ namespace FinalProjectFirstTest.Controllers
 
                 var checkIsFavOD = _db.OrderDetails.Where(x => x.UserId == userId && x.RoomId == Rid && x.Status == Status.Favority).FirstOrDefault();
 
-                if (checkIsFavOD == null)
-                {
-                    _db.OrderDetails.Add(new Models.OrderDetail()
-                    {
-                        UserId = userId,
-                        RoomId = Rid,
-                        CreateDate = DateTime.Now,
-                        StartDate = model.CheckInDate,
-                        EndDate = model.CheckOutDate,
-                        Status = Status.Paying,
-                        Name = model.Name,
-                        Phone = model.Tel
-                    });
-                }
-                else
-                {
-                    checkIsFavOD.CreateDate = DateTime.Now;
-                    checkIsFavOD.StartDate = model.CheckInDate;
-                    checkIsFavOD.EndDate = model.CheckOutDate;
-                    checkIsFavOD.Status = Status.Paying;
-                    checkIsFavOD.Name = model.Name;
-                    checkIsFavOD.Phone = model.Tel;
-                }
-                _db.SaveChanges();
+            var userOD = 0;
 
-                var userOD = _db.OrderDetails.OrderByDescending(x => x.Id).FirstOrDefault(x => x.UserId == userId);
+            if (checkIsFavOD == null)
+            {
+                _db.OrderDetails.Add(new Models.OrderDetail()
+                {
+                    UserId = userId,
+                    RoomId = Rid,
+                    CreateDate = DateTime.Now,
+                    StartDate = model.CheckInDate,
+                    EndDate = model.CheckOutDate,
+                    Status = Status.Paying,
+                    Name = model.Name,
+                    Phone = model.Tel
+                });
+                _db.SaveChanges();
+                userOD = _db.OrderDetails.OrderByDescending(x => x.Id).FirstOrDefault(x => x.UserId == userId).Id; // int
+            }
+            else
+            {
+                checkIsFavOD.CreateDate = DateTime.Now;
+                checkIsFavOD.StartDate = model.CheckInDate;
+                checkIsFavOD.EndDate = model.CheckOutDate;
+                checkIsFavOD.Status = Status.Paying;
+                checkIsFavOD.Name = model.Name;
+                checkIsFavOD.Phone = model.Tel;
+
+                _db.SaveChanges();
+                userOD = checkIsFavOD.Id; // int
+            }
+
                 string version = "2.0";
-                string ordernumber = userOD.Id.ToString();
+                string ordernumber = "TFM104_" + userOD.ToString();
                 int amount = Decimal.ToInt32(model.Price);
                 string PayMethod = "creditcard";
 
-                HttpContext.Session.SetString("userODid", userOD.Id.ToString());
+                HttpContext.Session.SetString("userODid", userOD.ToString());
 
                 TradeInfo tradeInfo = new TradeInfo()
                 {
@@ -238,12 +243,16 @@ namespace FinalProjectFirstTest.Controllers
                     SpgatewayOutputDataModel convertmodel = LambdaUtil.DictionaryToObject<SpgatewayOutputDataModel>(decrypttradecollection.AllKeys.ToDictionary(k => k, k => decrypttradecollection[k]));
 
 
-                    // todo 將回傳訊息寫入資料庫
-                    var o = _db.OrderDetails.Where(x => x.Id == Convert.ToInt32(convertmodel.MerchantOrderNo)).FirstOrDefault();
-                    o.Status = Status.Success;
-                    _db.SaveChanges();
+                // todo 將回傳訊息寫入資料庫
+                string[] arr = convertmodel.MerchantOrderNo.Split("_");
+                string strOdid = arr[1];
+                int odid = Convert.ToInt32(strOdid);
 
-                    return Content(JsonConvert.SerializeObject(convertmodel));
+                var o = _db.OrderDetails.Where(x => x.Id == odid).FirstOrDefault();
+                o.Status = Status.Success;
+                _db.SaveChanges();
+
+                return Content(JsonConvert.SerializeObject(convertmodel));
                 }
 
 

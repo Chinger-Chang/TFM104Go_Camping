@@ -1,104 +1,172 @@
-﻿<div id="mika">
-	<ul class="nav nav-tabs" id="myTab" role="tablist">
-		<li class="nav-item" role="presentation">
-			<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">註冊</a>
-		</li>
-		<li class="nav-item" role="presentation">
-			<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">登入</a>
-		</li>
-	</ul>
+﻿<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="~/css/loginregister.css" />
 
-	<div class="tab-content" id="myTabContent">
-		<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-			<form v-on:submit.prevent="register">
-				<div class="form-group">
-					<label for="emailID">帳號(email)</label>
-					<input required type="email" class="form-control" id="emailID" v-model.trim="email" v-on:blur="emailCheck">
-				</div>
-				<div class="form-group">
-					<label for="passwordID">密碼</label>
-					<input required type="password" class="form-control" id="passwordID" v-model.trim="password" v-on:blur="pwCheck">
-				</div>
-				<div class="form-group">
-					<label for="nameID">姓名</label>
-					<input required type="text" class="form-control" id="nameID" v-model.trim="name" v-on:blur="nameCheck">
-				</div>
-				<div class="form-group">
-					<label for="telID">手機</label>
-					<input required type="tel" class="form-control" id="telID" v-model.trim="phone" v-on:blur="phoneCheck">
-				</div>
 
-				<button type="submit" class="btn btn-primary">註冊</button>
+<style>
+    /*測試 背景要白色、字要黑色、整塊form要小、陰影要藍色  ，然後再弄同一份賣家*/
 
-				<div v-show="isEmail" class="alert alert-danger" role="alert">
-					Email格式錯誤
-				</div>
-				<div v-show="isUse" class="alert alert-danger" role="alert">
-					帳號已被使用
-				</div>
-				<div v-show="isSuccess" class="alert alert-primary" role="alert">
-					註冊成功
-				</div>
-			</form>
-		</div>
-		<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-			<form v-on:submit.prevent="login">
-				<div class="form-group">
-					<label for="LoginEmailID">帳號(email)</label>
-					<input required type="email" class="form-control" id="LoginEmailID" v-model.trim="LoginEmail" v-on:blur="LoginEmailCheck">
-				</div>
-				<div class="form-group">
-					<label for="LoginPasswordID">密碼</label>
-					<input required type="password" class="form-control" id="LoginPasswordID" v-model.trim="LoginPassword" v-on:blur="LoginPasswordCheck">
-				</div>
+    /*字全黑 ， 按鈕背景不要了 線none 帳號密碼 相距窄一點*/
+    body {
+        height: 1000px;
+    }
 
-				@*<button type="button" class="btn btn-link">忘記密碼</button>*@
+    .bye {
+        display: none;
+    }
+</style>
+<div id="mika">
+    <!--對話盒-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">忘記密碼</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label>請輸入帳號</label>
+                    <input v-model:value="a.Email" type="email" class="form-control">
+                    <p>{{a.email}}</p>
+                </div>
+                <div v-show="isSendNewPassword" class="alert alert-primary" role="alert">
+                    已寄出新密碼:)
+                </div>
+                <div v-show="noEmail" class="alert alert-primary" role="alert">
+                    請輸入帳號:)
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">關閉</button>
+                    <button type="button" v-on:click="sendNewPassword" class="btn">確定</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-				<!-- Button trigger modal -->
-				<button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">
-					忘記密碼
-				</button>
-				<button type="submit" class="btn btn-primary">登入</button>
+    <!-- partial:index.partial.html -->
 
-				<div v-show="isFalse" class="alert alert-danger" role="alert">
-					帳號或密碼錯誤
-				</div>
-				<div v-show="isLogin" class="alert alert-primary" role="alert">
-					登入成功
-				</div>
-			</form>
-			<!-- Modal -->
-			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">忘記密碼</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<label>請輸入帳號</label>
-							<input v-model:value="a.Email" type="email" class="form-control">
-							<div v-show="isSendNewPassword" class="alert alert-primary" role="alert">
-								已寄出新密碼:)
-							</div>
-							<p>{{a.Email}}</p>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-							<button v-on:click="sendNewPassword" type="button" class="btn btn-primary">確定</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <section class="forms-section" id="">
+        <h1 class="section-title">買家</h1>
+        <div class="forms">
+            <div class="form-wrapper is-active">
+                <button type="button" class="switcher switcher-login">
+                    登入
+                    <span class="underline"></span>
+                </button>
+                <!--form登入-->
+                <form class="form form-login" v-on:submit.prevent="login">
+                    <fieldset>
+                        <legend>Please, enter your email and password for login.</legend>
+                        <div class="input-block">
+                            <i class="bi bi-envelope-open-heart"></i>
+
+                            <label for="login-email">帳號(email)</label>
+
+
+                            <input id="login-email" type="email" required v-model.trim="LoginEmail" v-on:blur="LoginEmailCheck">
+                        </div>
+                        <div class="input-block">
+                            <i class="bi bi-lock"></i>
+                            <label for="login-password">密碼</label>
+                            <input id="login-password" type="password" required v-model.trim="LoginPassword"
+                                   v-on:blur="LoginPasswordCheck">
+                        </div>
+                    </fieldset>
+                    <div class="" style="display:flex;justify-content:center;">
+                        <div class="" style="position: relative; top:2.6rem">
+                            <a class="" v-on:click="forgetpassword" >忘記密碼</a>
+                            <a class="bi bi-question"></a>
+                        </div>
+
+                        <button type="submit" class="btn-login">登入</button>
+                    </div>
+                    @*<a class="btn facebook-btn social-btn btn-primary" href="/Login_Register/Facebook_Login"><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span></a>
+                        <br />
+                        <a class="btn google-btn social-btn btn-danger" href="/Login_Register/Google_Login"><span><i class="fab fa-google-plus-g"></i> Sign in with Google+</span></a>*@
+                    @*<v-btn href="/Login_Register/Facebook_Login" color="#212121" dark>
+                            <i class="fab fa-facebook-f"></i>
+                        </v-btn>
+                        <v-btn href="/Login_Register/Google_Login" color="#212121" dark>
+                            <i class="fab fa-google-plus-g"></i>
+                        </v-btn>*@
+
+                    <!--vue-->
+                    <div v-show="isFalse" class="alert alert-danger" role="alert">
+                        帳號或密碼錯誤
+                    </div>
+                    <div v-show="isLogin" class="alert alert-primary" role="alert">
+                        登入成功
+                    </div>
+                </form>
+            </div>
+
+
+
+
+            <div class="form-wrapper">
+                <button type="button" class="switcher switcher-signup">
+                    註冊
+                    <span class="underline"></span>
+                </button>
+
+                <!--form註冊-->
+                <form class="form form-signup" v-on:submit.prevent="register">
+                    <fieldset>
+                        <legend>Please, enter your email, password and password confirmation for sign up.</legend>
+                        <div class="input-block">
+                            <i class="bi bi-envelope-open-heart"></i>
+
+                            <label for="signup-email">帳號(email)</label>
+
+                            <input id="signup-email" type="email" required v-model.trim="email" v-on:blur="emailCheck">
+                        </div>
+                        <div class="input-block">
+                            <i class="bi bi-lock"></i>
+
+                            <label for="signup-password">密碼</label>
+
+                            <input id="signup-password" type="password" required v-model.trim="password" v-on:blur="pwCheck">
+                        </div>
+                        <div class="input-block">
+                            <i class="bi bi-person"></i>
+                            <label for="signup-name">姓名</label>
+
+                            <input id="signup-name" type="name" required v-model.trim="name" v-on:blur="nameCheck">
+                        </div>
+                        <!--add-->
+                        <div class="input-block">
+                            <i class="bi bi-telephone"></i>
+
+                            <label for="signup-phone">手機</label>
+
+                            <input id="signup-phone" type="phone" required v-model.trim="phone" v-on:blur="phoneCheck">
+                        </div>
+                    </fieldset>
+                    <div class="">
+                        <button type="submit" class="btn-signup">註冊</button>
+                    </div>
+                    <div v-show="isEmail" class="alert alert-danger" role="alert">
+                        Email格式錯誤
+                    </div>
+                    <div v-show="isUse" class="alert alert-danger" role="alert">
+                        帳號已被使用
+                    </div>
+                    <div v-show="isSuccess" class="alert alert-primary" role="alert">
+                        註冊成功
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
 </div>
 
 <script>
     var v = new Vue({
         el: '#mika',
+        vuetify: new Vuetify(),
         data: {
             email: '',
             password: '',
@@ -113,9 +181,9 @@
             isEmail: false,
             isSendNewPassword: false,
             a: {
-                Email: '???'
-            }
-
+                Email: ''
+            },
+            noEmail: false
 
         },
         methods: {
@@ -125,11 +193,9 @@
                 if (self.email == '') {
                     self.email = '';
                     self.isEmail = false; //格式錯誤 直接清空欄位
-                } else if (self.email.search(emailRule) != -1)
-                {
+                } else if (self.email.search(emailRule) != -1) {
                     self.isEmail = false; //格式正確
-                } else
-                {
+                } else {
                     self.isEmail = true;//格式錯誤
                 }
             },
@@ -184,36 +250,37 @@
                 })
                     .then(function (response) {
                         if (response.data == true) {
-                            self.isSuccess = true;
-                            self.isUse = false;
-                            //alert("註冊成功");
+                            axios({
+                                method: 'post',
+                                url: '/sendEmail/GetEmail',
+                                //API要求的資料
+                                data: data,
+                                headers: { "Content-Type": 'multipart/form-data' }
+                            })
+                                .then(function (response) {
+                                    Swal.fire({
+                                        background: 'white',
+                                        color: 'black',
+                                        icon: 'success',
+                                        title: 'Yeah!!!',
+                                        text: '註冊成功!驗證信已寄出~',
+                                        confirmButtonColor: '#3C6ECF',
+                                        confirmButtonText: '前往驗證',
+                                    });
+                                })
+
                         } else {
-                            self.isUse = true;
-                            self.isSuccess = false;
-                            self.email = '';
-                            //alert("註冊失敗");
+                            Swal.fire({
+                                background: 'white',
+                                color: 'black',
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: '註冊失敗~已有此帳號',
+                                confirmButtonColor: '#3C6ECF',
+                                confirmButtonText: '重新來過',
+                            });
                         }
 
-                    })
-                    .catch(function (response) {
-                        //handle error
-                        console.log(response);
-                    });
-
-                //POST請求
-                axios({
-                    method: 'post',
-                    url: '/sendEmail/GetEmail',
-                    //API要求的資料
-                    data: data,
-                    headers: { "Content-Type": 'multipart/form-data' }
-                })
-                    .then(function (response) {
-                        if (response.data == "信已寄出") {
-                            alert("信已寄出");
-                        } else {
-                            alert("沒收到信");
-                        }
                     })
                     .catch(function (response) {
                         //handle error
@@ -261,7 +328,17 @@
             },
             sendNewPassword: function () {
                 let self = this;
-                self.isSendNewPassword = true;
+
+                if (self.a.Email.trim() == '') {
+                    self.a.Email = '';
+                    this.noEmail = true;
+                    this.isSendNewPassword = false;
+                    return;
+                } else {
+                    this.noEmail = false;
+                    self.isSendNewPassword = true;
+                }
+
 
                 //POST請求
                 axios({
@@ -285,6 +362,38 @@
                         //handle error
                         console.log(response);
                     });
+            },
+            forgetpassword: function () {
+                Swal.fire({
+                    background: 'white',
+                    color: 'black',
+                    text: '請輸入信箱',
+                    input: 'text',
+                    confirmButtonColor: '#3c6ecf',
+                    confirmButtonText: '寄信',
+                    preConfirm: () => {
+                        var email = document.querySelector('.swal2-input').value;
+                        console.log(email);
+                        axios({
+                            method: 'post',
+                            url: '/sendEmail/forgetPassword',
+                            //API要求的資料
+                            data: { Email: email },
+                            headers: { "Content-Type": 'application/json' }
+                        })
+                            .then(function (response) {
+                                swal.fire({
+                                    background: 'white',
+                                    color: 'black',
+                                    icon: 'success',
+                                    text: '驗證信已寄出~',
+                                    confirmbuttoncolor: '#3c6ecf',
+                                    confirmbuttontext: '前往驗證',
+                                });
+                            })
+
+                    }
+                });
             }
         },
         computed: {
@@ -292,3 +401,4 @@
         }
     })
 </script>
+<script src="~/js/loginregister.js"></script>
