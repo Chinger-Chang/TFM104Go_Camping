@@ -4,14 +4,16 @@ using FinalProjectFirstTest.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FinalProjectFirstTest.Migrations
 {
     [DbContext(typeof(FinalProjectDbContext))]
-    partial class FinalProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220428184917_delete salt required")]
+    partial class deletesaltrequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -591,27 +593,6 @@ namespace FinalProjectFirstTest.Migrations
                             Camping_AreaId = 11,
                             Path = "campingarea28.jpg",
                             UpdateTime = new DateTime(2022, 4, 18, 8, 14, 33, 862, DateTimeKind.Unspecified).AddTicks(673)
-                        },
-                        new
-                        {
-                            Id = 41,
-                            Camping_AreaId = 12,
-                            Path = "campingarea28.jpg",
-                            UpdateTime = new DateTime(2022, 4, 20, 8, 14, 33, 862, DateTimeKind.Unspecified).AddTicks(673)
-                        },
-                        new
-                        {
-                            Id = 42,
-                            Camping_AreaId = 12,
-                            Path = "campingarea27.jpg",
-                            UpdateTime = new DateTime(2022, 4, 20, 8, 14, 33, 862, DateTimeKind.Unspecified).AddTicks(673)
-                        },
-                        new
-                        {
-                            Id = 43,
-                            Camping_AreaId = 12,
-                            Path = "campingarea29.jpg",
-                            UpdateTime = new DateTime(2022, 4, 20, 8, 14, 33, 862, DateTimeKind.Unspecified).AddTicks(673)
                         });
                 });
 

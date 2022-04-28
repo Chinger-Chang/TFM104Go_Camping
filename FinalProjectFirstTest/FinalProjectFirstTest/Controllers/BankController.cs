@@ -28,11 +28,11 @@ namespace FinalProjectFirstTest.Controllers
             /// </summary>
             private BankInfoModel _bankInfoModel = new BankInfoModel
             {
-                MerchantID = "MS134185442",
-                HashKey = "z9E9QRGqNITdNsX8GuHaEbolYvncsRnD",
-                HashIV = "CkJ9kz96PSRH9sIP",
+                MerchantID = "MS134176476",
+                HashKey = "1tn3k6a4gwK30bpPV2XnAIFXIgIM4TPq",
+                HashIV = "CxWPdhCB8mg0oY5P",
                 ReturnURL = "http://yourWebsitUrl/Bank/SpgatewayReturn",
-                NotifyURL = "https://5aa3-219-71-124-99.ngrok.io/Bank/spgatewayreturn",
+                NotifyURL = "https://gocamping.azurewebsites.net/Bank/spgatewayreturn",
                 CustomerURL = "http://yourWebsitUrl/Bank/SpgatewayCustomer",
                 AuthUrl = "https://ccore.spgateway.com/MPG/mpg_gateway",
                 CloseUrl = "https://core.newebpay.com/API/CreditCard/Close"
@@ -134,7 +134,7 @@ namespace FinalProjectFirstTest.Controllers
                     // 商店取號網址
                     CustomerURL = _bankInfoModel.CustomerURL,
                     // 支付取消 返回商店網址
-                    ClientBackURL = "https://5aa3-219-71-124-99.ngrok.io/Buyer/BOrderDetail",
+                    ClientBackURL = "https://gocamping.azurewebsites.net/Buyer/BOrderDetail",
                     // * 付款人電子信箱
                     Email = string.Empty,
                     // 付款人電子信箱 是否開放修改(1=可修改 0=不可修改)
