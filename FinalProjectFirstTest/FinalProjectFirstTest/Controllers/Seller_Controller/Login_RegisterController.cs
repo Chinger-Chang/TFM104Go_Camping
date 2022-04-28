@@ -79,11 +79,11 @@ namespace FinalProjectFirstTest.Controllers.Seller_Controller
                     if (seller.Password == hashString)
                     {
                         var claims = new List<Claim>()
-                    {
-                        new Claim(ClaimTypes.Name,seller.Name),
-                        new Claim(ClaimTypes.Email,seller.Email),
-                        new Claim("Seller_Id",seller.Id.ToString())
-                    };
+                        {
+                            new Claim(ClaimTypes.Name,seller.Name),
+                            new Claim(ClaimTypes.Email,seller.Email),
+                            new Claim("Seller_Id",seller.Id.ToString())
+                        };
                         if (seller.Email == "tfm104manager@gmail.com")
                         {
                             claims.Add(new Claim(ClaimTypes.Role, "Manager"));

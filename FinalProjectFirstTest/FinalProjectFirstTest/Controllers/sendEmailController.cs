@@ -136,8 +136,12 @@ namespace FinalProjectFirstTest.Controllers
             {
                 x.IsMailConfirm = true;
                 await _db.SaveChangesAsync();
+                return Content("帳號已開通");
             }
-            return Content("帳號已開通");
+            else
+            {
+                return Content("帳號沒開通");
+            }
         }
         static string encryptKey = "abcd";
         private string Decrypt(string str) // 解密字符串

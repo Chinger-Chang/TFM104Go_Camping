@@ -13,7 +13,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace FinalProjectFirstTest.Controllers
-{//
+{
     public class BuyerController : Controller
     {
         private readonly IWebHostEnvironment _environment;
@@ -279,7 +279,7 @@ namespace FinalProjectFirstTest.Controllers
             if (user == null)
             {
                 // 無此使用者
-                return Json(Url.Action("register", "Buyer"));
+                return Ok("400");
             }
             else
             {
@@ -289,26 +289,36 @@ namespace FinalProjectFirstTest.Controllers
                 byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
                 string hashString = Convert.ToBase64String(hashBytes);
 
-                if (user.Email == model.Email && user.Password == hashString)
+                var claims = new List<Claim>()
                 {
-                    // 有此使用者 且 密碼加鹽雜湊後 與資料庫password欄位一樣
-                    var claims = new List<Claim>()
+                    new Claim(ClaimTypes.Name,user.Name),
+                    new Claim(ClaimTypes.Email,user.Email),
+                    new Claim("User_Id",user.Id.ToString()),
+                    new Claim(ClaimTypes.Role,"User")
+                };
+                var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimPrincipal = new ClaimsPrincipal(claimIdentity);
+                await HttpContext.SignInAsync(claimPrincipal);
+
+                if (user.IsMailConfirm != false)
+                {
+                    if(user.Password == hashString)
                     {
-                        new Claim(ClaimTypes.Name,user.Name),
-                        new Claim(ClaimTypes.Email,user.Email),
-                        new Claim("User_Id",user.Id.ToString()),
-                        new Claim(ClaimTypes.Role,"User")
-                    };
-                    var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    var claimPrincipal = new ClaimsPrincipal(claimIdentity);
-                    await HttpContext.SignInAsync(claimPrincipal);
-                    //return RedirectToAction("Index","Home");
-                    return Json(Url.Action("Index", "Buyer"));
+                        // 有此使用者 且 密碼加鹽雜湊後 與資料庫password欄位一樣
+                        
+                        //return RedirectToAction("Index","Home");
+                        return Json(Url.Action("Index", "Buyer"));
+                    }
+                    else
+                    {
+                        // 有此使用者 但密碼錯誤
+                        return Ok("401");
+                    }
                 }
                 else
                 {
-                    // 有此使用者但密碼錯誤
-                    return Json(Url.Action("register", "Buyer"));
+                    // 有此使用者 但沒驗證
+                    return Ok("402");
                 }
             }
         }

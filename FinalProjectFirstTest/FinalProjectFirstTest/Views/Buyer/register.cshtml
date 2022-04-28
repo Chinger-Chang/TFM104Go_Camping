@@ -92,12 +92,12 @@
                         </v-btn>*@
 
                     <!--vue-->
-                    <div v-show="isFalse" class="alert alert-danger" role="alert">
+                    @*<div v-show="isFalse" class="alert alert-danger" role="alert">
                         帳號或密碼錯誤
                     </div>
                     <div v-show="isLogin" class="alert alert-primary" role="alert">
                         登入成功
-                    </div>
+                    </div>*@
                 </form>
             </div>
 
@@ -305,25 +305,69 @@
                     headers: { "Content-Type": 'multipart/form-data' }
                 })
                     .then(function (response) {
-                        //if (response.data == true) {
-                        //    self.isLogin = true;
-                        //    self.isFalse = false;
-                        //    //alert("登入成功");
-                        //} else {
-                        //    self.isFalse = true;
-                        //    self.isLogin = false;
-                        //    self.LoginEmail = '';
-                        //    self.LoginPassword = '';
-                        //    //alert("登入失敗");
-                        //}
-                        //console.log(response);
-                        //console.log(response.data);
-                        window.location.href = response.data
+                        if (response.data === 400) {
+                            Swal.fire({
+                                background: 'white',
+                                color: 'black',
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: '沒有此使用者喔~是不是帳號錯了~',
+                                confirmButtonColor: '#3C6ECF',
+                                confirmButtonText: '重打!',
+                            });
+                        }
+                        else if (response.data === 401) {
+                            Swal.fire({
+                                background: 'white',
+                                color: 'black',
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: '密碼錯了喔~',
+                                confirmButtonColor: '#3C6ECF',
+                                confirmButtonText: '重打!',
+                            });
+                        }
+                        else if (response.data === 402) {
+                            Swal.fire({
+                                background: 'white',
+                                color: 'black',
+                                icon: 'error',
+                                title: 'oops...',
+                                text: '信箱還沒驗證喔',
+                                confirmButtonColor: '#3c6ecf',
+                                confirmButtonText: '寄驗證信',
+                                preConfirm: () => {
+
+                                    axios({
+                                        method: 'post',
+                                        url: '/sendEmail/GetEmail',
+                                        //API要求的資料
+                                        data: data,
+                                        headers: { "Content-Type": 'multipart/form-data' }
+                                    })
+                                        .then(function (response) {
+                                            swal.fire({
+                                                background: 'white',
+                                                color: 'black',
+                                                icon: 'success',
+                                                title: 'yeah!!!',
+                                                text: '驗證信已寄出~',
+                                                confirmbuttoncolor: '#3c6ecf',
+                                                confirmbuttontext: '前往驗證',
+                                            });
+                                        })
+
+                                }
+                            });
+                        }
+                        else {
+                            window.location.href = response.data;
+                        }
+
                     })
                     .catch(function (response) {
-                        //handle error
-                        //console.log(response.data);
-                        window.location.href = response.data
+                        alert(response.data);
+
                     });
             },
             sendNewPassword: function () {
