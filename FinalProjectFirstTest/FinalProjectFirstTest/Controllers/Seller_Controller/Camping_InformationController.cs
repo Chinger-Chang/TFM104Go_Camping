@@ -27,8 +27,9 @@ namespace CampingAreaTest330.Controllers
 
 		public object GetAllCamping_Area()
 		{
-			
-			return _db.Camping_Areas.Select(s =>
+			var sellerid = Int32.Parse(User.Claims.FirstOrDefault(x => x.Type == "Seller_Id").Value);
+
+			return _db.Camping_Areas.Where(w => w.SellerId == sellerid).Select(s =>
 			new
 			{
 				Id = s.Id,

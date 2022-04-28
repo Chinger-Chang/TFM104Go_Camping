@@ -1,0 +1,224 @@
+[
+  {
+    "Id": 1,
+    "Camping_AreaId": 1,
+    "Name": "溫暖小木屋",
+    "Count": 5,
+    "Description": "含衛浴(共 1 間),可加至6人,屋頂專屬露台可搭帳野餐,附冷暖空調,需自備床墊、枕頭、棉被,需自備盥洗用具等個人用品(牙膏、牙刷、浴巾、毛巾)。",
+    "RoomType": 2,
+    "Price_Of_Weekdays": 1000,
+    "Price_Of_Weekends": 1100
+  },
+  {
+    "Id": 2,
+    "Camping_AreaId": 1,
+    "Name": "森與夢",
+    "Count": 6,
+    "Description": "室內含衛浴(共2間),提供冷氣,提供洗髪精/沐浴乳、棉被、枕頭、免洗牙刷/牙膏",
+    "RoomType": 4,
+    "Price_Of_Weekdays": 1000,
+    "Price_Of_Weekends": 1200
+  },
+  {
+    "Id": 3,
+    "Camping_AreaId": 1,
+    "Name": "八人雅房",
+    "Count": 3,
+    "Description": "本園區禁止攜帶寵物入場",
+    "RoomType": 8,
+    "Price_Of_Weekdays": 1250,
+    "Price_Of_Weekends": 1800
+  },
+  {
+    "Id": 4,
+    "Camping_AreaId": 1,
+    "Name": "異國風情奢華帳",
+    "Count": 2,
+    "Description": "室內附冷氣，獨立衛浴",
+    "RoomType": 14,
+    "Price_Of_Weekdays": 800,
+    "Price_Of_Weekends": 1500
+  },
+  {
+    "Id": 5,
+    "Camping_AreaId": 1,
+    "Name": "普羅旺斯",
+    "Count": 3,
+    "Description": "為響應環保，鼓勵您自備牙刷。",
+    "RoomType": 2,
+    "Price_Of_Weekdays": 1100,
+    "Price_Of_Weekends": 1750
+  },
+  {
+    "Id": 6,
+    "Camping_AreaId": 2,
+    "Name": "異國風情奢華帳",
+    "Count": 8,
+    "Description": "館內全面禁菸，違反者視情節輕重，將有可能請您退宿(住宿費用將不退還)，感謝您共同維護住宿品質。",
+    "RoomType": 13,
+    "Price_Of_Weekdays": 1350,
+    "Price_Of_Weekends": 1800
+  },
+  {
+    "Id": 7,
+    "Camping_AreaId": 2,
+    "Name": "天鷹座",
+    "Count": 5,
+    "Description": "鑰匙遺失賠償費用: TWD 500。",
+    "RoomType": 7,
+    "Price_Of_Weekdays": 800,
+    "Price_Of_Weekends": 1200
+  },
+  {
+    "Id": 8,
+    "Camping_AreaId": 3,
+    "Name": "牡羊座",
+    "Count": 7,
+    "Description": "飯店不提供加床。",
+    "RoomType": 9,
+    "Price_Of_Weekdays": 1200,
+    "Price_Of_Weekends": 1600
+  },
+  {
+    "Id": 9,
+    "Camping_AreaId": 4,
+    "Name": "鯨魚座",
+    "Count": 5,
+    "Description": "為維護住宿品質，夜間請保持輕聲細語。",
+    "RoomType": 10,
+    "Price_Of_Weekdays": 1450,
+    "Price_Of_Weekends": 2200
+  },
+  {
+    "Id": 10,
+    "Camping_AreaId": 5,
+    "Name": "北冕座",
+    "Count": 5,
+    "Description": "為維護環境安寧及其他住客權益，請勿在園區或房間內大聲喧嘩。",
+    "RoomType": 3,
+    "Price_Of_Weekdays": 2000,
+    "Price_Of_Weekends": 2500
+  },
+  {
+    "Id": 11,
+    "Camping_AreaId": 6,
+    "Name": "維納斯",
+    "Count": 3,
+    "Description": "附冷暖氣、床墊、棉被、枕頭、共用大客廳。一棟限14位，超過一人加收600元。(現場收費)。進場時間:當日下午14:00以後退場時間：次日上午11:00以前。下午兩點以前為餐飲營業時間，提早入園加收1000元。 夜衝時間：18：00～22：00之間，不接受提早或延遲，如攜帶寵物入場，酌收清潔費300元隻。",
+    "RoomType": 2,
+    "Price_Of_Weekdays": 600,
+    "Price_Of_Weekends": 1250
+  },
+  {
+    "Id": 12,
+    "Camping_AreaId": 6,
+    "Name": "雅典娜",
+    "Count": 5,
+    "Description": "為維護環境安寧及其他住客權益，請勿在園區或房間內大聲喧嘩。",
+    "RoomType": 8,
+    "Price_Of_Weekdays": 800,
+    "Price_Of_Weekends": 1350
+  },
+  {
+    "Id": 13,
+    "Camping_AreaId": 6,
+    "Name": "阿波羅",
+    "Count": 3,
+    "Description": "此區開放車邊帳、車頂帳及睡車上的營友預訂",
+    "RoomType": 4,
+    "Price_Of_Weekdays": 750,
+    "Price_Of_Weekends": 1200
+  },
+  {
+    "Id": 14,
+    "Camping_AreaId": 6,
+    "Name": "波塞頓",
+    "Count": 6,
+    "Description": "室內(共有6間) 無衛浴 提供冷暖氣 不可攜帶寵物入住 附沐浴乳、洗髮乳，寢具 進場時間：當日下午3：00後離場時間：次日上午11：00以前",
+    "RoomType": 11,
+    "Price_Of_Weekdays": 900,
+    "Price_Of_Weekends": 1250
+  },
+  {
+    "Id": 15,
+    "Camping_AreaId": 6,
+    "Name": "宙斯",
+    "Count": 6,
+    "Description": "飯店不提供加床。",
+    "RoomType": 1,
+    "Price_Of_Weekdays": 800,
+    "Price_Of_Weekends": 1300
+  },
+  {
+    "Id": 16,
+    "Camping_AreaId": 7,
+    "Name": "普羅米修斯",
+    "Count": 3,
+    "Description": "室內營位不含衛浴,附枕頭、棉被、冷氣,不含早餐,需自備個人盥洗用品,園區禁止攜帶寵物,園區禁止吸菸 包場可容納28人,多1位加收清潔費300元(現場收費)",
+    "RoomType": 7,
+    "Price_Of_Weekdays": 1500,
+    "Price_Of_Weekends": 1800
+  },
+  {
+    "Id": 17,
+    "Camping_AreaId": 7,
+    "Name": "阿洛伊代",
+    "Count": 8,
+    "Description": "館內全面禁菸，違反者視情節輕重，將有可能請您退宿(住宿費用將不退還)，感謝您共同維護住宿品質。",
+    "RoomType": 5,
+    "Price_Of_Weekdays": 1700,
+    "Price_Of_Weekends": 1800
+  },
+  {
+    "Id": 18,
+    "Camping_AreaId": 7,
+    "Name": "海斯堤亞",
+    "Count": 6,
+    "Description": "農場自搭帳每帳一車一帳，每帳人數 4 人。不含早餐。可於現場加購。",
+    "RoomType": 9,
+    "Price_Of_Weekdays": 780,
+    "Price_Of_Weekends": 1380
+  },
+  {
+    "Id": 19,
+    "Camping_AreaId": 8,
+    "Name": "亞瑞士",
+    "Count": 9,
+    "Description": "室內附冷氣，獨立衛浴",
+    "RoomType": 4,
+    "Price_Of_Weekdays": 2000,
+    "Price_Of_Weekends": 2500
+  },
+  {
+    "Id": 20,
+    "Camping_AreaId": 9,
+    "Name": "狄俄尼索斯",
+    "Count": 6,
+    "Description": "本園區禁止攜帶寵物入場",
+    "RoomType": 3,
+    "Price_Of_Weekdays": 1289,
+    "Price_Of_Weekends": 1450
+  },
+  {
+    "Id": 21,
+    "Camping_AreaId": 10,
+    "Name": "赫爾墨斯",
+    "Count": 6,
+    "Description": "室內含衛浴(共2間),提供冷氣,提供洗髪精/沐浴乳、棉被、枕頭、免洗牙刷/牙膏",
+    "RoomType": 13,
+    "Price_Of_Weekdays": 900,
+    "Price_Of_Weekends": 1550
+  },
+
+  {
+    "Id": 22,
+    "Camping_AreaId": 11,
+    "Name": "異國風情奢華帳",
+    "Count": 3,
+    "Description": "為維護環境安寧及其他住客權益，請勿在園區或房間內大聲喧嘩。",
+    "RoomType": 14,
+    "Price_Of_Weekdays": 890,
+    "Price_Of_Weekends": 1290
+  }
+  
+]

@@ -1,5 +1,10 @@
 ﻿<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
 <link rel="stylesheet" href="~/css/cpstyle.css"/>
+<style>
+	.section-center {
+		top: 200px;
+	}
+</style>
 
 <div class="fire-on"></div>
 
@@ -49,4 +54,19 @@
 <script src='https://code.jquery.com/jquery-2.2.2.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
 <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
-<script src="~/js/cpscript.js"></script>
+
+
+<script>
+	$("#switch").on('click', function () {
+		if ($("body").hasClass("fire-off")) {
+			$("body").removeClass("fire-off");
+			$("#switch").removeClass("switched");
+		}
+		else {
+			$("body").addClass("fire-off");
+			$("#switch").addClass("switched");
+			window.location.href = "/Buyer/Index";
+
+		}
+	});
+</script>

@@ -33,7 +33,7 @@ namespace FinalProjectFirstTest.Models
 		[Required]
 		public bool IsMailConfirm { get; set; }
 
-		
+		[Required]
 		public string Salt { get; set; }
 
 		public virtual ICollection<Camping_Area> Camping_Areas { get; set; }

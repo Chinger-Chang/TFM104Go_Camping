@@ -32,7 +32,8 @@ namespace FinalProjectFirstTest
 			services.AddSession();
 			services.AddDbContext<FinalProjectDbContext>(opt => 
 			{
-				opt.UseSqlServer(Configuration.GetConnectionString("FinalProjectTest"));
+				//opt.UseSqlServer(Configuration.GetConnectionString("FinalProjectTest"));
+				opt.UseSqlServer(Configuration.GetConnectionString("TFM104Go_Camping"));
 			});
 			// ¥[cookie
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
