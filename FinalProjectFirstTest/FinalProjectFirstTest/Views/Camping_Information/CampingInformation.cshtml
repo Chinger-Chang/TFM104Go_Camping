@@ -1,0 +1,274 @@
+﻿<style>
+	.border-right {
+		border-style: solid;
+		color: rgb(56 191 245 / 0.80);
+		height: 300px;
+		position: fixed;
+		border-width: 3px;
+	}
+
+	.dot {
+		width: 45px;
+		height: 45px;
+		position: fixed;
+		text-align: center;
+	}
+</style>
+<div class="float-right" style="display:flex;justify-content:center;">
+
+	<div class="border-right "></div>
+	<img src="~/test/tent2.png" class="dot">
+	@*<button class="dot btn-info"></button>*@
+	<p style="margin-top: 50px; position: fixed;">編輯露營區</p>
+	<img src="~/test/tent2.png" class="dot" style="margin-top:125px">
+	@*<button class="dot btn-outline-info" style="margin-top:125px"></button>*@
+	<p style="margin-top: 175px; position: fixed;">編輯房型</p>
+	<img src="~/test/tent2.png" class="dot" style="margin-top:250px">
+	@*<button class="dot btn-outline-info" style="margin-top:275px"></button>*@
+	<p style="margin-top: 300px; position: fixed;">完成</p>
+</div>
+<div id="c1" class="container">
+	<div class="row">
+		<div class="col-2 mt-5" style="text-align:center">
+			<a href="/Create_Camping_Area/Campingarea" title="新增露營區">
+				<div class="w-50 mb-0" style="justify-content:end">
+					<img class=" w-25" src="~/test/add.png">
+				</div>
+				<img class="w-50" src="~/test/tent3.png">
+			</a>
+		</div>
+		<div class="col-8">
+			<div class="text-center my-5">
+				<label for="selected" class="form-label">選擇露營區:</label>
+				<select v-model="selected" v-on:change="getmore">
+					<option value="" disabled selected>選擇露營區</option>
+					<option v-for="n in nameList" v-bind:value="n.id">{{ n.name }}</option>
+				</select>
+			</div>
+			<div class="my-5" v-if="productList.auditDescription != null" style="background-color: #808080; color: white; text-align:center;">
+				<label for="description" class="form-label py-2">不通過原因:</label>
+				<textarea class="form-control py-2" id="description" v-model="productList.auditDescription" readonly style="background-color: #13439f; color: white; text-align: center;"></textarea>
+			</div>
+			<div class="card mb-5 mx-auto w-100 shadow" style="height:auto" v-if="productList.camping_AreaId !=null" id="productList.camping_AreaId">
+				<div class="row no-gutters">
+					<div class="col-md-5">
+						<img class="w-100 h-100" v-bind:src="productList.camping_Area_Path">
+					</div>
+					<div class="col-md-7">
+						<div class="d-flex justify-content-end">
+							<button type="button" class="btn btn-danger rounded" v-on:click="deletecamping" style="position: absolute;">
+								X
+							</button>
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">露營區名稱: </h5>
+							<p class="card-text">{{productList.camping_Area_Name}}</p>
+							<h5 class="card-title">露營區地址: </h5>
+							<p class="card-text">{{productList.camping_AreaAddress}}</p>
+							<h5 class="card-title" v-if="productList.isAudit ===true">已審核</h5>
+							<h5 class="card-title" v-else>審核中</h5>
+							<div class="d-flex justify-content-end">
+								<a href="#" class="btn btn-dark" v-on:click="editcamping">編輯露營區</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card mb-5 mx-auto w-75  shadow" style="height:auto" v-for="(item,index) of productList.myrooms" :id="item.roomId">
+				<div class="row no-gutters">
+					<div class="col-md-6">
+						<img class="w-100 h-100" v-bind:src="item.room_Path">
+						@*<img class="w-100 h-100" src="aaa/nasa4.jpg">*@
+					</div>
+					<div class="col-md-6">
+						<div class="d-flex justify-content-end">
+							<button type="button" class="btn btn-danger rounded" v-on:click="deleteroom(index)"
+									style="position: absolute;">
+								X
+							</button>
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">房間名稱: </h5>
+							<p class="card-text">{{item.roomName}}</p>
+							<h5 class="card-title">房間數量: </h5>
+							<p class="card-text">{{ item.roomCount}}</p>
+							<div class="d-flex justify-content-end">
+								<a href="#" class="btn btn-dark" v-on:click="editroom(index)">編輯房型</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			@*<div class="col-4" v-if="productList.camping_AreaId !=null">
+			<div class="card" style="width: 18rem;" id="productList.camping_AreaId">
+				<img class="card-img-top" v-bind:src="productList.camping_Area_Path" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title"></h5>
+					<h5 class="card-title" v-if="productList.isAudit ===true"></h5>
+					<h5 class="card-title" v-else></h5>
+					<a href="#" class="btn btn-primary" v-on:click="editcamping"></a>
+					<button class="btn-danger" v-on:click="deletecamping"></button>
+				</div>
+			</div>
+		</div>*@
+
+			@*<div class="col-4" v-for="(item,index) of productList.myrooms">
+			<div class="card" style="width: 18rem;" :id="item.roomId">
+				<img class="card-img-top" v-bind:src="item.room_Path" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title">房間名稱: {{item.roomName}}</h5>
+					<h5 class="card-title">房間數量:{{ item.roomCount}}</h5>
+					<a href="#" class="btn btn-primary" v-on:click="editroom(index)">編輯房型</a>
+					<button class="btn-danger" v-on:click="deleteroom(index)">刪除</button>
+				</div>
+			</div>
+		</div>*@
+		</div>
+		<div class="col-2 mt-5" style="text-align:center" >
+			<a href="/Create_Room/CreateRoom/" title="新增房型">
+				<div class="w-50 mb-0">
+					<img class=" w-25" src="~/test/add.png">
+				</div>
+				<img class="w-50" src="~/test/room.png">
+			</a>
+		</div>
+		</div>
+		@*<button v-on:click="addroom">新增房型</button>
+		<button v-on:click="addcamping_area">新增露營區</button>*@
+	</div>
+
+
+
+		<script>
+			var app = new Vue({
+				el: '#c1',
+				data: {
+					selected: '',
+					productList: {},
+					nameList: {}
+				},
+				methods: {
+					getmore: function () {
+						var self = this;
+						productList = {};
+						axios.get("/Camping_Information/GetAllInformation/" + this.selected).then(function (res) {
+							self.productList = res.data;
+							console.log(self.productList);
+						})
+					},
+
+					addroom: function () {
+						window.location.href = "/Create_Room/CreateRoom/" + this.selected;
+					},
+
+					addcamping_area: function () {
+						window.location.href = "/Create_Camping_Area/Campingarea";
+
+					},
+					deletecamping: function (a) {
+						var self = this;
+						Swal.fire({
+							title: '確定取消???',
+							icon: 'warning',
+							background: "black",
+							color: "white",
+							text: '取消露營區跟房間都會刪除喔!!!',
+							showCancelButton: true,
+							cancelButtonColor: '#B9C0CE',
+							confirmButtonText: '確定!!!',
+							confirmButtonColor: 'red',
+							preConfirm: () => {
+								axios.post("/Camping_Information/DeleteCamping/" + self.productList.camping_AreaId).then(function (res) {
+									if (res.data == true) {
+										Swal.fire({
+											title: '取消成功~',
+											background: "black",
+											color: "white",
+											preConfirm: () => {
+												window.location.reload();
+											}
+										});
+									}
+									else {
+										Swal.fire({
+											title: '取消失敗!',
+											background: "black",
+											color: "white",
+										})
+									}
+								});
+							}
+						});
+					},
+					deleteroom: function (a) {
+						var self = this;
+						Swal.fire({
+							title: '確定取消???',
+							icon: 'warning',
+							background: "black",
+							color: "white",
+							text: '取消就沒了喔~',
+							showCancelButton: true,
+							cancelButtonColor: '#B9C0CE',
+							confirmButtonText: '確定!!!',
+							confirmButtonColor: 'red',
+							preConfirm: () => {
+								axios.post("/Camping_Information/DeleteRoom/" + self.productList.myrooms[a].roomId).then(function (res) {
+									if (res.data == true) {
+										Swal.fire({
+											title: '取消成功~',
+											background: "black",
+											color: "white",
+											preConfirm: () => {
+												window.location.reload();
+											}
+										});
+									}
+									else {
+										Swal.fire({
+											title: '取消失敗!',
+											background: "black",
+											color: "white",
+										})
+									}
+								});
+							}
+						});
+					}, 
+					editcamping: function () {
+						//var self = this;
+						window.location.href = "/Edit_Camping_Area/EditCamping_Area";
+					},
+					editroom: function (a) {
+						var self = this;
+						window.location.href = "/Edit_Room/EditRoom/" + self.productList.myrooms[a].roomId;
+					}
+
+				},
+				mounted:function() {
+						var self = this;
+					axios.get("/Camping_Information/GetAllCamping_Area").then(function (res) {
+						self.nameList = res.data;
+						console.log("111" + self.selected);
+						axios.get("/Camping_Information/GetAllInformation/" + self.selected).then(function (res) {
+							if (res.data == false) {
+								Swal.fire({
+									title: '剛註冊嗎？還沒有露營區喔~',
+									text:'請點選左上角新增露營區',
+									background: "black",
+									color: "white"
+								});
+							}
+							else {
+								self.productList = res.data;
+								console.log(self.productList);
+								console.log("222" + self.selected);
+							}
+							
+						})
+					});
+					
+					}
+			});
+		</script>
+

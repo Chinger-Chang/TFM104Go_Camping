@@ -1,0 +1,230 @@
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - FinalProjectFirstTest</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" />
+	<!--底部原生搬移到此-->
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+	<!-- #endregion-->
+	@*fullcalendar*@
+	<link href='fullcalendar/main.css' rel='stylesheet' />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.css">
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.js"></script>
+	@*vue axios*@
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.9.1/axios.js' integrity='sha512-Kg0CewqPNO/ziOJuCq5eyl3P/V6OLz/Lb1I2m+yKS3lHZcGVFN/KOew18rWP+kTsL7haYdaqGjwHQCZrN0heLQ==' crossorigin='anonymous'></script>
+	@{ if (!User.IsInRole("Seller"))
+		{
+			@*vuetify*@
+			<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+			<link href="https://cdn.jsdelivr.net/npm/@@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+			<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+			<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+			<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+		}
+	}
+	@*sweetalert*@
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.9/dist/sweetalert2.all.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.9/dist/sweetalert2.all.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.9/dist/sweetalert2.css">
+
+	<!-- #endregion -->
+	<!-- #region Zhong 0416-->
+	<!--cdn jq-->
+	@*<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/sunny/jquery-ui.css">
+		<link rel="stylesheet" href="/resources/demos/style.css">
+		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>*@
+
+
+	<!--slick 箭頭救星-->
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css' />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">-->
+	<!--icon-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!--icon cdn-->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+	<!--google-icon cdn-->
+	<link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
+
+	<!--營火-->
+	<!--<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+	<script src='https://code.jquery.com/jquery-2.2.2.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
+	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>-->
+
+	<!-- #endregion-->
+	<!-- #region layoutRWD-->
+	@*<style>
+
+
+
+			@@media (max-width: 500px) and (min-width: 200px) {
+				header {
+					position: fixed;
+					width: 100%;
+				}
+
+				* {
+					font-size: 20px !important;
+				}
+			}
+		</style>*@
+	<!-- #endregion -->
+</head>
+<body>
+	<header>
+		<!-- #region First navbar -->
+
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+			@{
+				if (User.IsInRole("Seller"))
+				{
+					<div class="container">
+						<a class="navbar-brand" asp-area="" asp-controller="Order_Detail" asp-action="Seller_OrderDetail">賣家</a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+								aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+					</div>
+				}
+				else
+				{
+					<div class="container">
+						<a class="navbar-brand" asp-area="" asp-controller="Buyer" asp-action="Index">買家</a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+								aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+					</div>
+				}
+			}
+
+			<!-- 這一行是靠右邊的-->
+			<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+				<ul class="navbar-nav ml-auto">
+					<!-- #region 登入登出 註冊 NavBar this is right-->
+					@{
+						if (User.Identity.IsAuthenticated)
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Login_Register" asp-action="Logout">登出</a>
+							</li>
+						}
+						else
+						{
+
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+									註冊/登入
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									<a class="dropdown-item" asp-area="" asp-controller="Buyer" asp-action="register">買家</a>
+									<a class="dropdown-item" asp-area="" asp-controller="Login_Register" asp-action="LoginRegister">賣家</a>
+								</div>
+							</li>
+
+						}
+					}
+					<!-- #endregion-->
+				</ul>
+			</div>
+		</nav>
+		@{ if (User.Identity.IsAuthenticated)
+			{
+
+				<!-- 第二導航  頁面  使用VS預設 -->
+				<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+					<div class="mx-auto order-0">
+						<ul class="navbar-nav ml-auto">
+							<!-- #region Buyer Nav-->
+							@{if (User.IsInRole("User"))
+								{
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Buyer" asp-action="Index">買家首頁</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Buyer" asp-action="roomInfo">房型</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Buyer" asp-action="reservation">訂房</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Buyer" asp-action="BOrderDetail">買家訂單</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Buyer" asp-action="userInfo">買家基本資料</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Buyer" asp-action="ListString">ListString</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Buyer" asp-action="test2">test2</a>
+									</li>
+								}
+								<!-- #endregion -->
+								<!-- #region Admin Nav -->
+								if (User.IsInRole("Manager"))
+								{
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Manager" asp-action="ManagerOrderDetails">訂單管理</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Manager" asp-action="Get_Unaudited_Campingarea">審核露營區</a>
+									</li>
+								}
+								<!-- #endregion-->
+								<!-- #region Seller nav-->
+								if (User.IsInRole("Seller"))
+								{
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Order_Detail" asp-action="Seller_OrderDetail">訂單管理</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Create_Camping_Area" asp-action="CampingArea">建露營區</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Camping_Information" asp-action="CampingInformation">露營區/房型</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Room_Condition" asp-action="RoomCondition">房況</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Seller_Info" asp-action="SellerInfo">基本資料</a>
+									</li>
+								}
+								<!-- #endregion-->
+							}
+						</ul>
+
+					</div>
+
+				</nav>
+			} }
+		<!--  #endregion -->
+	</header>
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
+
+	<footer class="border-top footer text-muted">
+		<div class="container">
+			&copy; 2022 - FinalProjectFirstTest - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+		</div>
+	</footer>
+</body>
+</html>

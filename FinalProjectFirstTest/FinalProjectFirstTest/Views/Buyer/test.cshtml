@@ -1,0 +1,129 @@
+﻿<div id="mika">
+    <input disabled type="text" class="form-control" id="IdId" v-model:value="UsersList[0].id">
+
+    <div class="form-group">
+        <label for="nameId">姓名</label>
+        <input type="text" class="form-control" id="nameId" v-model:value="UsersList[0].name">
+    </div>
+    <div class="form-group">
+        <label for="emailId">帳號</label>
+        <input type="email" class="form-control" id="emailId" v-model:value="UsersList[0].email">
+    </div>
+    <div class="form-group">
+        <label for="telId">電話號碼</label>
+        <input type="tel" class="form-control" id="telId" v-model:value="UsersList[0].phone">
+    </div>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        修改密碼
+    </button>
+    <button v-on:click="edit" type="submit" class="btn btn-secondary">編輯確認</button>
+    <div v-show="isShowEdit" class="alert alert-primary" role="alert">
+        修改成功
+    </div>
+    <div v-show="isShowNothing" class="alert alert-danger" role="alert">
+        不可為空
+    </div>
+    <p>{{UsersList[0].name}}</p>
+    <p>{{UsersList[0].email}}</p>
+    <p>{{UsersList[0].phone}}</p>
+    <p>{{UsersList[0].password}}</p>
+
+    <p>{{UsersList}}</p>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">修改密碼</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="passwordId">新密碼</label>
+                        <input type="text" class="form-control" id="passwordId" v-model:value="UsersList[0].password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                    <button v-on:click="edit" type="button" class="btn btn-primary" data-dismiss="modal">確定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<script>
+    var v = new Vue({
+        el: '#mika',
+        data: {
+            UsersList: [],
+            //user: {
+            //    id: '',
+            //    name: '',
+            //    email: '',
+            //    phone: ''
+            //}
+            isShowEdit: false,
+            isShowNothing: false
+        },
+        methods: {
+            
+            edit: function () {
+
+                let self = this;
+
+                //self.user.id = self.UsersList[0].id;
+                //self.user.name = self.UsersList[0].name;
+                //self.user.email = self.UsersList[0].email;
+                //self.user.phone = self.UsersList[0].phone;
+
+                for (x of self.UsersList) {
+                    if (x.name == '' || x.email == '' || x.phone == '' || x.password == '') {
+                        //alert("不可為空");
+                        self.isShowEdit = false;
+                        self.isShowNothing = true;
+                        return;
+                    }
+                }
+
+                //POST請求
+                axios({
+                    method: 'post',
+                    url: '/Buyer/GetNewUserInfo',
+                    //API要求的資料
+                    data: self.UsersList[0],
+                    headers: { "Content-Type": 'application/json' }
+                })
+                    .then(function (response) {
+                        if (response.data == true) {
+                            //alert("修改成功");
+                            self.isShowNothing = false;
+                            self.isShowEdit = true;
+                        } else {
+                            alert("修改失敗");
+                        }
+
+                    })
+                    .catch(function (response) {
+                        //handle error
+                        console.log(response);
+                    });
+
+            }
+        },
+        mounted: function () {
+            var self = this;
+            axios.get("/Buyer/GetUserInfo").then(function (res) {
+                self.UsersList = res.data;
+            })
+        }
+    })
+</script>

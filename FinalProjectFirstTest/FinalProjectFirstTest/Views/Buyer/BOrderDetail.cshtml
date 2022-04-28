@@ -1,0 +1,392 @@
+﻿<style>
+	.a {
+		background-color: #000000;
+	}
+
+	body {
+		background-color: #424242;
+	}
+
+	.v-application--wrap {
+		background-color: #424242;
+	}
+
+	.tab-content {
+		background-color: #424242;
+	}
+	/*.myItem {
+		background-color: black;
+		color: white!important;
+	}*/
+	.myItem:focus {
+	}
+
+	#contact-tab {
+		color: white;
+		background-color: black;
+	}
+
+	#home-tab {
+		color: white;
+		background-color: black;
+	}
+
+	#profile-tab {
+		color: white;
+		background-color: black;
+	}
+
+
+	#contact-tab:focus {
+		color: black;
+		background-color: white;
+	}
+
+
+	#home-tab:focus {
+		color: black;
+		background-color: white;
+	}
+
+	#profile-tab:focus {
+		color: black;
+		background-color: white;
+	}
+
+	#myTab {
+		background-color: #424242;
+	}
+
+	.active {
+		background-color: white !important;
+		color: black !important;
+	}
+</style>
+
+<div id="mika">
+	<v-app>
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item myItem" role="presentation">
+				<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true" style="color:white;">已預定</a>
+			</li>
+			<li class="nav-item myItem" role="presentation">
+				<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">已收藏</a>
+			</li>
+			<li class="nav-item myItem" role="presentation">
+				<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">歷史訂單</a>
+			</li>
+		</ul>
+		<div class="tab-content" id="myTabContent">
+			<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+				<template>
+					<v-simple-table dark per-page="5" @*fixed-header height="500px"*@>
+						<template v-slot:default>
+							<thead>
+								<tr>
+									@*<th class="text-left" scope="col">index</th>*@
+									<th class="text-left" scope="col">訂單編號</th>
+									<th class="text-left" scope="col">露營區</th>
+									<th class="text-left" scope="col">房名</th>
+									<th class="text-left" scope="col">房型</th>
+									<th class="text-left" scope="col">訂購人</th>
+									<th class="text-left" scope="col">電話</th>
+									<th class="text-left" scope="col">入住時間</th>
+									<th class="text-left" scope="col">退房時間</th>
+									<th class="text-left" scope="col">價錢</th>
+									<th class="text-left" scope="col">狀態</th>
+									<th class="text-left" scope="col">取消?</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for=" (x,index) in OrderDetailsList">
+									@*<th>{{index}}</th>*@
+									<th>{{x.orderDetailId}}</th>
+									<th>{{x.campingAreaName}}</th>
+									<th>{{x.roomName}}</th>
+									<td>{{x.roomType}}</td>
+									<th>{{x.name}}</th>
+									<th>{{x.phone}}</th>
+									<td>{{x.checkInDate}}</td>
+									<td>{{x.checkOutDate}}</td>
+									<td>{{x.price}}</td>
+									<td>{{x.status}}</td>
+									<td>
+										@*<v-btn v-show="x.status == '已付款'" v-on:click="cancle(x.orderDetailId,x.status)" color="error">
+												取消<v-icon right>mdi-emoticon-confused-outline</v-icon>
+											</v-btn>*@
+										@*<button v-show="x.status == '已付款'" v-on:click="cancle(x.orderDetailId,x.status)" type="button" class="btn btn-danger" data-toggle="modal" data-target="#staticBackdrop">
+												我想取消
+											</button>*@
+										<v-btn v-show="x.status == '已付款'" v-on:click="cancle(x.orderDetailId,x.status)" color="#EF5350" dark @@click.stop="dialog = true">
+											<v-icon left>mdi-trash-can-outline</v-icon>取消
+										</v-btn>
+									</td>
+								</tr>
+							</tbody>
+						</template>
+					</v-simple-table>
+				</template>
+			</div>
+			<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+				<template>
+					<v-simple-table dark per-page="5" @*fixed-header height="500px"*@>
+						<template v-slot:default>
+							<thead>
+								<tr>
+									@*<th class="text-left" scope="col">index</th>*@
+									<th class="text-left" scope="col">訂單編號</th>
+									<th class="text-left" scope="col">露營區</th>
+									<th class="text-left" scope="col">房名</th>
+									<th class="text-left" scope="col">房型</th>
+									@*<th class="text-left" scope="col">訂購人</th>
+										<th class="text-left" scope="col">電話</th>
+										<th class="text-left" scope="col">入住時間</th>
+										<th class="text-left" scope="col">退房時間</th>
+										<th class="text-left" scope="col">價錢</th>
+										<th class="text-left" scope="col">狀態</th>*@
+									<th class="text-left" scope="col">要訂房嗎?</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for=" (x,index) in FavoriteOrderDetailsList">
+									@*<th>{{index}}</th>*@
+									<th>{{x.orderDetailId}}</th>
+									<th>{{x.campingAreaName}}</th>
+									<th>{{x.roomName}}</th>
+									<td>{{x.roomType}}</td>
+									@*<th>{{x.name}}</th>
+										<th>{{x.phone}}</th>
+										<td>{{x.checkInDate}}</td>
+										<td>{{x.checkOutDate}}</td>
+										<td>{{x.price}}</td>
+										<td>{{x.status}}</td>*@
+									<td>
+										<v-btn v-on:click="sendRoomId(x.roomId)" color="#586D80" dark>
+											<v-icon left>mdi-hand-pointing-up</v-icon>我要訂房!
+										</v-btn>
+										<v-btn v-on:click="sendFavoriteRoomID(x.roomId)" color="#7E57C2" dark>
+											取消收藏<v-icon right>mdi-emoticon-confused-outline</v-icon>
+										</v-btn>
+									</td>
+								</tr>
+							</tbody>
+						</template>
+					</v-simple-table>
+				</template>
+			</div>
+			<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+				<template>
+					<v-simple-table dark>
+						<template v-slot:default>
+							<thead>
+								<tr>
+									@*<th class="text-left" scope="col">index</th>*@
+									<th class="text-left" scope="col">訂單編號</th>
+									<th class="text-left" scope="col">露營區</th>
+									<th class="text-left" scope="col">房名</th>
+									<th class="text-left" scope="col">房型</th>
+									<th class="text-left" scope="col">訂購人</th>
+									<th class="text-left" scope="col">電話</th>
+									<th class="text-left" scope="col">入住時間</th>
+									<th class="text-left" scope="col">退房時間</th>
+									<th class="text-left" scope="col">價錢</th>
+									<th class="text-left" scope="col">狀態</th>
+									<th class="text-left" scope="col">取消時間</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="(y,index) in CancelOrderDetailsList">
+									@*<th>{{index}}</th>*@
+									<th>{{y.orderDetailId}}</th>
+									<th>{{y.campingAreaName}}</th>
+									<th>{{y.roomName}}</th>
+									<td>{{y.roomType}}</td>
+									<th>{{y.name}}</th>
+									<th>{{y.phone}}</th>
+									<td>{{y.checkInDate}}</td>
+									<td>{{y.checkOutDate}}</td>
+									<td>{{y.price}}</td>
+									<td>{{y.status}}</td>
+									<td>{{y.cancelDate}}</td>
+								</tr>
+							</tbody>
+						</template>
+					</v-simple-table>
+				</template>
+			</div>
+		</div>
+		<template>
+			<v-row justify="center">
+				<v-dialog v-model="dialog" max-width="290">
+					<v-card>
+						<v-card-title class="text-h5">
+							確定取消???
+						</v-card-title>
+						<v-card-text class="text-h6">
+							取消就救不回來了:)
+						</v-card-text>
+						<v-card-actions>
+							<v-spacer></v-spacer>
+							<v-btn color="#536DFE" class="text-white" @@click="dialog = false">
+								關閉
+							</v-btn>
+							<v-btn v-on:click="sendodID" color="#E53935" class="text-white" @@click="dialog = false">
+								確定
+							</v-btn>
+						</v-card-actions>
+					</v-card>
+				</v-dialog>
+			</v-row>
+		</template>
+
+		@*<div class="spinner-border text-secondary" role="status">
+				<span class="sr-only">Loading...</span>
+			</div>*@
+
+		@*Modal*@
+		<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			@*<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="staticBackdropLabel">確定取消??</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							取消就救不回來了:)
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+							<button v-on:click="sendodID" type="button" class="btn btn-primary">確定</button>
+						</div>
+					</div>
+				</div>*@
+		</div>
+		<br />
+		<div>
+			@*<p>Success + Refunding</p>
+				<p>{{OrderDetailsList}}</p>
+				<p>Cancel</p>
+				<p>{{CancelOrderDetailsList}}</p>
+				<p>Favorite</p>
+				<p>{{FavoriteOrderDetailsList}}</p>*@
+		</div>
+
+
+	</v-app>
+</div>
+
+<script>
+    var a = new Vue({
+        el: '#mika',
+        vuetify: new Vuetify(),
+        data: {
+            OrderDetailsList: [],
+            CancelOrderDetailsList: [],
+            FavoriteOrderDetailsList: [],
+            a: {
+                odID: 0
+            },
+            dialog: false,
+            froomId: 0,
+
+        },
+        methods: {
+            cancle: function (i, s) {
+                //alert(i);
+                //alert(s);
+                let self = this;
+                self.a.odID = i;
+                //alert(self.a.odID);
+            },
+            sendRoomId: function (rid) {
+                alert(rid);
+                this.froomId = rid;
+                alert(this.froomId);
+
+                window.location.href = "/Buyer/reservation/" + this.froomId;
+            },
+            sendodID: function () {
+                let self = this;
+
+                //POST請求
+                axios({
+                    method: 'post',
+                    url: '/Buyer/GetodID',
+                    //API要求的資料
+                    data: self.a,
+                    headers: { "Content-Type": 'application/json' }
+                })
+                    .then(function (response) {
+                        if (response.data == true) {
+                            //alert("傳入成功");
+                            window.location.reload();
+
+                        } else {
+                            alert("取消失敗");
+                        }
+                    })
+                    .catch(function (response) {
+                        //handle error
+                        //console.log(response.data);
+                        window.location.href = response.data
+                    });
+            },
+            // 取消收藏
+            sendFavoriteRoomID: function (fRoomId) {
+                //alert(fRoomId);
+
+                let self = this;
+                self.a.favRoomId = fRoomId;
+                //alert(self.a.favRoomId);
+
+                //POST請求
+                axios({
+                    method: 'post',
+                    url: '/Buyer/getFavoriteInfo',
+                    //API要求的資料
+                    data: self.a,
+                    headers: { "Content-Type": 'application/json' }
+                })
+                    .then(function (response) {
+                        if (response.data == true) {
+                            //alert("收藏成功");
+                            //window.location.reload();
+                            axios.get("/Buyer/getRoomInfo").then(function (res) {
+                                self.RoomInfo = res.data;
+                                console.log(res.data);
+                            })
+                        } else {
+                            //alert("已取消收藏");
+                            axios.get("/Buyer/getRoomInfo").then(function (res) {
+                                self.RoomInfo = res.data;
+                                console.log(res.data);
+                            })
+                            window.location.reload();
+                        }
+                    })
+                    .catch(function (response) {
+                        //handle error
+                        //console.log(response.data);
+                        window.location.href = response.data
+                    });
+
+            },
+        },
+        mounted: function () {
+            var self = this;
+            axios.get("/Buyer/GetOrderDetails").then(function (res) {
+                self.OrderDetailsList = res.data;
+            }),
+                axios.get("/Buyer/GetCancelOrderDetails").then(function (res) {
+                    self.CancelOrderDetailsList = res.data;
+                }),
+                axios.get("/Buyer/GetFavoriteOrderDetails").then(function (res) {
+                self.FavoriteOrderDetailsList = res.data;
+            })
+        }
+    });
+</script>

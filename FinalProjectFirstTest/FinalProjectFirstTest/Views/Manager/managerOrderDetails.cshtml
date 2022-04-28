@@ -1,0 +1,237 @@
+﻿<style>
+	.a {
+		background-color: #000000;
+	}
+
+	body {
+		background-color: #424242;
+	}
+
+	#contact-tab {
+		color: white;
+		background-color: black;
+	}
+
+	#home-tab {
+		color: white;
+		background-color: black;
+	}
+
+	#profile-tab {
+		color: white;
+		background-color: black;
+	}
+
+
+	#contact-tab:focus {
+		color: black;
+		background-color: white;
+	}
+
+
+	#home-tab:focus {
+		color: black;
+		background-color: white;
+	}
+
+	#profile-tab:focus {
+		color: black;
+		background-color: white;
+	}
+
+	#myTab {
+		background-color: #424242;
+	}
+
+	.active {
+		background-color: white !important;
+		color: black !important;
+	}
+</style>
+
+<div id="mika">
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+		<li class="nav-item" role="presentation">
+			<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">待確認</a>
+		</li>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">所有訂單</a>
+		</li>
+	</ul>
+	<div class="tab-content" id="myTabContent">
+		<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+			<template>
+				<v-simple-table dark>
+					<template v-slot:default>
+						<thead>
+							<tr>
+								@*<th scope="col">index</th>*@
+								<th scope="col">訂單編號</th>
+								<th scope="col">露營區</th>
+								<th scope="col">房名</th>
+								<th scope="col">房型</th>
+								<th scope="col">訂購人</th>
+								<th scope="col">電話</th>
+								<th scope="col">入住時間</th>
+								<th scope="col">退房時間</th>
+								<th scope="col">價錢</th>
+								<th scope="col">狀態</th>
+								<th scope="col">取消時間</th>
+								<th scope="col">確認中</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="(y,index) in ReOrderDetailsList">
+								@*<th scope="row">{{index}}</th>*@
+								<th scope="row">{{y.mOrderDetailID}}</th>
+								<th scope="row">{{y.campingAreaName}}</th>
+								<td>{{y.roomName}}</td>
+								<td>{{y.roomType}}</td>
+								<th>{{y.name}}</th>
+								<th>{{y.phone}}</th>
+								<td>{{y.checkInDate}}</td>
+								<td>{{y.checkOutDate}}</td>
+								<td>{{y.price}}</td>
+								<td>{{y.status}}</td>
+								<td>{{y.cancelDate}}</td>
+								<td>
+									@*<button v-on:click="checkAndSend(y.mOrderDetailID)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+										  確認退款
+										</button>*@
+									<v-btn v-on:click="checkAndSend(y.mOrderDetailID)" color="#8D6E63" dark @@click.stop="dialog = true">
+										確認退款<v-icon right>mdi-emoticon-confused-outline</v-icon>
+									</v-btn>
+								</td>
+							</tr>
+						</tbody>
+					</template>
+				</v-simple-table>
+			</template>
+		</div>
+		<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+			<template>
+				<v-simple-table dark>
+					<template v-slot:default>
+						<thead>
+							<tr>
+								@*<th scope="col">index</th>*@
+								<th scope="col">訂單編號</th>
+								<th scope="col">露營區</th>
+								<th scope="col">房名</th>
+								<th scope="col">房型</th>
+								<th scope="col">訂購人</th>
+								<th scope="col">電話</th>
+								<th scope="col">入住時間</th>
+								<th scope="col">退房時間</th>
+								<th scope="col">價錢</th>
+								<th scope="col">狀態</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="(x,index) in AllOrderDetailsList">
+								@*<th scope="row">{{index}}</th>*@
+								<th scope="row">{{x.mOrderDetailID}}</th>
+								<th scope="row">{{x.campingAreaName}}</th>
+								<td>{{x.roomName}}</td>
+								<td>{{x.roomType}}</td>
+								<th>{{x.name}}</th>
+								<th>{{x.phone}}</th>
+								<td>{{x.checkInDate}}</td>
+								<td>{{x.checkOutDate}}</td>
+								<td>{{x.price}}</td>
+								<td>{{x.status}}</td>
+							</tr>
+						</tbody>
+					</template>
+				</v-simple-table>
+			</template>
+		</div>
+
+	</div>
+
+	@*<div class="spinner-border text-secondary" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>*@
+
+	@*Modal*@
+	<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		@*<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">確定取消??</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						取消就救不回來了:)
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+						<button type="button" class="btn btn-primary">確定</button>
+					</div>
+				</div>
+			</div>*@
+	</div>
+
+	@*<p>退款中訂單</p>*@
+	@*<p>{{ReOrderDetailsList}}</p>*@
+	@*<p>所有訂單</p>*@
+	@*<p>{{AllOrderDetailsList}}</p>*@
+</div>
+
+<script>
+    var a = new Vue({
+        el: '#mika',
+        data: {
+            AllOrderDetailsList: [],
+            ReOrderDetailsList: [],
+            a: {
+                modID:0
+            }
+        },
+        methods: {
+            checkAndSend: function (i) {
+                //alert(i);
+                let self = this;
+                self.a.modID = i;
+                //alert(self.a.modID);
+
+                //POST請求
+                axios({
+                    method: 'post',
+                    url: '/Manager/GetmodID',
+                    //API要求的資料
+                    data: self.a,
+                    headers: { "Content-Type": 'application/json' }
+                })
+                    .then(function (response) {
+                        if (response.data == true) {
+                            //alert("傳入成功");
+                            window.location.reload();
+
+                        } else {
+                            alert("確認退款失敗");
+                        }
+                    })
+                    .catch(function (response) {
+                        //handle error
+                        //console.log(response.data);
+                        window.location.href = response.data
+                    });
+            }
+        },
+        mounted: function () {
+            var self = this;
+            axios.get("/Manager/GetAllOrderDetails").then(function (res) {
+				self.AllOrderDetailsList = res.data;
+				console.log(res.data);
+            }),
+                axios.get("/Manager/GetReFundingOrderDetails").then(function (res) {
+					self.ReOrderDetailsList = res.data;
+					console.log(res.data);
+            })
+        }
+    });
+</script>
+

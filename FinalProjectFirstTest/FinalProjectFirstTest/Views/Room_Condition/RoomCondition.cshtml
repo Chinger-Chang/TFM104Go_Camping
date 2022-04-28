@@ -1,0 +1,180 @@
+﻿
+
+
+<div id="ab" class="container">
+	<div class="col-6 form-group mt-5 mr-3" style="display:inline-block ;text-align:right;">
+		<label for="selectcamp" class="form-label">露營區:</label>
+		<select v-model="selectcamp" v-on:change="getallroom">
+			<option value="" disabled selected>選擇露營區</option>
+			<option v-for="(item,index) of camplist.camping_Area_Name" v-bind:value="index">
+				{{ item }}
+			</option>
+		</select>
+	</div>
+	<div class="col-6 form-group row mt-5" style="display:inline-block">
+		<label for="selectroom" class="form-label">房間:</label>
+		<select v-model="selectroom" v-on:change="getroomcondition">
+			<option value="" disabled selected>選擇房型</option>
+			<option v-for="(item,index) of roomlist.room_Name" v-bind:value="index">
+				{{ item }}
+			</option>
+		</select>
+	</div>
+	<div class="border-dark" width="80%" id="calendar"></div>
+</div>
+
+
+
+
+
+<script>
+
+	var a = new Vue({
+		el: '#ab',
+		data: {
+			camplist: {},
+			roomlist: {},
+			selectcamp: "",
+			selectroom: "",
+			getalldate: {},
+			getremaining_amount: {},
+			totalamount: 0
+		},
+		methods: {
+			getallroom: function () {
+				var self = this;
+				/*alert(self.camplist.camping_AreaId[self.selectcamp]);*/
+				axios.get("/Room_Condition/Get_Room/" + self.camplist.camping_AreaId[self.selectcamp]).then(function (res) {
+					self.roomlist = res.data;
+					console.log(res.data);
+					self.selectroom = "";
+
+
+				});
+			},
+			getroomcondition: function () {
+				var self = this;
+				var ev = [];
+				var TodayDate;
+				var d;
+				var m;
+				var y;
+				var date;
+				var dates = [];
+				/*alert(self.roomlist.roomId[self.selectroom]);*/
+				axios.get("/Room_Condition/ListString/" + self.roomlist.roomId[self.selectroom]).then(function (res) {
+					console.log(res.data);
+					self.getalldate = res.data.getAllDate;
+					console.log(self.getalldate);
+					self.getremaining_amount = res.data.getRemaining_Amount;
+					console.log(self.getremaining_amount);
+					self.totalamount = res.data.total_Amount;
+					console.log(self.totalamount);
+
+					TodayDate = new Date(self.getalldate[0]);
+					EndDate = new Date(self.getalldate[self.getalldate.length - 1]);
+					console.log(TodayDate);
+
+					em = EndDate.getMonth();
+					d = TodayDate.getDate(); console.log(em);
+					m = TodayDate.getMonth(); console.log(m);
+					y = TodayDate.getFullYear();
+					ev = [];
+					console.log(d, m, y);
+					date = new Date(y, m, 1);
+					enddate = new Date(y, m, 1);
+					console.log(date);
+					dates = [];
+
+					while (date.getMonth() <= em) {
+						dates.push(new Date(date).toLocaleDateString('en-CA'));
+						date.setDate(date.getDate() + 1);
+					}
+
+					for (let s of dates) {
+						let a = 1;
+						self.getalldate.forEach((fulls, index) => {
+							if (s === fulls) {
+								if (self.getremaining_amount[index] === 0) {
+									ev.push({
+										title: "已滿",
+										start: `${s}`,
+										color: '#F11717'
+									});
+								}
+								else {
+									ev.push({
+										title: '剩' + self.getremaining_amount[index] + "間",
+										start: `${s}`,
+										color: '#84F5E6'
+									});
+								}
+								ev.push({
+									title: "已" + ((self.totalamount) - (self.getremaining_amount[index])) + "筆訂購",
+									start: `${s}`,
+									textColor: 'black'
+								});
+
+								a = 0
+							}
+						})
+						if (a != 0) {
+							ev.push({
+								title: '剩' + self.totalamount + "間",
+								start: `${s}`,
+								color: '#D4D2D2'
+							});
+						}
+					}
+					for (let e of ev) {
+						console.log(e);
+					}
+					var calendarEl = document.getElementById('calendar');
+					var calendar = new FullCalendar.Calendar(calendarEl, {
+						initialView: 'dayGridMonth',
+						eventTextColor: "black",
+						eventContent: function (arg) {
+							console.log(arg);
+							if (arg.event.title.includes('間')) {
+								return {
+									html: ' <span class="material-icons">bedroom_parent</span >' + arg.event.title
+								}
+							}
+
+						},
+						events: ev
+					});
+					calendar.render();
+				});
+			}
+		},
+		mounted: function () {
+
+			var self = this;
+			axios.get("/Room_Condition/Get_Camping_Area").then(function (res) {
+				self.camplist = res.data;
+				console.log(self.camplist);
+
+				axios.get("/Room_Condition/Get_Room").then(function (res) {
+					self.roomlist = res.data;
+					console.log(self.roomlist);
+
+
+				});
+			});
+
+
+
+			document.addEventListener('DOMContentLoaded', function () {
+				var calendarEl = document.getElementById('calendar');
+				var calendar = new FullCalendar.Calendar(calendarEl, {
+					initialView: 'dayGridMonth',
+					eventColor: '#ffffff',
+					eventTextColor: "black"
+				});
+				calendar.render();
+			});
+		}
+	});
+</script>
+

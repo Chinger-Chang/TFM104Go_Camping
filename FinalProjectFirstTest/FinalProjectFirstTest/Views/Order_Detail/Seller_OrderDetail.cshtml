@@ -1,0 +1,203 @@
+﻿<style>
+
+	tbody > tr:nth-child(even) {
+		background-color: white;
+	}
+</style>
+<div class="mt-5" id="mika">
+
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+		<li class="nav-item" role="presentation">
+			<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true" style="color: white; background-color: #343a40">訂單</a>
+		</li>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false" style="color: white; background-color: #343a40">歷史訂單</a>
+		</li>
+		@*<a style="display:flex;justify-content:flex-end;">*@
+		<li class="nav-item" role="presentation">
+			<input class="search" type="text" v-model="search" placeholder="搜尋關鍵字" />
+		</li>
+
+	</ul>
+	<div class="tab-content" id="myTabContent">
+		<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+			<table class="table table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">露營區</th>
+						<th scope="col">房型</th>
+						<th scope="col">訂購人</th>
+						<th scope="col">電話</th>
+						<th scope="col">入住時間</th>
+						<th scope="col">退房時間</th>
+						<th scope="col">價錢</th>
+						<th scope="col">狀態</th>
+						<th scope="col">取消</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for=" (item,index) in searchOrderDetail">
+						<td>{{item.campingAreaName}}</td>
+						<td>{{item.roomType}}</td>
+						<td>{{item.name}}</td>
+						<td>{{item.phone}}</td>
+						<td>{{item.checkInDate}}</td>
+						<td>{{item.checkOutDate}}</td>
+						<td>{{item.price}}</td>
+						<td>{{item.status}}</td>
+						<td>
+							<button v-show="item.status == '已付款'" v-on:click="cancle(index)" type="button" class="btn btn-danger">
+								取消訂單
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+			<table class="table table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">露營區</th>
+						<th scope="col">房型</th>
+						<th scope="col">訂購人</th>
+						<th scope="col">電話</th>
+						<th scope="col">入住時間</th>
+						<th scope="col">退房時間</th>
+						<th scope="col">價錢</th>
+						<th scope="col">狀態</th>
+						<th scope="col">取消時間</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(item,index) in searchCancelOrderDetailsList">
+						<td>{{item.campingAreaName}}</td>
+						<td>{{item.roomType}}</td>
+						<td>{{item.name}}</td>
+						<td>{{item.phone}}</td>
+						<td>{{item.checkInDate}}</td>
+						<td>{{item.checkOutDate}}</td>
+						<td>{{item.price}}</td>
+						<td>{{item.status}}</td>
+						<td>{{item.cancelDate}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+	<script>
+		var a = new Vue({
+			el: '#mika',
+			data: {
+				OrderDetailsList: {},
+				CancelOrderDetailsList: {},
+				search: "",
+				odID: 0
+
+			},
+			methods: {
+				cancle: function (a) {
+					let self = this;
+					self.odID = self.OrderDetailsList[a].orderDetailId;
+					console.log(self.odID);
+					Swal.fire({
+						title: '確定取消???',
+						icon: 'warning',
+						background: "black",
+						color: "white",
+						text: '取消就回不來了喔~',
+						showCancelButton: true,
+						cancelButtonColor: '#B9C0CE',
+						confirmButtonText: '確定!!!',
+						confirmButtonColor: 'red',
+						preConfirm: () => {
+							axios({
+								method: 'post',
+								url: '/Order_Detail/Delete_Order_Detail',
+								data: self.odID,
+								headers: { "Content-Type": 'application/json' }
+							})
+								.then(function (response) {
+									if (response.data == true) {
+										Swal.fire({
+											title: '取消成功~等待退款!',
+											background: "black",
+											color: "white",
+											preConfirm: () => {
+												window.location.reload();
+											}
+										});
+
+									} else {
+										Swal.fire({
+											title: '取消失敗!',
+											background: "black",
+											color: "white",
+										})
+									}
+								})
+								.catch(function (response) {
+									//handle error
+									console.log(response.data);
+									// window.location.href = response.data
+								});
+						}
+					});
+				}
+			},
+			computed: {
+				searchOrderDetail() {
+					let se = []
+					if (this.search !== '') {
+						se = this.OrderDetailsList.filter(p =>
+							p.campingAreaName.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.roomType.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.name.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.phone.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.checkInDate.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.checkOutDate.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.status.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.cancelDate.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.price === Number(this.search)
+						)
+					} else {
+						se = this.OrderDetailsList;
+					}
+					return se
+				},
+				searchCancelOrderDetailsList() {
+					let se = []
+					if (this.search !== '') {
+						se = this.CancelOrderDetailsList.filter(p =>
+							p.campingAreaName.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.roomType.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.name.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.phone.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.checkInDate.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.checkOutDate.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.status.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.cancelDate.toLowerCase().includes(this.search.toLowerCase()) ||
+							p.price === Number(this.search)
+						)
+					} else {
+						se = this.CancelOrderDetailsList;
+					}
+					return se
+				}
+			},
+			mounted: function () {
+				var self = this;
+				axios.get("/Order_Detail/Get_Order_Details").then(function (res) {
+					self.OrderDetailsList = res.data;
+					console.log(self.OrderDetailsList);
+
+				});
+				axios.get("/Order_Detail/Get_Cancel_Order_Details").then(function (res) {
+					self.CancelOrderDetailsList = res.data;
+					//console.log(res.data);
+				});
+			}
+		});
+	</script>

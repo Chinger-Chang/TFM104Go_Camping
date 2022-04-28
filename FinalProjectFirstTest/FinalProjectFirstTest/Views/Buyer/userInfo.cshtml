@@ -1,0 +1,265 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		.a {
+			background-color: #E0E0E0;
+		}
+	</style>
+</head>
+<body>
+	<div id="mika">
+		<v-app>
+			<template>
+				<v-form class="a" v-model="valid">
+					<v-container>
+						<v-row>
+							<v-col cols="12" md="4">
+								<v-text-field v-model="UsersList.id"
+											  @*:rules=""*@
+											  @*:counter="10"*@
+											  label="UserId"
+											  required disabled></v-text-field>
+							</v-col>
+						</v-row>
+						<v-row>
+							<v-col cols="12" md="4">
+								<v-text-field v-model="UsersList.email"
+											  @*:rules="nameRules"*@
+											  @*:counter="10"*@
+											  label="Email"
+											  required disabled></v-text-field>
+							</v-col>
+						</v-row>
+						<v-row>
+							<v-col cols="12" md="4">
+								<v-text-field v-model="UsersList.name"
+											  :rules="nameRules"
+											  :counter="10"
+											  label="姓名"
+											  required></v-text-field>
+							</v-col>
+						</v-row>
+						<v-row>
+							<v-col cols="12" md="4">
+								<v-text-field v-model="UsersList.phone"
+											  :rules="PhoneRules"
+											  label="電話"
+											  required></v-text-field>
+							</v-col>
+						</v-row>
+						<v-row>
+							<v-col cols="12" md="4">
+								<div class="text-right">
+									<v-dialog v-model="dialog" width="500">
+										<template v-slot:activator="{ on, attrs }">
+											<v-btn color="red lighten-2" dark v-bind="attrs" v-on="on">
+												修改密碼
+												<v-icon right> mdi-pencil </v-icon>
+											</v-btn>
+											<v-btn v-on:click="edit" tile color="success">
+												編輯確認
+												<v-icon right> mdi-pencil </v-icon>
+											</v-btn>
+										</template>
+
+										<v-card>
+											<v-card-title class="text-h5 grey lighten-2">
+												修改密碼
+											</v-card-title>
+
+											<v-card-text class="text-h6">
+												請輸入新密碼
+											</v-card-text>
+
+											<v-text-field v-model="pw"
+														  @*:rules="nameRules"*@
+														  @*:counter="10"*@
+														  @*label="新密碼"*@
+														  @*required*@></v-text-field>
+
+											@*<v-divider></v-divider>*@
+
+											<v-card-actions>
+												<v-spacer></v-spacer>
+												<v-btn v-on:click="edit" color="primary" text
+													   @@click="dialog = false">
+													確定
+												</v-btn>
+											</v-card-actions>
+										</v-card>
+									</v-dialog>
+								</div>
+							</v-col>
+						</v-row>
+						<v-row>
+							<v-col cols="12" md="4">
+								<v-alert v-show="isShowEdit" type="success">
+									修改成功
+								</v-alert>
+							</v-col>
+						</v-row>
+						<v-row>
+							<v-col cols="12" md="4">
+								<v-alert v-show="isShowNothing" type="error">
+									不可為空
+								</v-alert>
+							</v-col>
+						</v-row>
+					</v-container>
+				</v-form>
+			</template>
+
+			<div>
+				@*<input disabled type="hidden" class="form-control" id="IdId" v-model:value="UsersList.id">
+
+					<div class="form-group">
+						<label for="emailId">帳號</label>
+						<input disabled type="email" class="form-control" id="emailId" v-model:value="UsersList.email">
+					</div>
+
+					<div class="form-group">
+						<label for="nameId">姓名</label>
+						<input type="text" class="form-control" id="nameId" v-model:value="UsersList.name">
+					</div>
+
+					<div class="form-group">
+						<label for="telId">電話號碼</label>
+						<input type="tel" pattern="[0-9]{4}[0-9]{3}[0-9]{3}" class="form-control" id="telId" v-model:value="UsersList.phone">
+					</div>*@
+			</div>
+			<div>
+				@*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+						修改密碼
+					</button>
+					<button v-on:click="edit" type="submit" class="btn btn-secondary">編輯確認</button>
+					<div v-show="isShowEdit" class="alert alert-primary" role="alert">
+						修改成功
+					</div>
+					<div v-show="isShowNothing" class="alert alert-danger" role="alert">
+						不可為空
+					</div>*@
+			</div>
+			@*<p>{{UsersList.name}}</p>
+				<p>{{UsersList.email}}</p>
+				<p>{{UsersList.phone}}</p>
+				<p>{{UsersList.password}}</p>
+
+				<p>{{UsersList}}</p>*@
+
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				@*<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">修改密碼</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="passwordId">請輸入新密碼</label>
+									<input type="text" class="form-control" id="passwordId" v-model:value="pw">
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+								<button v-on:click="edit" type="button" class="btn btn-primary" data-dismiss="modal">確定</button>
+							</div>
+						</div>
+					</div>*@
+			</div>
+		</v-app>
+	</div>
+	@*Id ==> hidden*@
+	@*電話號碼pattern*@
+	@*修改密碼*@
+
+
+	<script>
+        var v = new Vue({
+            el: '#mika',
+            vuetify: new Vuetify(),
+            data: {
+                UsersList: [],
+                pw: '',
+                isShowEdit: false,
+                isShowNothing: false,
+                //--------------------
+                valid: false,
+                firstname: '',
+                lastname: '',
+                nameRules: [
+                v => !!v || 'Name is required',
+                v => v.length <= 10 || 'Name must be less than 10 characters',
+                ],
+                email: '',
+                emailRules: [
+                v => !!v || 'E-mail is required',
+                v => /.+@@.+/.test(v) || 'E-mail must be valid',
+                ],
+                PhoneRules: [
+                    v => !!v || 'Phone is required',
+                    v => v.length == 10 || 'Phone must be less than 10 characters',
+                ],
+                dialog: false
+            },
+            methods: {
+                edit: function () {
+
+                    let self = this;
+
+                    //alert(Object.keys(x));
+                    if (self.UsersList.name.trim() == '' || self.UsersList.phone.trim() == '') {
+                        //alert("不可為空");
+                        self.isShowEdit = false;
+                        self.isShowNothing = true;
+                        return;
+                    }
+                    if (self.pw != '') {
+                        self.UsersList.password = self.pw;
+                        //alert(self.UsersList.password);
+                    }
+                    // || self.UsersList.password.trim() == ''
+
+                    //POST請求
+                    axios({
+                        method: 'post',
+                        url: '/Buyer/GetNewUserInfo',
+                        //API要求的資料
+                        data: self.UsersList,
+                        headers: { "Content-Type": 'application/json' }
+                    })
+                        .then(function (response) {
+                            if (response.data == true) {
+                                //alert("修改成功");
+                                self.isShowNothing = false;
+                                self.isShowEdit = true;
+                                axios.get("/Buyer/GetUserInfo").then(function (res) {
+                                    self.UsersList = res.data;
+                                    console.log(res.data);
+                                })
+                            } else {
+                                alert("修改失敗");
+                            }
+
+                        })
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+
+                }
+            },
+            mounted: function () {
+                var self = this;
+                axios.get("/Buyer/GetUserInfo").then(function (res) {
+                    self.UsersList = res.data;
+                    console.log(res.data);
+                })
+            }
+        })
+	</script>
+</body>
+</html>

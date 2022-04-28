@@ -1,0 +1,57 @@
+﻿<div id="c1" class="container">
+	<div class="row">
+		<div class="col-8 mx-auto my-5">
+			<div class="card mb-5 mx-auto w-100 shadow" style="height:auto" v-for="(item,index) in campingarealist" id="item.campingAreaId">
+				<div class="row no-gutters">
+					<div class="col-md-5">
+						<img class="w-100 h-75" v-bind:src="item.path">
+						<div class="d-flex justify-content-center mt-3">
+							<h3 class="card-text">{{item.campingAreaName}}</h3>
+						</div>
+					</div>
+					<div class="col-md-7">
+						<div class="card-body">
+							<h5 class="card-title">經營人信箱: </h5>
+							<p class="card-text">{{item.sellerEmail}}</p>
+							<h5 class="card-title">經營人姓名: </h5>
+							<p class="card-text">{{item.sellerName}}</p>
+							<h5 class="card-title">經營人電話: </h5>
+							<p class="card-text">{{item.sellerPhone}}</p>
+							<div class="d-flex justify-content-end">
+								<a href="#" class="btn btn-dark" v-on:click="goaudit(index)">審核露營區</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script>
+			var app = new Vue({
+				el: '#c1',
+				data: {
+					campingarealist: {}
+				},
+				methods: {
+					goaudit: function (index) {
+						var self = this;
+						window.location.href = "/Manager/Get_All/" + self.campingarealist[index].campingAreaId;
+
+					}
+				},
+				mounted:function() {
+						var self = this;
+					axios.get("/Manager/Unaudited_Campingarea_Info").then(function (res) {
+						self.campingarealist = res.data;
+						console.log(self.campingarealist);
+					});
+
+					}
+			});
+</script>
+
+

@@ -1,0 +1,153 @@
+﻿<div id="c1" class="container">
+	<div class="row">
+		<div class="col-2 mt-5" style="text-align:center">
+			<button class="btn btn-danger btn-lg" v-on:click="notpass">不通過</button>
+		</div>
+		<div class="col-8 mx-auto my-5">
+			<div class="my-5" v-if="alllist.auditDescription != null" style="background-color: #292b2c; color: white; text-align: center;">
+				<label for="description" class="form-label py-2">不通過原因:</label>
+				<textarea class="form-control py-2" id="description" v-model="alllist.auditDescription" readonly style="background-color: #808080; color: white; text-align: center;"></textarea>
+			</div>
+			<div class="card mb-5 mx-auto w-100 shadow" style="height:auto" v-if="alllist.camping_AreaId !=null" id="alllist.camping_AreaId">
+				<div class="row no-gutters">
+					<div class="col-md-5">
+						<img class="w-100 h-100" v-bind:src="alllist.camping_Area_Path">
+					</div>
+					<div class="col-md-7">
+						<div class="card-body">
+							<h5 class="card-title">露營區名稱: </h5>
+							<p class="card-text">{{alllist.camping_Area_Name}}</p>
+							<h5 class="card-title">露營區地址: </h5>
+							<p class="card-text">{{alllist.camping_AreaAddress}}</p>
+							<div class="d-flex justify-content-end">
+								<a href="#" class="btn btn-dark" v-on:click="goauditcampingarea">審核露營區</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card mb-5 mx-auto w-75  shadow" style="height:auto" v-for="(item,index) of alllist.myrooms" :id="item.roomId">
+				<div class="row no-gutters">
+					<div class="col-md-6">
+						<img class="w-100 h-100" v-bind:src="item.room_Path" />
+					</div>
+					<div class="col-md-6">
+						<div class="card-body">
+							<h5 class="card-title">房間名稱: </h5>
+							<p class="card-text">{{item.roomName}}</p>
+							<h5 class="card-title">房間數量: </h5>
+							<p class="card-text">{{ item.roomCount}}</p>
+							<div class="d-flex justify-content-end">
+								<a href="#" class="btn btn-dark" v-on:click="goauditroom(index)">審核房型</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-2 mt-5" style="text-align:center">
+			<button class="btn btn-info btn-lg" v-on:click="pass">通過</button>
+		</div>
+	</div>
+	
+</div>
+
+
+
+<script>
+			var app = new Vue({
+				el: '#c1',
+				data: {
+					alllist: {}
+				},
+				methods: {
+					goauditcampingarea: function () {
+						window.location.href = "/Manager/Get_CampingArea";
+					},
+					goauditroom: function (index) {
+						var self = this;
+						window.location.href = "/Manager/Get_Room/" + self.alllist.myrooms[index].roomId;
+					},
+					pass: function () {
+						Swal.fire({
+							background: 'black',
+							color: 'white',
+							icon: 'info',
+							title: '確定通過嗎???!',
+							showCancelButton: true,
+							cancelButtonColor: '#B9C0CE',
+							confirmButtonColor: '#3c6ecf',
+							confirmButtonText: '確定!!!',
+							preConfirm: () => {
+								axios.get("/Manager/Pass").then(function (res) {
+									if (res.data == true) {
+										Swal.fire({
+											background: 'black',
+											color: 'white',
+											icon: 'success',
+											title: '審核完成!',
+											confirmButtonColor: '#3c6ecf',
+											confirmButtonText: '返回審核頁~',
+											preConfirm: () => {
+												window.location.href = "/Manager/Get_Unaudited_Campingarea"
+											}
+										});
+										
+									}
+								});
+							}
+						});
+					},
+					notpass: function () {
+						Swal.fire({
+							background: 'black',
+							color: 'white',
+							text: '請輸入不通過原因',
+							input: 'textarea',
+							showCancelButton: true,
+							cancelButtonColor: '#B9C0CE',
+							confirmButtonColor: 'red',
+							confirmButtonText: '確定',
+							preConfirm: () => {
+								var description = document.querySelector('.swal2-textarea').value;
+								console.log(description);
+								axios({
+									method: 'post',
+									url: '/Manager/NotPass',
+									//API要求的資料
+									data: { Description: description },
+									headers: { "Content-Type": 'application/json' }
+								})
+									.then(function (response) {
+										if (response.data == true) {
+											Swal.fire({
+												background: 'black',
+												color: 'white',
+												icon: 'success',
+												title: '審核完成!',
+												confirmButtonColor: '#3c6ecf',
+												confirmButtonText: '返回審核頁~',
+												preConfirm: () => {
+													window.location.href = "/Manager/Get_Unaudited_Campingarea"
+												}
+											});
+										}
+									})
+							}
+						});
+					}
+				},
+				mounted:function() {
+						var self = this;
+					axios.get("/Manager/Get_All_FromDB").then(function (res) {
+						self.alllist = res.data;
+						console.log(self.alllist);
+					});
+
+					}
+			});
+</script>
+
+
+
+

@@ -1,0 +1,294 @@
+﻿<div id="mika">
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+		<li class="nav-item" role="presentation">
+			<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">註冊</a>
+		</li>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">登入</a>
+		</li>
+	</ul>
+
+	<div class="tab-content" id="myTabContent">
+		<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+			<form v-on:submit.prevent="register">
+				<div class="form-group">
+					<label for="emailID">帳號(email)</label>
+					<input required type="email" class="form-control" id="emailID" v-model.trim="email" v-on:blur="emailCheck">
+				</div>
+				<div class="form-group">
+					<label for="passwordID">密碼</label>
+					<input required type="password" class="form-control" id="passwordID" v-model.trim="password" v-on:blur="pwCheck">
+				</div>
+				<div class="form-group">
+					<label for="nameID">姓名</label>
+					<input required type="text" class="form-control" id="nameID" v-model.trim="name" v-on:blur="nameCheck">
+				</div>
+				<div class="form-group">
+					<label for="telID">手機</label>
+					<input required type="tel" class="form-control" id="telID" v-model.trim="phone" v-on:blur="phoneCheck">
+				</div>
+
+				<button type="submit" class="btn btn-primary">註冊</button>
+
+				<div v-show="isEmail" class="alert alert-danger" role="alert">
+					Email格式錯誤
+				</div>
+				<div v-show="isUse" class="alert alert-danger" role="alert">
+					帳號已被使用
+				</div>
+				<div v-show="isSuccess" class="alert alert-primary" role="alert">
+					註冊成功
+				</div>
+			</form>
+		</div>
+		<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+			<form v-on:submit.prevent="login">
+				<div class="form-group">
+					<label for="LoginEmailID">帳號(email)</label>
+					<input required type="email" class="form-control" id="LoginEmailID" v-model.trim="LoginEmail" v-on:blur="LoginEmailCheck">
+				</div>
+				<div class="form-group">
+					<label for="LoginPasswordID">密碼</label>
+					<input required type="password" class="form-control" id="LoginPasswordID" v-model.trim="LoginPassword" v-on:blur="LoginPasswordCheck">
+				</div>
+
+				@*<button type="button" class="btn btn-link">忘記密碼</button>*@
+
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">
+					忘記密碼
+				</button>
+				<button type="submit" class="btn btn-primary">登入</button>
+
+				<div v-show="isFalse" class="alert alert-danger" role="alert">
+					帳號或密碼錯誤
+				</div>
+				<div v-show="isLogin" class="alert alert-primary" role="alert">
+					登入成功
+				</div>
+			</form>
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">忘記密碼</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<label>請輸入帳號</label>
+							<input v-model:value="a.Email" type="email" class="form-control">
+							<div v-show="isSendNewPassword" class="alert alert-primary" role="alert">
+								已寄出新密碼:)
+							</div>
+							<p>{{a.Email}}</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+							<button v-on:click="sendNewPassword" type="button" class="btn btn-primary">確定</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+    var v = new Vue({
+        el: '#mika',
+        data: {
+            email: '',
+            password: '',
+            name: '',
+            phone: '',
+            isUse: false,
+            isSuccess: false,
+            LoginEmail: '',
+            LoginPassword: '',
+            isFalse: false,
+            isLogin: false,
+            isEmail: false,
+            isSendNewPassword: false,
+            a: {
+                Email: '???'
+            }
+
+
+        },
+        methods: {
+            emailCheck: function () {
+                let self = this;
+                var emailRule = /^\w+((-\w+)|(\.\w+))*\@@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+                if (self.email == '') {
+                    self.email = '';
+                    self.isEmail = false; //格式錯誤 直接清空欄位
+                } else if (self.email.search(emailRule) != -1)
+                {
+                    self.isEmail = false; //格式正確
+                } else
+                {
+                    self.isEmail = true;//格式錯誤
+                }
+            },
+            pwCheck: function () {
+                let self = this;
+                if (self.password == '') {
+                    self.password = '';
+                }
+            },
+            nameCheck: function () {
+                let self = this;
+                if (self.name == '') {
+                    self.name = '';
+                }
+            },
+            phoneCheck: function () {
+                let self = this;
+                if (self.phone == '') {
+                    self.phone = '';
+                }
+            },
+            LoginEmailCheck: function () {
+                let self = this;
+                if (self.LoginEmail == '') {
+                    self.LoginEmail = '';
+                }
+            },
+            LoginPasswordCheck: function () {
+                let self = this;
+                if (self.LoginPassword == '') {
+                    self.LoginPassword = '';
+                }
+            },
+            register: function () {
+
+                let self = this;
+
+                let data = new FormData();
+                data.append('Email', this.email);
+                data.append('Password', this.password);
+                data.append('Name', this.name);
+                data.append('Phone', this.phone);
+
+
+                //POST請求
+                axios({
+                    method: 'post',
+                    url: '/Buyer/registerCheck',
+                    //API要求的資料
+                    data: data,
+                    headers: { "Content-Type": 'multipart/form-data' }
+                })
+                    .then(function (response) {
+                        if (response.data == true) {
+                            self.isSuccess = true;
+                            self.isUse = false;
+                            //alert("註冊成功");
+                        } else {
+                            self.isUse = true;
+                            self.isSuccess = false;
+                            self.email = '';
+                            //alert("註冊失敗");
+                        }
+
+                    })
+                    .catch(function (response) {
+                        //handle error
+                        console.log(response);
+                    });
+
+                //POST請求
+                axios({
+                    method: 'post',
+                    url: '/sendEmail/GetEmail',
+                    //API要求的資料
+                    data: data,
+                    headers: { "Content-Type": 'multipart/form-data' }
+                })
+                    .then(function (response) {
+                        if (response.data == "信已寄出") {
+                            alert("信已寄出");
+                        } else {
+                            alert("沒收到信");
+                        }
+                    })
+                    .catch(function (response) {
+                        //handle error
+                        console.log(response);
+                    });
+
+            },
+            login: function () {
+                let self = this;
+
+                let data = new FormData();
+                data.append('Email', self.LoginEmail);
+                data.append('Password', self.LoginPassword);
+
+
+                //POST請求
+                axios({
+                    method: 'post',
+                    url: '/Buyer/LoginCheck',
+                    //API要求的資料
+                    data: data,
+                    headers: { "Content-Type": 'multipart/form-data' }
+                })
+                    .then(function (response) {
+                        //if (response.data == true) {
+                        //    self.isLogin = true;
+                        //    self.isFalse = false;
+                        //    //alert("登入成功");
+                        //} else {
+                        //    self.isFalse = true;
+                        //    self.isLogin = false;
+                        //    self.LoginEmail = '';
+                        //    self.LoginPassword = '';
+                        //    //alert("登入失敗");
+                        //}
+                        //console.log(response);
+                        //console.log(response.data);
+                        window.location.href = response.data
+                    })
+                    .catch(function (response) {
+                        //handle error
+                        //console.log(response.data);
+                        window.location.href = response.data
+                    });
+            },
+            sendNewPassword: function () {
+                let self = this;
+                self.isSendNewPassword = true;
+
+                //POST請求
+                axios({
+                    method: 'post',
+                    url: '/sendEmail/forgetPassword',
+                    //API要求的資料
+                    data: self.a,
+                    headers: { "Content-Type": 'application/json' }
+                })
+                    .then(function (response) {
+                        //if (response.data == true) {
+
+                        //    alert("傳送帳號成功");
+                        //} else {
+
+                        //    alert("傳送帳號失敗");
+                        //}
+
+                    })
+                    .catch(function (response) {
+                        //handle error
+                        console.log(response);
+                    });
+            }
+        },
+        computed: {
+
+        }
+    })
+</script>

@@ -1,0 +1,152 @@
+﻿<form id="form1" v-on:submit.prevent="edit">
+	<div class="container">
+		<div class="row">
+			<div class="col-8 mx-auto my-5">
+				<div class="border p-5 shadow " style="background-color:#e6e4e4">
+					<div class="form-group row mb-4">
+						<label for="name" class="form-label">帳號</label>
+						<input type="text" class="form-control" id="name" v-model="sellerlist.email" readonly>
+					</div>
+					<div class="form-group row mb-4">
+						<label for="selected" class="form-label">姓名</label>
+						<input type="text" class="form-control" id="name" v-model="sellerlist.name" required>
+					</div>
+
+					<div class="form-group row mb-4">
+						<label for="phone" class="form-label">電話</label>
+						<input type="tel" placeholder="0123-445-678" pattern="[0-9]{4}-[0-9]{3}-[0-9]{3}" required
+							   class="form-control" id="phone" v-model="sellerlist.phone">
+					</div>
+				</div>
+				<div class=" mt-2">
+					<button type="button" v-on:click="editpassword" class="btn text-white btn-lg" style="background-color:#1529a1">編輯密碼</button>
+					<button type="submit" class="btn btn-dark text-white btn-lg">編輯完成</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+<script>
+	var hey = new Vue(
+		{
+			el: "#form1",
+			data: {
+				sellerlist: {},
+				password:''
+			},
+			methods: {
+				edit: function () {
+					var self = this;
+					axios({
+						method: 'post',
+						url: '/Seller_Info/Edit_SellerInfo',
+						//API要求的資料
+						data: self.sellerlist,
+						headers: { "Content-Type": 'application/json' }
+					})
+						.then(function (response) {
+							if (response.data == true) {
+								Swal.fire({
+									background: 'black',
+									color: 'white',
+									icon: 'success',
+									text: '修改完成~'
+								});
+							} else {
+								Swal.fire({
+									background: 'black',
+									color: 'white',
+									icon: 'error',
+									text: '修改失敗!'
+								});
+							}
+
+						})
+				},
+				editpassword: function () {
+					var self = this;
+					/*alert("密碼");*/
+					Swal.fire({
+						background: 'black',
+						color: 'white',
+						text: '請輸入原本密碼',
+						input: 'text',
+						showCancelButton: true,
+						cancelButtonColor: '#B9C0CE',
+						confirmButtonColor: '#3c6ecf',
+						confirmButtonText: '完成',
+						preConfirm: () => {
+							var password = document.querySelector('.swal2-input').value;
+							console.log(password);
+							axios({
+								method: 'post',
+								url: '/Seller_Info/Check_Password',
+								//API要求的資料
+								data: { Password: password },
+								headers: { "Content-Type": 'application/json' }
+							})
+								.then(function (response) {
+									if (response.data == true) {
+										Swal.fire({
+											background: 'black',
+											color: 'white',
+											icon: 'success',
+											title:'正確!!!',
+											text: '請輸入修改密碼',
+											input: 'text',
+											showCancelButton: true,
+											cancelButtonColor: '#B9C0CE',
+											confirmButtonColor: '#3c6ecf',
+											confirmButtonText: '完成',
+											preConfirm: () => {
+												var password = document.querySelector('.swal2-input').value;
+												console.log(password);
+												axios({
+													method: 'post',
+													url: '/Seller_Info/Change_Password',
+													//API要求的資料
+													data: { Password: password },
+													headers: { "Content-Type": 'application/json' }
+												})
+													.then(function (response) {
+														if (response.data == true) {
+															Swal.fire({
+																background: 'white',
+																color: 'black',
+																icon: 'success',
+																text: '修改完成~'
+															});
+														}
+													})
+											}
+										});
+									}
+									else {
+										Swal.fire({
+											background: 'white',
+											color: 'black',
+											icon: 'error',
+											text: '密碼錯誤喔',
+											confirmButtonColor: '#3c6ecf',
+											confirmButtonText: '重打',
+										});
+									}
+									
+								})
+
+						}
+					});
+				}
+			},
+			mounted: function () {
+				var self = this;
+				axios.get("/Seller_Info/Get_SellerInfo").then(function (res) {
+					self.sellerlist = res.data;
+					console.log(res.data);
+				})
+			}
+		});
+</script>
+
+

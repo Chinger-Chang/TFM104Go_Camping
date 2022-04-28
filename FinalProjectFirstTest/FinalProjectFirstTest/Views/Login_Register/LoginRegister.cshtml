@@ -1,0 +1,289 @@
+﻿<link rel="stylesheet" href="~/css/loginregister.css" />
+<div id="hey">
+	<section class="forms-section" id="">
+		<div class="forms">
+			<div class="form-wrapper is-active">
+				<button type="button" class="switcher switcher-login">
+					賣家登入
+					<span class="underline"></span>
+				</button>
+				<!--form登入-->
+				<form class="form form-login" v-on:submit.prevent="login">
+					<fieldset>
+						<legend>Please, enter your email and password for login.</legend>
+						<div class="input-block">
+							<i class="bi bi-envelope-open-heart"></i>
+
+							<label for="login-email">帳號(email)</label>
+
+
+							<input id="login-email" type="email" required v-model="loginemail">
+						</div>
+						<div class="input-block">
+							<i class="bi bi-lock"></i>
+							<label for="login-password">密碼</label>
+							<input id="login-password" type="password" v-model="loginpassword" required>
+						</div>
+					</fieldset>
+					<div class="" style="display:flex;justify-content:center;">
+						<div class="" style="position: relative; top:2.6rem">
+							<a href="#"  style="color:black;" v-on:click="forgetpassword">忘記密碼</a>
+							<a class="bi bi-question"></a>
+						</div>
+						<button type="submit" class="btn-login">登入</button>
+					</div>
+					<a class="btn facebook-btn social-btn btn-primary" href="/Login_Register/Facebook_Login"><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span></a>
+					<br />
+					<br />
+					<a class="btn google-btn social-btn btn-danger" href="/Login_Register/Google_Login"><span><i class="fab fa-google-plus-g"></i> Sign in with Google+</span></a>
+				</form>
+			</div>
+			<div class="form-wrapper">
+				<button type="button" class="switcher switcher-signup">
+					賣家註冊
+					<span class="underline"></span>
+				</button>
+
+				<!--form註冊-->
+				<form class="form form-signup" v-on:submit.prevent="register">
+					<fieldset>
+						<legend>Please, enter your email, password and password confirmation for sign up.</legend>
+						<div class="input-block">
+							<i class="bi bi-envelope-open-heart"></i>
+
+							<label for="signup-email">帳號(email)</label>
+
+							<input id="signup-email" type="email" required v-model="email" v-on:blur="emailCheck">
+							<div v-show="isEmail">
+								Email格式錯誤
+							</div>
+						</div>
+						<div class="input-block">
+							<i class="bi bi-lock"></i>
+
+							<label for="signup-password">密碼</label>
+
+							<input id="signup-password" type="password" v-model="password" required>
+						</div>
+						<div class="input-block">
+							<i class="bi bi-person"></i>
+							<label for="signup-name">姓名</label>
+
+							<input id="signup-name" required v-model="name">
+						</div>
+						<!--add-->
+						<div class="input-block">
+							<i class="bi bi-telephone"></i>
+
+							<label for="signup-phone">手機</label>
+
+							<input id="signup-phone" type="tel" placeholder="0123-445-678" pattern="[0-9]{4}-[0-9]{3}-[0-9]{3}" required v-model="phone">
+						</div>
+					</fieldset>
+					<div class="">
+						<button type="submit" class="btn-signup">註冊</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+</div>
+
+<script>
+	var v = new Vue({
+		el: '#hey',
+		data: {
+			email: '',
+			password: '',
+			name: '',
+			phone: '',
+			loginemail: '',
+			loginpassword: '',
+			isEmail:false
+		},
+		methods: {
+			emailCheck: function () {
+				let self = this;
+				var emailRule = /^\w+((-\w+)|(\.\w+))*\@@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+				if (self.email == '') {
+					self.email = '';
+					self.isEmail = false; //格式錯誤 直接清空欄位
+				} else if (self.email.search(emailRule) != -1) {
+					self.isEmail = false; //格式正確
+				} else {
+					self.isEmail = true;//格式錯誤
+				}
+			},
+			register: function () {
+				let data = new FormData();
+				data.append('Email', this.email);
+				data.append('Password', this.password);
+				data.append('Name', this.name);
+				data.append('Phone', this.phone);
+
+				//POST請求
+				axios({
+					method: 'post',
+					url: '/Login_Register/Register',
+					//API要求的資料
+					data: data,
+					headers: { "Content-Type": 'multipart/form-data' }
+				})
+					.then(function (response) {
+						if (response.data == true) {
+							axios({
+								method: 'post',
+								url: '/sendEmail/GetEmail',
+								//API要求的資料
+								data: data,
+								headers: { "Content-Type": 'multipart/form-data' }
+							})
+								.then(function (response) {
+									Swal.fire({
+										background: 'white',
+										color: 'black',
+										icon: 'success',
+										title: 'Yeah!!!',
+										text: '註冊成功!驗證信已寄出~',
+										confirmButtonColor: '#3C6ECF',
+										confirmButtonText: '前往驗證',
+									});
+								})
+							
+						} else {
+							Swal.fire({
+								background: 'white',
+								color: 'black',
+								icon: 'error',
+								title: 'Oops...',
+								text: '註冊失敗~已有此帳號',
+								confirmButtonColor: '#3C6ECF',
+								confirmButtonText: '重新來過',
+							});
+						}
+
+					})
+					.catch(function (response) {
+						//handle error
+						console.log(response);
+					});
+
+			},
+			login: function () {
+				let self = this;
+
+				let data = new FormData();
+				data.append('Email', self.loginemail);
+				data.append('Password', self.loginpassword);
+
+
+				//POST請求
+				axios({
+					method: 'post',
+					url: '/Login_Register/LoginCheck',
+					//API要求的資料
+					data: data,
+					headers: { "Content-Type": 'multipart/form-data' }
+				})
+					.then(function (response) {
+						if (response.data === 400) {
+							Swal.fire({
+								background: 'white',
+								color: 'black',
+								icon: 'error',
+								title: 'Oops...',
+								text: '沒有此使用者喔~是不是帳號錯了~',
+								confirmButtonColor: '#3C6ECF',
+								confirmButtonText: '重打!',
+							});
+						}
+						else if (response.data === 401) {
+							Swal.fire({
+								background: 'white',
+								color: 'black',
+								icon: 'error',
+								title: 'Oops...',
+								text: '密碼錯了喔~',
+								confirmButtonColor: '#3C6ECF',
+								confirmButtonText: '重打!',
+							});
+						}
+						else if (response.data === 402) {
+							Swal.fire({
+								background: 'white',
+								color: 'black',
+								icon: 'error',
+								title: 'oops...',
+								text: '信箱還沒驗證喔',
+								confirmButtonColor: '#3c6ecf',
+								confirmButtonText: '寄驗證信',
+								preConfirm: () => {
+
+									axios({
+										method: 'post',
+										url: '/sendEmail/GetEmail',
+										//API要求的資料
+										data: data,
+										headers: { "Content-Type": 'multipart/form-data' }
+									})
+													.then(function (response) {
+														swal.fire({
+															background: 'white',
+															color: 'black',
+															icon: 'success',
+															title: 'yeah!!!',
+															text: '驗證信已寄出~',
+															confirmbuttoncolor: '#3c6ecf',
+															confirmbuttontext: '前往驗證',
+														});
+													})
+
+											}
+							});
+						}
+						else {
+								window.location.href = response.data;
+						}
+						
+					})
+					.catch(function (response) {
+						alert(response.data);
+						
+					});
+			},
+			forgetpassword: function(){
+				Swal.fire({
+					background: 'white',
+					color: 'black',
+					text: '請輸入信箱',
+					input:'text',
+					confirmButtonColor: '#3c6ecf',
+					confirmButtonText: '寄信',
+					preConfirm: () => {
+						var email = document.querySelector('.swal2-input').value;
+						console.log(email);
+						axios({
+							method: 'post',
+							url: '/sendEmail/forgetPassword',
+							//API要求的資料
+							data: { Email: email},
+							headers:  { "Content-Type": 'application/json' }
+						})
+							.then(function (response) {
+								swal.fire({
+									background: 'white',
+									color: 'black',
+									icon: 'success',
+									text: '驗證信已寄出~',
+									confirmbuttoncolor: '#3c6ecf',
+									confirmbuttontext: '前往驗證',
+								});
+							})
+
+					}
+				});
+			}
+		}
+	});
+</script>
+<script src = "~/js/loginregister.js" ></script>
