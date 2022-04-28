@@ -65,7 +65,8 @@
 		else {
 			$("body").addClass("fire-off");
 			$("#switch").addClass("switched");
-			window.location.href = "/Buyer/Index";
+			window.setTimeout((() => window.location.href = "/Buyer/Index"), 2000);
+			
 
 		}
 	});

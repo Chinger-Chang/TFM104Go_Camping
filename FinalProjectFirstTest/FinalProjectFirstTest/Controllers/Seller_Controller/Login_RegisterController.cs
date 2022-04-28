@@ -74,28 +74,31 @@ namespace FinalProjectFirstTest.Controllers.Seller_Controller
                 byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(model.Password + salt);
                 byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
                 string hashString = Convert.ToBase64String(hashBytes);
-                if(seller.IsMailConfirm!=false)
+
+                var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.Name,seller.Name),
+                        new Claim(ClaimTypes.Email,seller.Email),
+                        new Claim("Seller_Id",seller.Id.ToString())
+                    };
+                if (seller.Email == "tfm104manager@gmail.com")
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, "Manager"));
+                }
+                else
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, "Seller"));
+                }
+
+                var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimPrincipal = new ClaimsPrincipal(claimIdentity);
+                await HttpContext.SignInAsync(claimPrincipal);
+
+                if (seller.IsMailConfirm!=false)
 				{
                     if (seller.Password == hashString)
                     {
-                        var claims = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.Name,seller.Name),
-                            new Claim(ClaimTypes.Email,seller.Email),
-                            new Claim("Seller_Id",seller.Id.ToString())
-                        };
-                        if (seller.Email == "tfm104manager@gmail.com")
-                        {
-                            claims.Add(new Claim(ClaimTypes.Role, "Manager"));
-                        }
-                        else
-                        {
-                            claims.Add(new Claim(ClaimTypes.Role, "Seller"));
-                        }
-
-                        var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        var claimPrincipal = new ClaimsPrincipal(claimIdentity);
-                        await HttpContext.SignInAsync(claimPrincipal);
+                       
                         if (seller.Email == "tfm104manager@gmail.com")
                         {
                             return Json(Url.Action("ManagerOrderDetails", "Manager"));

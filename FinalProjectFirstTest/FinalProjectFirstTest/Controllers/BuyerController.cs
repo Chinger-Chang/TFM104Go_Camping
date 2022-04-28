@@ -1,6 +1,8 @@
 ﻿using FinalProjectFirstTest.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Facebook;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -321,6 +323,129 @@ namespace FinalProjectFirstTest.Controllers
                     return Ok("402");
                 }
             }
+        }
+
+        public IActionResult Facebook_Login()
+        {
+            var fb = new AuthenticationProperties()
+            {
+                RedirectUri = Url.Action("Facebook_Response")
+            };
+            return Challenge(fb, FacebookDefaults.AuthenticationScheme);
+        }
+
+        public async Task<IActionResult> Facebook_ResponseAsync()
+        {
+            string email = "";
+            var response = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            var data = response.Principal.Claims.Select(x => new
+            {
+                x.Type,
+                x.Value,
+                x.Issuer,
+                x.OriginalIssuer
+            });
+
+            foreach (var item in data)
+            {
+                if (item.Type.ToLower().Contains("emailaddress"))
+                {
+                    email = item.Value;
+                }
+            }
+
+            var seller = _db.Users.FirstOrDefault(x => x.Email == email);
+            if (seller == null)
+            {
+                //此帳號可使用
+                _db.Users.Add(new User()
+                {
+                    Email = email,
+                    CreateDate = DateTime.Now,
+                    IsMailConfirm = true
+                });
+                _db.SaveChanges();
+            }
+            Console.WriteLine(email);
+
+            var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.Email,email),
+                        new Claim(ClaimTypes.Role,"User"),
+
+                    };
+
+            var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var claimPrincipal = new ClaimsPrincipal(claimIdentity);
+            await HttpContext.SignInAsync(claimPrincipal);
+            //return RedirectToAction("login", "Account");
+
+            return RedirectToAction("Index", "Buyer");
+        }
+
+        //[Route("google-login")]
+        public IActionResult Google_Login()
+        {
+            //跟Google拿資料
+            var properties = new AuthenticationProperties { RedirectUri = Url.Action("Google_Response") };
+
+            return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+        }
+
+        //[Route("google-response")]
+        public async Task<IActionResult> Google_Response()
+        {
+            string email = "";
+            //拿回來的資料 做接收 並作為登入依據
+            var response = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var data = response.Principal.Identities.FirstOrDefault()
+                .Claims.Select(claim => new
+                {
+                    claim.Issuer,
+                    claim.OriginalIssuer,
+                    claim.Type,
+                    claim.Value
+                });
+
+            foreach (var item in data)
+            {
+                if (item.Type.ToLower().Contains("emailaddress"))
+                {
+                    email = item.Value;
+                }
+            }
+
+
+            var seller = _db.Users.FirstOrDefault(x => x.Email == email);
+            if (seller == null)
+            {
+                //此帳號可使用
+                _db.Users.Add(new User()
+                {
+                    Email = email,
+                    CreateDate = DateTime.Now,
+                    IsMailConfirm = true
+                });
+                _db.SaveChanges();
+            }
+            Console.WriteLine(email);
+            //Console.WriteLine(name);
+
+            var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.Email,email),
+                        new Claim(ClaimTypes.Role,"User")
+                    };
+
+            var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var claimPrincipal = new ClaimsPrincipal(claimIdentity);
+            await HttpContext.SignInAsync(claimPrincipal);
+            //return RedirectToAction("login", "Account");
+
+            return RedirectToAction("Index", "Buyer");
+
+            //return Json(claims);
         }
         //--------------------------------------------------------------------------
         // 訂房
