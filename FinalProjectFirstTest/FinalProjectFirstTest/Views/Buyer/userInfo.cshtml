@@ -1,183 +1,239 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-	<style>
-		.a {
-			background-color: #E0E0E0;
-		}
-	</style>
+    <style>
+        .row {
+            justify-content: space-between;
+        }
+
+        .a {
+            background-color: #E0E0E0;
+            border-radius: 20px;
+            margin-top: 60px;
+            padding-top: 45px;
+            padding-left: 90px;
+            padding-right: 90px;
+        }
+
+        body {
+            background-color: #212121;
+        }
+
+        .v-application--wrap {
+            background-color: #212121;
+        }
+
+        @@media (min-width: 1260px) {
+            .container {
+                max-width: 600px;
+            }
+        }
+
+        @@media (min-width: 601px) and (max-width:960px) {
+            .container {
+                max-width: 600px;
+            }
+        }
+    </style>
 </head>
 <body>
-	<div id="mika">
-		<v-app>
-			<template>
-				<v-form class="a" v-model="valid">
-					<v-container>
-						<v-row>
-							<v-col cols="12" md="4">
-								<v-text-field v-model="UsersList.id"
-											  @*:rules=""*@
-											  @*:counter="10"*@
-											  label="UserId"
-											  required disabled></v-text-field>
-							</v-col>
-						</v-row>
-						<v-row>
-							<v-col cols="12" md="4">
-								<v-text-field v-model="UsersList.email"
-											  @*:rules="nameRules"*@
-											  @*:counter="10"*@
-											  label="Email"
-											  required disabled></v-text-field>
-							</v-col>
-						</v-row>
-						<v-row>
-							<v-col cols="12" md="4">
-								<v-text-field v-model="UsersList.name"
-											  :rules="nameRules"
-											  :counter="10"
-											  label="姓名"
-											  required></v-text-field>
-							</v-col>
-						</v-row>
-						<v-row>
-							<v-col cols="12" md="4">
-								<v-text-field v-model="UsersList.phone"
-											  :rules="PhoneRules"
-											  label="電話"
-											  required></v-text-field>
-							</v-col>
-						</v-row>
-						<v-row>
-							<v-col cols="12" md="4">
-								<div class="text-right">
-									<v-dialog v-model="dialog" width="500">
-										<template v-slot:activator="{ on, attrs }">
-											<v-btn color="red lighten-2" dark v-bind="attrs" v-on="on">
-												修改密碼
-												<v-icon right> mdi-pencil </v-icon>
-											</v-btn>
-											<v-btn v-on:click="edit" tile color="success">
-												編輯確認
-												<v-icon right> mdi-pencil </v-icon>
-											</v-btn>
-										</template>
+    <div id="mika">
+        <v-app>
+            <template>
+                <v-form class="a" v-model="valid">
+                    <v-container>
+                        <!--<v-row>
+                            <v-col cols="12" md="12">
+                                <v-text-field v-model="UsersList.id"-->
+                        @*:rules=""*@
+                        @*:counter="10"*@
+                        <!--label="UserId"
+                                              required disabled></v-text-field>
+                            </v-col>
+                        </v-row>-->
+                        <v-row>
+                            <v-col cols="12" md="12">
+                                <v-text-field v-model="UsersList.email"
+                                              @*:rules="nameRules"*@
+                                              @*:counter="10"*@
+                                              label="Email"
+                                              required disabled></v-text-field>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col cols="12" md="12">
+                                <v-text-field v-model="UsersList.name"
+                                              :rules="nameRules"
+                                              :counter="10"
+                                              label="姓名"
+                                              required></v-text-field>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col cols="12" md="12">
+                                <v-text-field v-model="UsersList.phone"
+                                              :rules="PhoneRules"
+                                              label="電話"
+                                              required></v-text-field>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col cols="12" md="12">
+                                <div class="text-right">
+                                    <v-dialog v-model="dialog" width="500">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-row style="padding-left: 10px; padding-right: 10px">
 
-										<v-card>
-											<v-card-title class="text-h5 grey lighten-2">
-												修改密碼
-											</v-card-title>
+                                                <v-btn color="#7E57C2" dark v-bind="attrs" v-on="on">
+                                                    修改密碼
+                                                    <v-icon right> mdi-lead-pencil </v-icon>
+                                                </v-btn>
 
-											<v-card-text class="text-h6">
-												請輸入新密碼
-											</v-card-text>
+                                                <v-btn v-on:click="edit" dark tile color="#78909C">
+                                                    編輯確認
+                                                    <v-icon right> mdi-lead-pencil </v-icon>
+                                                </v-btn>
 
-											<v-text-field v-model="pw"
-														  @*:rules="nameRules"*@
-														  @*:counter="10"*@
-														  @*label="新密碼"*@
-														  @*required*@></v-text-field>
+                                            </v-row>
+                                        </template>
 
-											@*<v-divider></v-divider>*@
+                                        <v-card>
+                                            <v-card-title class="text-h5 grey lighten-2">
+                                                修改密碼
+                                            </v-card-title>
 
-											<v-card-actions>
-												<v-spacer></v-spacer>
-												<v-btn v-on:click="edit" color="primary" text
-													   @@click="dialog = false">
-													確定
-												</v-btn>
-											</v-card-actions>
-										</v-card>
-									</v-dialog>
-								</div>
-							</v-col>
-						</v-row>
-						<v-row>
-							<v-col cols="12" md="4">
-								<v-alert v-show="isShowEdit" type="success">
-									修改成功
-								</v-alert>
-							</v-col>
-						</v-row>
-						<v-row>
-							<v-col cols="12" md="4">
-								<v-alert v-show="isShowNothing" type="error">
-									不可為空
-								</v-alert>
-							</v-col>
-						</v-row>
-					</v-container>
-				</v-form>
-			</template>
+                                            <v-card-text class="text-h6">
+                                                請輸入新密碼
+                                            </v-card-text>
 
-			<div>
-				@*<input disabled type="hidden" class="form-control" id="IdId" v-model:value="UsersList.id">
+                                            <v-text-field v-model="pw"
+                                                          @*:rules="nameRules"*@
+                                                          @*:counter="10"*@
+                                                          @*label="新密碼"*@
+                                                          @*required*@></v-text-field>
 
-					<div class="form-group">
-						<label for="emailId">帳號</label>
-						<input disabled type="email" class="form-control" id="emailId" v-model:value="UsersList.email">
-					</div>
+                                            @*<v-divider></v-divider>*@
 
-					<div class="form-group">
-						<label for="nameId">姓名</label>
-						<input type="text" class="form-control" id="nameId" v-model:value="UsersList.name">
-					</div>
+                                            <v-card-actions>
+                                                <v-spacer></v-spacer>
+                                                <v-btn v-on:click="edit" color="primary" text>
+                                                    確定@*@@click="dialog = false"*@
+                                                </v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
+                                </div>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col cols="12" md="4">
+                                <v-alert v-show="isShowEdit" type="success">
+                                    修改成功
+                                </v-alert>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col cols="12" md="4">
+                                <v-alert v-show="isShowNothing" type="error">
+                                    不可為空
+                                </v-alert>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-form>
+            </template>
+            <template>
+                <div class="text-center">
+                    @*<v-btn dark
+                               color="red darken-2"
+                               @@click="snackbar = true">
+                            訂房<v-icon>mdi-cursor-pointer</v-icon>
+                        </v-btn>*@
 
-					<div class="form-group">
-						<label for="telId">電話號碼</label>
-						<input type="tel" pattern="[0-9]{4}[0-9]{3}[0-9]{3}" class="form-control" id="telId" v-model:value="UsersList.phone">
-					</div>*@
-			</div>
-			<div>
-				@*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-						修改密碼
-					</button>
-					<button v-on:click="edit" type="submit" class="btn btn-secondary">編輯確認</button>
-					<div v-show="isShowEdit" class="alert alert-primary" role="alert">
-						修改成功
-					</div>
-					<div v-show="isShowNothing" class="alert alert-danger" role="alert">
-						不可為空
-					</div>*@
-			</div>
-			@*<p>{{UsersList.name}}</p>
-				<p>{{UsersList.email}}</p>
-				<p>{{UsersList.phone}}</p>
-				<p>{{UsersList.password}}</p>
+                    <v-snackbar v-model="snackbar"
+                                :multi-line="multiLine">
+                        {{ text }}
 
-				<p>{{UsersList}}</p>*@
+                        <template v-slot:action="{ attrs }">
+                            <v-btn color="red"
+                                   text
+                                   v-bind="attrs"
+                                   @@click="snackbar = false">
+                                Close
+                            </v-btn>
+                        </template>
+                    </v-snackbar>
+                </div>
+            </template>
 
-			<!-- Modal -->
-			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				@*<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">修改密碼</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<div class="form-group">
-									<label for="passwordId">請輸入新密碼</label>
-									<input type="text" class="form-control" id="passwordId" v-model:value="pw">
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-								<button v-on:click="edit" type="button" class="btn btn-primary" data-dismiss="modal">確定</button>
-							</div>
-						</div>
-					</div>*@
-			</div>
-		</v-app>
-	</div>
-	@*Id ==> hidden*@
-	@*電話號碼pattern*@
-	@*修改密碼*@
+            <div>
+                @*<input disabled type="hidden" class="form-control" id="IdId" v-model:value="UsersList.id">
+
+                    <div class="form-group">
+                        <label for="emailId">帳號</label>
+                        <input disabled type="email" class="form-control" id="emailId" v-model:value="UsersList.email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nameId">姓名</label>
+                        <input type="text" class="form-control" id="nameId" v-model:value="UsersList.name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telId">電話號碼</label>
+                        <input type="tel" pattern="[0-9]{4}[0-9]{3}[0-9]{3}" class="form-control" id="telId" v-model:value="UsersList.phone">
+                    </div>*@
+            </div>
+            <div>
+                @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        修改密碼
+                    </button>
+                    <button v-on:click="edit" type="submit" class="btn btn-secondary">編輯確認</button>
+                    <div v-show="isShowEdit" class="alert alert-primary" role="alert">
+                        修改成功
+                    </div>
+                    <div v-show="isShowNothing" class="alert alert-danger" role="alert">
+                        不可為空
+                    </div>*@
+            </div>
+            @*<p>{{UsersList.name}}</p>
+                <p>{{UsersList.email}}</p>
+                <p>{{UsersList.phone}}</p>
+                <p>{{UsersList.password}}</p>*@
+
+            @*<p>{{UsersList}}</p>*@
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                @*<div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">修改密碼</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="passwordId">請輸入新密碼</label>
+                                    <input type="text" class="form-control" id="passwordId" v-model:value="pw">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                                <button v-on:click="edit" type="button" class="btn btn-primary" data-dismiss="modal">確定</button>
+                            </div>
+                        </div>
+                    </div>*@
+            </div>
+        </v-app>
+    </div>
+    @*Id ==> hidden*@
+    @*電話號碼pattern*@
+    @*修改密碼*@
 
 
-	<script>
+    <script>
         var v = new Vue({
             el: '#mika',
             vuetify: new Vuetify(),
@@ -191,19 +247,23 @@
                 firstname: '',
                 lastname: '',
                 nameRules: [
-                v => !!v || 'Name is required',
-                v => v.length <= 10 || 'Name must be less than 10 characters',
+                    v => !!v || 'Name is required',
+                    v => v.length <= 10 || 'Name must be less than 10 characters',
                 ],
                 email: '',
                 emailRules: [
-                v => !!v || 'E-mail is required',
-                v => /.+@@.+/.test(v) || 'E-mail must be valid',
+                    v => !!v || 'E-mail is required',
+                    v => /.+@@.+/.test(v) || 'E-mail must be valid',
                 ],
                 PhoneRules: [
                     v => !!v || 'Phone is required',
                     v => v.length == 10 || 'Phone must be less than 10 characters',
                 ],
-                dialog: false
+                dialog: false,
+                //------------------------------------------------
+                multiLine: true,
+                snackbar: false,
+                text: '修改成功'
             },
             methods: {
                 edit: function () {
@@ -213,14 +273,15 @@
                     //alert(Object.keys(x));
                     if (self.UsersList.name.trim() == '' || self.UsersList.phone.trim() == '') {
                         //alert("不可為空");
-                        self.isShowEdit = false;
+                        //self.isShowEdit = false;
                         self.isShowNothing = true;
                         return;
                     }
                     if (self.pw != '') {
                         self.UsersList.password = self.pw;
-                        //alert(self.UsersList.password);
+                        //alert(self.userslist.password);
                     }
+
                     // || self.UsersList.password.trim() == ''
 
                     //POST請求
@@ -233,12 +294,15 @@
                     })
                         .then(function (response) {
                             if (response.data == true) {
+                                self.snackbar = true;
                                 //alert("修改成功");
                                 self.isShowNothing = false;
-                                self.isShowEdit = true;
+                                //self.isShowEdit = true;
+                                self.dialog = false;
                                 axios.get("/Buyer/GetUserInfo").then(function (res) {
                                     self.UsersList = res.data;
                                     console.log(res.data);
+                                    self.pw = '';
                                 })
                             } else {
                                 alert("修改失敗");
@@ -260,6 +324,6 @@
                 })
             }
         })
-	</script>
+    </script>
 </body>
 </html>

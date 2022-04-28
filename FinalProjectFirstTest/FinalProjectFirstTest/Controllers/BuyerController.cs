@@ -69,51 +69,102 @@ namespace FinalProjectFirstTest.Controllers
             string caid = HttpContext.Session.GetString("caid");
             int CAid = Convert.ToInt32(caid);
 
-            int userId = Int32.Parse(User.Claims.FirstOrDefault(x => x.Type == "User_Id").Value);
+            var hasUserId = User.HasClaim(x => x.Type == "User_Id");
 
-            var camp = _db.Camping_Areas.Where(x => x.Id == CAid).FirstOrDefault();
-            var service = _db.Services.Where(x => x.Camping_AreaId == camp.Id).FirstOrDefault();
-
-            var userFavRoomId = _db.OrderDetails.Where(x => x.UserId == userId && x.Status == Status.Favority).Select(y => y.RoomId).ToList();
-
-            var s = new RoomInfoViewModel
+            if (hasUserId)
             {
-                UserFavRoomId = userFavRoomId,
-                CAId = camp.Id,
-                CAname = camp.Name,
-                CAaddress = camp.Address,
-                CAphone = camp.Phone,
-                CAdescription = camp.Description,
-                CApicPath = _db.Camping_Area_Pictures.Where(x => x.Camping_AreaId == camp.Id).Select(s => s.Path).ToList(),
-                Wifi = service.Wifi,
-                Breakfast = service.Breakfast,
-                Canopy = service.Canopy,
-                Canteen = service.Canteen,
-                Dinner = service.Dinner,
-                IsCancel = service.IsCancel,
-                Kitchen_Utensils = service.Kitchen_Utensils,
-                Lunch = service.Lunch,
-                Mattress = service.Mattress,
-                Night_Lighting = service.Night_Lighting,
-                No_Equipment = service.No_Equipment,
-                Outdoor_Tables_Chairs = service.Outdoor_Tables_Chairs,
-                Power_Supply = service.Power_Supply,
-                Public_Refrigerator = service.Public_Refrigerator,
-                Tent_Equipment = service.Tent_Equipment,
-                Rooms = _db.Rooms.Where(x => x.Camping_AreaId == camp.Id).Select(z => new Myroom
+                int userId = Int32.Parse(User.Claims.FirstOrDefault(x => x.Type == "User_Id").Value);
+
+                var camp = _db.Camping_Areas.Where(x => x.Id == CAid).FirstOrDefault();
+                var service = _db.Services.Where(x => x.Camping_AreaId == camp.Id).FirstOrDefault();
+
+                var userFavRoomId = _db.OrderDetails.Where(x => x.UserId == userId && x.Status == Status.Favority).Select(y => y.RoomId).ToList();
+
+                var s = new RoomInfoViewModel
                 {
-                    UserId = userId, // 好像不需要傳userId
-                    RoomId = z.Id,
-                    RoomName = z.Name,
-                    //RoomType = r.RoomType.GetType().GetMember(r.RoomType.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName(),
-                    RoomType = z.RoomType.GetType().GetMember(z.RoomType.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName(),
-                    PriceOfWeekDay = z.Price_Of_Weekdays,
-                    Room_Path = _db.Room_Pictures.Where(y => y.RoomId == z.Id).Select(s => s.Path).ToList(),
-                    Room_Des = z.Description,
-                    RoomStatus = _db.OrderDetails.Where(n => n.UserId == userId && n.RoomId == z.Id && n.Status == Status.Favority).Select(c => c.Status.ToString()).FirstOrDefault()
-                }).ToList()
-            };
-            return s;
+                    UserFavRoomId = userFavRoomId,
+                    CAId = camp.Id,
+                    CAname = camp.Name,
+                    CAaddress = camp.Address,
+                    CAphone = camp.Phone,
+                    CAdescription = camp.Description,
+                    CApicPath = _db.Camping_Area_Pictures.Where(x => x.Camping_AreaId == camp.Id).Select(s => s.Path).ToList(),
+                    Wifi = service.Wifi,
+                    Breakfast = service.Breakfast,
+                    Canopy = service.Canopy,
+                    Canteen = service.Canteen,
+                    Dinner = service.Dinner,
+                    IsCancel = service.IsCancel,
+                    Kitchen_Utensils = service.Kitchen_Utensils,
+                    Lunch = service.Lunch,
+                    Mattress = service.Mattress,
+                    Night_Lighting = service.Night_Lighting,
+                    No_Equipment = service.No_Equipment,
+                    Outdoor_Tables_Chairs = service.Outdoor_Tables_Chairs,
+                    Power_Supply = service.Power_Supply,
+                    Public_Refrigerator = service.Public_Refrigerator,
+                    Tent_Equipment = service.Tent_Equipment,
+                    Rooms = _db.Rooms.Where(x => x.Camping_AreaId == camp.Id).Select(z => new Myroom
+                    {
+                        UserId = userId, // 好像不需要傳userId
+                        RoomId = z.Id,
+                        RoomName = z.Name,
+                        //RoomType = r.RoomType.GetType().GetMember(r.RoomType.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName(),
+                        RoomType = z.RoomType.GetType().GetMember(z.RoomType.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName(),
+                        PriceOfWeekDay = z.Price_Of_Weekdays,
+                        Room_Path = _db.Room_Pictures.Where(y => y.RoomId == z.Id).Select(s => s.Path).ToList(),
+                        Room_Des = z.Description,
+                        RoomStatus = _db.OrderDetails.Where(n => n.UserId == userId && n.RoomId == z.Id && n.Status == Status.Favority).Select(c => c.Status.ToString()).FirstOrDefault()
+                    }).ToList()
+                };
+                return s;
+            }
+            else
+            {
+                var camp = _db.Camping_Areas.Where(x => x.Id == CAid).FirstOrDefault();
+                var service = _db.Services.Where(x => x.Camping_AreaId == camp.Id).FirstOrDefault();
+
+                //var userFavRoomId = _db.OrderDetails.Where(x => x.UserId == userId && x.Status == Status.Favority).Select(y => y.RoomId).ToList();
+
+                var s = new RoomInfoViewModel
+                {
+                    //UserFavRoomId = userFavRoomId,
+                    CAId = camp.Id,
+                    CAname = camp.Name,
+                    CAaddress = camp.Address,
+                    CAphone = camp.Phone,
+                    CAdescription = camp.Description,
+                    CApicPath = _db.Camping_Area_Pictures.Where(x => x.Camping_AreaId == camp.Id).Select(s => s.Path).ToList(),
+                    Wifi = service.Wifi,
+                    Breakfast = service.Breakfast,
+                    Canopy = service.Canopy,
+                    Canteen = service.Canteen,
+                    Dinner = service.Dinner,
+                    IsCancel = service.IsCancel,
+                    Kitchen_Utensils = service.Kitchen_Utensils,
+                    Lunch = service.Lunch,
+                    Mattress = service.Mattress,
+                    Night_Lighting = service.Night_Lighting,
+                    No_Equipment = service.No_Equipment,
+                    Outdoor_Tables_Chairs = service.Outdoor_Tables_Chairs,
+                    Power_Supply = service.Power_Supply,
+                    Public_Refrigerator = service.Public_Refrigerator,
+                    Tent_Equipment = service.Tent_Equipment,
+                    Rooms = _db.Rooms.Where(x => x.Camping_AreaId == camp.Id).Select(z => new Myroom
+                    {
+                        //UserId = userId, // 好像不需要傳userId
+                        RoomId = z.Id,
+                        RoomName = z.Name,
+                        //RoomType = r.RoomType.GetType().GetMember(r.RoomType.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName(),
+                        RoomType = z.RoomType.GetType().GetMember(z.RoomType.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName(),
+                        PriceOfWeekDay = z.Price_Of_Weekdays,
+                        Room_Path = _db.Room_Pictures.Where(y => y.RoomId == z.Id).Select(s => s.Path).ToList(),
+                        Room_Des = z.Description,
+                        RoomStatus = "noUserId"
+                    }).ToList()
+                };
+                return s;
+            }
         }
         // 收藏
         [HttpPost]
@@ -146,6 +197,42 @@ namespace FinalProjectFirstTest.Controllers
             }
 
         }
+        public IActionResult MyFav()
+        {
+            return View();
+        }
+        public List<Myroom> GetFavorite()
+        {
+            var userId = Int32.Parse(User.Claims.FirstOrDefault(x => x.Type == "User_Id").Value);
+
+
+            //var userFavRoomId = _db.OrderDetails.Where(x => x.UserId == userId && x.Status == Status.Favority).Select(y => y.RoomId).ToList();
+            var s = from od in _db.OrderDetails.Where(x => x.UserId == userId && x.Status == Status.Favority)
+                    join r in _db.Rooms on od.RoomId equals r.Id
+                    select new Myroom
+                    {
+                        RoomId = r.Id,
+                        CAId = r.Camping_AreaId,
+                        CAName = r.Camping_Area.Name,
+                        RoomName = r.Name,
+                        Room_Des = r.Description,
+                        RoomType = r.RoomType.GetType().GetMember(r.RoomType.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName(),
+                        PriceOfWeekDay = r.Price_Of_Weekdays,
+                        Room_Path = _db.Room_Pictures.Where(y => y.RoomId == r.Id).Select(s => s.Path).ToList(),
+                        RoomStatus = od.Status.ToString()
+                    };
+
+
+            //RoomType = r.RoomType.GetType().GetMember(r.RoomType.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName(),
+            //from od in _db.OrderDetails.Where(x => x.UserId == userId && x.Status != Status.Cancel && x.EndDate >= DateTime.Now)
+            //join r in _db.Rooms on od.RoomId equals r.Id
+            //join ca in _db.Camping_Areas on r.Camping_AreaId equals ca.Id
+            //orderby od.CreateDate descending
+            //select new OrderDetailViewModel
+            return s.ToList();
+
+        }
+        //------------------------------------------
         // 買家 註冊+登入
         public IActionResult register()
         {
@@ -557,6 +644,8 @@ namespace FinalProjectFirstTest.Controllers
         public class Myroom
         {
             public int UserId { get; set; }
+            public int CAId { get; set; }
+            public string CAName { get; set; }
             public int RoomId { get; set; }
             public decimal PriceOfWeekDay { get; set; }
             public string RoomName { get; set; }

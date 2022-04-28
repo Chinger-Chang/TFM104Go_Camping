@@ -3,148 +3,172 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<style>
-		.a {
-			background-color: #212121;
-		}
+    <style>
+        .a {
+            background-color: #212121;
+        }
 
-		body {
-			background-color: #212121;
-		}
+        body {
+            background-color: #212121;
+        }
 
-		.myBtn {
-			display: flex !important;
-			justify-content: flex-end !important;
-		}
+        .myBtn {
+            display: flex !important;
+            justify-content: flex-end !important;
+        }
 
-		/*卡片高
-		.v-card {
-			height: 566px;
-		}*/
-		.custom-select {
-			background-color: #BDBDBD;
-			color: #424242;
-			border: none;
-		}
+        卡片高
+        .v-card {
+            height: 566px;
+        }
 
-		/*字間行高
-		.text-black {
-			line-height:1.7rem;
-		}*/
-	</style>
+        .custom-select {
+            background-color: #BDBDBD;
+            color: #424242;
+            border: none;
+        }
+
+
+        /*字間行高
+        .text-black {
+            line-height:1.7rem;
+        }*/
+    </style>
 </head>
 <body>
-	<div id="mika">
-		<v-app>
-			<template>
-				<v-carousel class="a"
-							cycle
-							height="400"
-							hide-delimiter-background
-							show-arrows-on-hover>
-					<v-carousel-item v-for="(item,i) in aaa"
-									 :key="i"
-									 :src="item.src">
-						<v-sheet :color="aaa[i]"
-								 height="100%">
-							<v-row class="fill-height"
-								   align="center"
-								   justify="center">
+    <div id="mika">
+        <v-app>
+            <template>
+                <v-carousel class="a"
+                            cycle
+                            height="400"
+                            hide-delimiter-background
+                            show-arrows-on-hover>
+                    <v-carousel-item v-for="(item,i) in aaa"
+                                     :key="i"
+                                     :src="item.src">
+                        <v-sheet :color="aaa[i]"
+                                 height="100%">
+                            <v-row class="fill-height"
+                                   align="center"
+                                   justify="center">
 
-							</v-row>
-						</v-sheet>
-					</v-carousel-item>
-				</v-carousel>
-				<v-container fluid class="a">
-					@*<v-row align="center">
-							<v-col class="d-flex" cols="12" sm="6">
-								<v-select :items="Region"
-										  v-model="R"
-										  label="依地區"
-										  item-text="name"
-										  dense
-										  solo></v-select>
-								<p>select:{{Region}}</p>
-								<p>select:{{R}}</p>
-							</v-col>
-						</v-row>*@
-				</v-container>
-				<div class="a" style="padding-bottom:30px">
-					<select v-model="selected" class="custom-select w-25" asp-items="Html.GetEnumSelectList<Region>()">
-						<option selected>選擇地區</option>
-					</select>
-					@*<span>select:{{selected}}</span>*@
-				</div>
-				<div class="row a">
-					@*<div class="col-1"><v-icon>mdi-alpha-c-circle</v-icon></div>
-						<div class="col-1"><v-icon>mdi-alpha-a-circle</v-icon></div>
-						<div class="col-1"><v-icon>mdi-alpha-m-circle</v-icon></div>
-						<div class="col-1"><v-icon>mdi-alpha-p-circle</v-icon></div>
-						<div class="col-1"><v-icon>mdi-alpha-i-circle</v-icon></div>
-						<div class="col-1"><v-icon>mdi-alpha-n-circle</v-icon></div>
-						<div class="col-1"><v-icon>mdi-alpha-g-circle</v-icon></div>
-						<div class="col-1"><v-icon>mdi-baby-face-outline</v-icon></div>
-						<div class="col-1"><v-icon>mdi-email</v-icon></div>
-						<div class="col-1"><v-icon>mdi-ghost</v-icon></div>
-						<div class="col-1"><v-icon>mdi-image-area</v-icon></div>
-						<div class="col-1"><v-icon>mdi-lightning-bolt</v-icon></div>*@
-				</div>
-				<div class="row a">
-					@*<div class="col-1"><v-icon>mdi-star-face</v-icon></div>
-						<div class="col-1"><v-icon>mdi-star-face</v-icon></div>*@
+                            </v-row>
+                        </v-sheet>
+                    </v-carousel-item>
+                </v-carousel>
+                <v-container fluid class="a">
+                    @*<v-row align="center">
+                            <v-col class="d-flex" cols="12" sm="6">
+                                <v-select :items="Region"
+                                          v-model="R"
+                                          label="依地區"
+                                          item-text="name"
+                                          dense
+                                          solo></v-select>
+                                <p>select:{{Region}}</p>
+                                <p>select:{{R}}</p>
+                            </v-col>
+                        </v-row>*@
+                </v-container>
+                <div class="a" style="padding-bottom:30px">
+                    <select v-model="selected" class="custom-select w-25" asp-items="Html.GetEnumSelectList<Region>()">
+                        <option selected>選擇地區</option>
+                    </select>
+                    @*<span>select:{{selected}}</span>*@
+                </div>
+                <div class="row a">
+                    @*<div class="col-1"><v-icon>mdi-alpha-c-circle</v-icon></div>
+                        <div class="col-1"><v-icon>mdi-alpha-a-circle</v-icon></div>
+                        <div class="col-1"><v-icon>mdi-alpha-m-circle</v-icon></div>
+                        <div class="col-1"><v-icon>mdi-alpha-p-circle</v-icon></div>
+                        <div class="col-1"><v-icon>mdi-alpha-i-circle</v-icon></div>
+                        <div class="col-1"><v-icon>mdi-alpha-n-circle</v-icon></div>
+                        <div class="col-1"><v-icon>mdi-alpha-g-circle</v-icon></div>
+                        <div class="col-1"><v-icon>mdi-baby-face-outline</v-icon></div>
+                        <div class="col-1"><v-icon>mdi-email</v-icon></div>
+                        <div class="col-1"><v-icon>mdi-ghost</v-icon></div>
+                        <div class="col-1"><v-icon>mdi-image-area</v-icon></div>
+                        <div class="col-1"><v-icon>mdi-lightning-bolt</v-icon></div>*@
+                </div>
+                <div class="row a">
+                    @*<div class="col-1"><v-icon>mdi-star-face</v-icon></div>
+                        <div class="col-1"><v-icon>mdi-star-face</v-icon></div>*@
 
-				</div>
-				<div class="row a">
+                </div>
 
-					<div v-for="x in IndexInfo" v-if="selected == '選擇地區' || selected == x.region" class="col-lg-3 col-md-4 col-sm-12">
-						<v-hover v-slot="{ hover }" close-delay="200">
+                <div class="row a">
 
-							<v-card color="#757575" :elevation="hover ? 16 : 2" :class="{ 'on-hover': hover }" class="mx-auto" max-width="344">
+                    <div v-for="x in IndexInfo" v-if="selected == '選擇地區' || selected == x.region" class="col-lg-3 col-md-6 col-sm-12">
+                        <v-hover v-slot="{ hover }" close-delay="200">
 
-								<v-img :src="'/Camping_Area_Picture/' + x.picPath" height="200px"></v-img>
+                            <v-card color="#BDBDBD" :elevation="hover ? 16 : 2" :class="{ 'on-hover': hover }" class="mx-auto" max-width="344">
 
-								<v-card-title class="text-black text-h6 font-weight-black">【{{RR[x.region]}}】{{x.campingAreaName}}</v-card-title>
-								<v-card-subtitle class="text-black font-weight-bold"><v-icon>mdi-star-face</v-icon> {{x.campingDes}}</v-card-subtitle>
-								<v-card-text class="text-danger text-h6 text-right font-weight-bold">最低價格 : TWD {{x.lowerPrice}}</v-card-text>
+                                <v-img :src="'/Camping_Area_Picture/' + x.picPath" height="250px"></v-img>
 
-								<div class="myBtn">
-									<v-card-actions>
-										@*<v-btn icon color="pink">
-												<v-icon>mdi-heart</v-icon>
-											</v-btn>*@
-										<v-btn v-on:click="sendCAid(x.campingAreaId)" color="#212121"
-											   dark>
-											查看露營區<v-icon>mdi-cursor-pointer</v-icon>
-										</v-btn>
+                                <v-card-title class="text-black text-h6 font-weight-black">【{{RR[x.region]}}】{{x.campingAreaName | aaa}}</v-card-title>
+                                @*<v-card-subtitle style="overflow: hidden;text-overflow: ellipsis; white-space: nowrap; " class="text-black font-weight-bold"><v-icon>mdi-star-face</v-icon> {{x.campingDes}}</v-card-subtitle>*@
+                                <v-card-subtitle class="text-black font-weight-bold"><v-icon>mdi-star-face</v-icon> {{x.campingDes | ellipsis}}</v-card-subtitle>
+                                @*<v-card-text>{{x.campingDes | ellipsis}}</v-card-text>*@
 
-										<v-spacer></v-spacer>
-									</v-card-actions>
-								</div>
-							</v-card>
-						</v-hover>
-					</div>
-				</div>
-			</template>
-		</v-app>
-		@*<p>{{Region}}</p>*@
-		@*<p>{{IndexInfo}}</p>*@
-	</div>
+                                <v-card-text class="text-danger text-h6 text-right font-weight-bold">每人每晚 : TWD {{x.lowerPrice}}</v-card-text>
+
+                                <div class="myBtn">
+                                    <v-card-actions>
+                                        @*<v-btn icon color="pink">
+                                                <v-icon>mdi-heart</v-icon>
+                                            </v-btn>*@
+                                        <v-btn v-on:click="sendCAid(x.campingAreaId)" color="#212121"
+                                               dark>
+                                            查看露營區<v-icon>mdi-cursor-pointer</v-icon>
+                                        </v-btn>
+
+                                        <v-spacer></v-spacer>
+                                    </v-card-actions>
+                                </div>
+                            </v-card>
+                        </v-hover>
+                    </div>
+                </div>
+                <div class="a" style="padding-bottom: 2rem; padding-top: 3rem;justify-content: flex-end;display: flex;">
+                    <v-btn large v-if="moreShowBoolen" @@click="moreShow" color="#757575" dark>
+                        加載更多<v-icon large right>mdi-arrow-down-bold</v-icon>
+                    </v-btn>
+                    <v-btn large v-else color="#00897B" dark>
+                        已經全部了<v-icon right>mdi-block-helper</v-icon>
+                    </v-btn>
+                </div>
 
 
-	<script>
+
+
+
+
+            </template>
+        </v-app>
+        @*<p>{{Region}}</p>
+            <p>{{IndexInfo}}</p>*@
+    </div>
+
+
+    <script>
         var v = new Vue({
             el: '#mika',
             vuetify: new Vuetify(),
             data: {
+                list: [],
+                moreShowBoolen: false,
+                nowPage: 1,
+                //-------------------------
                 aaa: [
                     {
-                        src: 'https://lh3.googleusercontent.com/lJ_5-YTT9eoPpG5vBcr9IbfcOvWCbkPaTjxwn48PpL3ZZnEDO-UMHNRwM2xb_pI94Y7WnFFesk2Sj1xA5FkALAMafUY8Ktd9MZAqdPhiYr0QfztjGvNUYG98ZNAX1hlzgdc2A13azgUz1P_19vK7w7fPew3OmcmbE_eqxdLHxsfNumeKGdMpNTyCGCfCM08jYXLPMlqTbOZg9NgW8X3QAyV2SzWREhMZGqO7_ZTBbsKSk8yZpAzPYB_c4MH0YIqp_yrfLWw_ibstMFvsil94jlmWMYQ4jeBgha2zFACTs1YER-sXjtkSIEip6HwdTr3fcg-Jt_DEZP8FcDcxYyzAkP84-MgSmpY-kTWUQbwP-Ud1VBKn7kcUQrdtem1CO7xmyqyATKtlL0XXd-m-iaa6vPWkvneFrBCvWnQ7b_iQJRrbiEbOmxjX3zEd4qZdHDqvosCpLnIek9fzKao2fV6MHg6hj5uNDiRRtAq4COthRXsp_gMGbg3sslYY0JpCwc_OFcejMZT9jn7KtTVQkv01qwySpa3pLMaO0ErQJH5iYIrVFrKxq5oqAZ48v3XGMVoAmmxv-PzH1DAUInqafh3TW_S_uAQiBX1fgMMsLLoeRov22EReJxtHF7oIVIxa2jCC8Xol9C2Km2lQQEEf4NSqdBK1BS-H6Ua-HObXFKv5Pn3WSbM0KXgssl6uhtc36nvm8mkFm_NEiQZjfjymS12g1SlbI8cZLP0sJ0rRAeNDzWiUXw0DRqGdM9-oB_jYEnecwf79fOkDmci5KnAVXFo-Rj0bEQC_grZxCQA=w1023-h576-no?authuser=0',
+                        src: '/Camping_Area_Picture/Rilakkuma.PNG',
                     },
                     {
-                        src: 'https://lh3.googleusercontent.com/lJ_5-YTT9eoPpG5vBcr9IbfcOvWCbkPaTjxwn48PpL3ZZnEDO-UMHNRwM2xb_pI94Y7WnFFesk2Sj1xA5FkALAMafUY8Ktd9MZAqdPhiYr0QfztjGvNUYG98ZNAX1hlzgdc2A13azgUz1P_19vK7w7fPew3OmcmbE_eqxdLHxsfNumeKGdMpNTyCGCfCM08jYXLPMlqTbOZg9NgW8X3QAyV2SzWREhMZGqO7_ZTBbsKSk8yZpAzPYB_c4MH0YIqp_yrfLWw_ibstMFvsil94jlmWMYQ4jeBgha2zFACTs1YER-sXjtkSIEip6HwdTr3fcg-Jt_DEZP8FcDcxYyzAkP84-MgSmpY-kTWUQbwP-Ud1VBKn7kcUQrdtem1CO7xmyqyATKtlL0XXd-m-iaa6vPWkvneFrBCvWnQ7b_iQJRrbiEbOmxjX3zEd4qZdHDqvosCpLnIek9fzKao2fV6MHg6hj5uNDiRRtAq4COthRXsp_gMGbg3sslYY0JpCwc_OFcejMZT9jn7KtTVQkv01qwySpa3pLMaO0ErQJH5iYIrVFrKxq5oqAZ48v3XGMVoAmmxv-PzH1DAUInqafh3TW_S_uAQiBX1fgMMsLLoeRov22EReJxtHF7oIVIxa2jCC8Xol9C2Km2lQQEEf4NSqdBK1BS-H6Ua-HObXFKv5Pn3WSbM0KXgssl6uhtc36nvm8mkFm_NEiQZjfjymS12g1SlbI8cZLP0sJ0rRAeNDzWiUXw0DRqGdM9-oB_jYEnecwf79fOkDmci5KnAVXFo-Rj0bEQC_grZxCQA=w1023-h576-no?authuser=0',
+                        src: '/Camping_Area_Picture/Rilakkuma.PNG',
                     },
                     {
-                        src: 'https://lh3.googleusercontent.com/lJ_5-YTT9eoPpG5vBcr9IbfcOvWCbkPaTjxwn48PpL3ZZnEDO-UMHNRwM2xb_pI94Y7WnFFesk2Sj1xA5FkALAMafUY8Ktd9MZAqdPhiYr0QfztjGvNUYG98ZNAX1hlzgdc2A13azgUz1P_19vK7w7fPew3OmcmbE_eqxdLHxsfNumeKGdMpNTyCGCfCM08jYXLPMlqTbOZg9NgW8X3QAyV2SzWREhMZGqO7_ZTBbsKSk8yZpAzPYB_c4MH0YIqp_yrfLWw_ibstMFvsil94jlmWMYQ4jeBgha2zFACTs1YER-sXjtkSIEip6HwdTr3fcg-Jt_DEZP8FcDcxYyzAkP84-MgSmpY-kTWUQbwP-Ud1VBKn7kcUQrdtem1CO7xmyqyATKtlL0XXd-m-iaa6vPWkvneFrBCvWnQ7b_iQJRrbiEbOmxjX3zEd4qZdHDqvosCpLnIek9fzKao2fV6MHg6hj5uNDiRRtAq4COthRXsp_gMGbg3sslYY0JpCwc_OFcejMZT9jn7KtTVQkv01qwySpa3pLMaO0ErQJH5iYIrVFrKxq5oqAZ48v3XGMVoAmmxv-PzH1DAUInqafh3TW_S_uAQiBX1fgMMsLLoeRov22EReJxtHF7oIVIxa2jCC8Xol9C2Km2lQQEEf4NSqdBK1BS-H6Ua-HObXFKv5Pn3WSbM0KXgssl6uhtc36nvm8mkFm_NEiQZjfjymS12g1SlbI8cZLP0sJ0rRAeNDzWiUXw0DRqGdM9-oB_jYEnecwf79fOkDmci5KnAVXFo-Rj0bEQC_grZxCQA=w1023-h576-no?authuser=0',
+                        src: '/Camping_Area_Picture/Rilakkuma.PNG',
                     }
                 ],
                 //location: ['台北', '新竹', '台南', '高雄'],
@@ -154,7 +178,7 @@
                     caId: ''
                 },
                 Region: [],
-                R:'',
+                R: '',
                 RR: ["基隆", "新北市", "台北市", "桃園", "新竹", "苗栗", "台中", "彰化",
                     "南投", "雲林", "嘉義", "台南", "高雄", "屏東", "宜蘭", "花蓮", "台東"]
             },
@@ -165,21 +189,62 @@
                     //alert(self.a.caId);
 
                     window.location.href = "/Buyer/RoomInfo/" + self.a.caId;
+                },
+                init() {
+                    axios.get("/Buyer/getIndexInfo").then(res => {
+                        if (res.data.length <= 4) { // 5個一頁
+                            this.IndexInfo = res.data
+                            this.moreShowBoolen = false
+                        } else {
+                            this.IndexInfo = res.data.slice(0, 4)
+                            this.moreShowBoolen = true
+                        }
+                    })
+                },
+                moreShow() { // 點擊查詢更多
+                    axios.get("/Buyer/getIndexInfo").then(res => {
+                        this.IndexInfo = this.IndexInfo.concat(res.data.slice(this.nowPage * 4, (this.nowPage + 1) * 4))
+                        this.nowPage++
+                        if (res.data.length >= this.nowPage * 4) {
+                            this.moreShowBoolen = true
+                        } else {
+                            this.moreShowBoolen = false
+                        }
+                    })
+                }
+            },
+            filters: {
+                ellipsis(value) {
+                    //alert(value);
+                    if (!value) return '';
+                    if (value.length > 50) {
+                        return value.slice(0, 50) + '...';
+                    }
+                    return value;
+                },
+                aaa(value) {
+                    //alert(value);
+                    if (!value) return '';
+                    if (value.length > 5) {
+                        return value.slice(0, 5) + '...';
+                    }
+                    return value;
                 }
             },
             mounted: function () {
-                var self = this;
-                axios.get("/Buyer/getIndexInfo").then(function (res) {
-                    self.IndexInfo = res.data;
-                    console.log(res.data);
-                }),
-                    axios.get("/Buyer/GetDisplayName").then(function (res) {
-                        self.Region = res.data;
-                        console.log(res.data);
-                    })
+                this.init();
+                //var self = this;
+                //axios.get("/Buyer/getIndexInfo").then(function (res) {
+                //    self.IndexInfo = res.data;
+                //    console.log(res.data);
+                //}),
+                //axios.get("/Buyer/GetDisplayName").then(function (res) {
+                //    self.Region = res.data;
+                //    console.log(res.data);
+                //})
             }
         })
-	</script>
+    </script>
 </body>
 </html>
 

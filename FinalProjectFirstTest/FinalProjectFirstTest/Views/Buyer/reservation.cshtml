@@ -2,130 +2,129 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<style>
-		.a {
-			background-color: #E0E0E0;
-		}
+    <style>
+        .a {
+            background-color: #E0E0E0;
+        }
 
-		body {
-			background-color: #212121;
-		}
+        body {
+            background-color: #212121;
+        }
 
-		.v-application--wrap {
-			background-color: #212121;
-		}
+        .v-application--wrap {
+            background-color: #212121;
+        }
 
-		.container a rounded-xl {
-			height: 70%;
-			width: 70%;
-		}
+        .container a rounded-xl {
+            height: 70%;
+            width: 70%;
+        }
 
-		#app {
-			width: 60% !important;
-		}
-		/*
-		.v-picker v-card v-picker--date theme--light {
-			width: 1000px;
-		}*/
-		.v-btn v-btn--has-bg theme--dark v-size--default {
-			height: 40px !important;
-		}
-	</style>
+        #app {
+            width: 60% !important;
+        }
+        /*
+        .v-picker v-card v-picker--date theme--light {
+            width: 1000px;
+        }*/
+        .v-btn v-btn--has-bg theme--dark v-size--default {
+            height: 40px !important;
+        }
+    </style>
 </head>
 <body>
 
-	<div id="mika" class="col d-flex justify-content-center ">
-		<v-app>
-			<template>
-				<v-container class="a rounded-xl">
-					<v-row>
-						<v-col cols="12" md="6">
-							<v-text-field v-model="name"
-										  :rules="nameRules"
-										  :counter="10"
-										  label="姓名"
-										  required></v-text-field>
-						</v-col>
+    <div id="mika" class="col d-flex justify-content-center ">
+        <v-app>
+            <template>
+                <v-container class="a rounded-xl" style="margin-top: 40px; padding-left: 50px; padding-right: 50px; ">
+                    <v-row style="padding-top: 45px;">
+                        <v-col cols="12" md="6">
+                            <v-text-field v-model="name"
+                                          :rules="nameRules"
+                                          :counter="10"
+                                          label="姓名"
+                                          required></v-text-field>
+                        </v-col>
 
-						<v-col cols="12" md="6">
-							<v-text-field v-model="phone"
-										  :rules="phoneRules"
-										  :counter="10"
-										  label="電話"
-										  required></v-text-field>
-						</v-col>
-					</v-row>
-					<v-row>
-						<v-col cols="12" md="6">
-							<div class="" style="display:flex;justify-content:center;">
-								<div class="" style="width:90%;">
-									<v-date-picker width="100%" color="#616161" v-model="dates" range :allowed-dates="allowedDates">
-									</v-date-picker>
-								</div>
-							</div>
-						</v-col>
-						<v-col cols="12" md="6">
-							<v-text-field v-model="dateRangeText" label="Date range" prepend-icon="mdi-calendar" readonly></v-text-field>
-						</v-col>
-					</v-row>
-					<v-row>
-						<v-col cols="12" md="6">
-							<v-text-field v-model="calDays"
-										  label="天數"
-										  required></v-text-field>
-						</v-col>
-						<v-col cols="12" md="6">
-							<v-text-field v-model="calPrice"
-										  label="總價"
-										  required></v-text-field>
-						</v-col>
-					</v-row>
-					<div style="display:flex;justify-content:flex-end;">
-						<v-btn v-on:click="send" depressed color="#424242" dark class="">
-							下一步
-							<v-icon>mdi-arrow-right-bold</v-icon>
-						</v-btn>
-					</div>
-				</v-container>
-			</template>
-			<!--v-container跟v-row都是bootstrap的用法只是Vuetify也有一套Layout方式 -->
-			<!-- :allowed-dates的用法是允許哪一天可以選擇 -->
-			<div class="form-row">
-				@*<div class="col-6">
-						<div class="form-group">
-							<h4>天數</h4>
-							<input v-model="calDays" readonly type="number" class="form-control">
-						</div>
-					</div>*@
-			</div>
-			<div class="form-row">
-				@*<div class="col-6">
-						<div class="form-group">
-							<h4>總價</h4>
-							<input readonly v-model="calPrice" type="text" class="form-control">
-						</div>
-					</div>*@
-			</div>
-			@*<button v-on:click="send" type="button" class="btn btn-primary">下一步</button>*@
+                        <v-col cols="12" md="6">
+                            <v-text-field v-model="phone"
+                                          :rules="phoneRules"
+                                          :counter="10"
+                                          label="電話"
+                                          required></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="12" md="6">
+                            <div class="" style="display:flex;justify-content:center;">
+                                <div class="" style="width:90%;">
+                                    <v-date-picker width="100%" color="#616161" v-model="dates" range :allowed-dates="allowedDates">
+                                    </v-date-picker>
+                                </div>
+                            </div>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                            <v-text-field v-model="dateRangeText" label="Date range" prepend-icon="mdi-calendar" readonly></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="12" md="6">
+                            <v-text-field v-model="calDays"
+                                          label="天數"
+                                          required></v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                            <v-text-field v-model="calPrice"
+                                          label="總價"
+                                          required></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <div style="display:flex;justify-content:flex-end; padding-bottom: 45px;">
+                        <v-btn large v-on:click="send" depressed color="#424242" dark class="">
+                            <v-icon left large>mdi-arrow-right-bold</v-icon>結帳
+                        </v-btn>
+                    </div>
+                </v-container>
+            </template>
+            <!--v-container跟v-row都是bootstrap的用法只是Vuetify也有一套Layout方式 -->
+            <!-- :allowed-dates的用法是允許哪一天可以選擇 -->
+            <div class="form-row">
+                @*<div class="col-6">
+                        <div class="form-group">
+                            <h4>天數</h4>
+                            <input v-model="calDays" readonly type="number" class="form-control">
+                        </div>
+                    </div>*@
+            </div>
+            <div class="form-row">
+                @*<div class="col-6">
+                        <div class="form-group">
+                            <h4>總價</h4>
+                            <input readonly v-model="calPrice" type="text" class="form-control">
+                        </div>
+                    </div>*@
+            </div>
+            @*<button v-on:click="send" type="button" class="btn btn-primary">下一步</button>*@
 
-			@*<p>-----訂房資訊-----</p>
-				<p>name: {{name}}</p>
-				<p>tel: {{phone}}</p>
-				<p>startDate: {{ dates[0] }}</p>
-				<p>endDate: {{ dates[1] }}</p>
-				<p>range: {{ dates }}</p>
-				<p>{{reservationData.date1}}</p>
-				<p>{{reservationData.date2}}</p>
-				<p>-----getRoomIdtoView-----</p>
-				<p>{{getRoomIdtoView}}</p>
-				<p>weekDayPrice: {{getRoomIdtoView.weekDayPrice}}</p>
-				<p>-----ListString(不能選的日期)-----</p>
-				<p>{{ListString}}</p>*@
-		</v-app>
-	</div>
+            @*<p>-----訂房資訊-----</p>
+                <p>name: {{name}}</p>
+                <p>tel: {{phone}}</p>
+                <p>startDate: {{ dates[0] }}</p>
+                <p>endDate: {{ dates[1] }}</p>
+                <p>range: {{ dates }}</p>
+                <p>{{reservationData.date1}}</p>
+                <p>{{reservationData.date2}}</p>
+                <p>-----getRoomIdtoView-----</p>
+                <p>{{getRoomIdtoView}}</p>
+                <p>weekDayPrice: {{getRoomIdtoView.weekDayPrice}}</p>
+                <p>-----ListString(不能選的日期)-----</p>
+                <p>{{ListString}}</p>*@
+        </v-app>
+    </div>
 
 
-	<script>
+    <script>
         var v = new Vue({
             el: '#mika',
             vuetify: new Vuetify(),
@@ -294,6 +293,6 @@
                 })
             }
         })
-	</script>
+    </script>
 </body>
 </html>
