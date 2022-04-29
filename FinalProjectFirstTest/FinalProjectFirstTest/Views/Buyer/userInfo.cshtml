@@ -58,7 +58,7 @@
                                               @*:rules="nameRules"*@
                                               @*:counter="10"*@
                                               label="Email"
-                                              required disabled></v-text-field>
+                                              required readonly></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -85,12 +85,12 @@
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-row style="padding-left: 10px; padding-right: 10px">
 
-                                                <v-btn color="#7E57C2" dark v-bind="attrs" v-on="on">
+                                                <v-btn color="#CFA79D" dark v-bind="attrs" v-on="on">
                                                     修改密碼
                                                     <v-icon right> mdi-lead-pencil </v-icon>
                                                 </v-btn>
 
-                                                <v-btn v-on:click="edit" dark tile color="#78909C">
+                                                <v-btn v-on:click="edit" dark tile color="#75809C">
                                                     編輯確認
                                                     <v-icon right> mdi-lead-pencil </v-icon>
                                                 </v-btn>
@@ -107,7 +107,7 @@
                                                 請輸入新密碼
                                             </v-card-text>
 
-                                            <v-text-field v-model="pw"
+                                            <v-text-field v-model="pw" style="width:90%;padding-left:10%"
                                                           @*:rules="nameRules"*@
                                                           @*:counter="10"*@
                                                           @*label="新密碼"*@
@@ -117,7 +117,7 @@
 
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
-                                                <v-btn v-on:click="editPassword" color="primary" text>
+                                                <v-btn v-on:click="editPassword" color="#78909C" dark>
                                                     確定@*@@click="dialog = false"*@
                                                 </v-btn>
                                             </v-card-actions>

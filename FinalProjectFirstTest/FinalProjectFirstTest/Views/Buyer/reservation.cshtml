@@ -72,12 +72,12 @@
                         <v-col cols="12" md="6">
                             <v-text-field v-model="calDays"
                                           label="天數"
-                                          required></v-text-field>
+                                          required readonly></v-text-field>
                         </v-col>
                         <v-col cols="12" md="6">
                             <v-text-field v-model="calPrice"
                                           label="總價"
-                                          required></v-text-field>
+                                          required readonly></v-text-field>
                         </v-col>
                     </v-row>
                     <div style="display:flex;justify-content:flex-end; padding-bottom: 45px;">
@@ -113,6 +113,21 @@
                                    text
                                    v-bind="attrs"
                                    @@click="ph = false">
+                                Close
+                            </v-btn>
+                        </template>
+                    </v-snackbar>
+                </div>
+                <div class="text-center">
+                    <v-snackbar v-model="datedate"
+                                :multi-line="phmultiLine">
+                        請重新填寫
+
+                        <template v-slot:action="{ attrs }">
+                            <v-btn color="red"
+                                   text
+                                   v-bind="attrs"
+                                   @@click="datedate = false">
                                 Close
                             </v-btn>
                         </template>
@@ -168,6 +183,8 @@
                 phmultiLine: true,
                 ph: false,
                 phtext: '亂打 全部重填',
+
+                datedate: false,
                 //------------------------------
                 reservationData: {
                     name: '',
@@ -289,7 +306,8 @@
                         //this.reservationData.date1 = '';
                         //this.reservationData.date2 = '';
                         this.dates = [];
-                        alert('請重新填寫');
+                        //alert('請重新填寫');
+                        this.datedate = true;
                     }
                 },
                 calPrice() {

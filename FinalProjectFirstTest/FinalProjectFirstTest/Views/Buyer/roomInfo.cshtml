@@ -130,14 +130,14 @@
                                 <h1 style="margin-top: 50px; margin-left: 100px; ">
                                     <v-icon large color="white">mdi-fire</v-icon>{{RoomInfo.cAname}}
                                 </h1>
-                                <h3 style="margin-left: 120px; margin-top: 60px; margin-right: 120px; ">
+                                <h5 style="margin-left: 120px; margin-top: 60px; margin-right: 120px; ">
                                     <v-icon color="white">mdi-cellphone</v-icon>電話@*<v-icon>mdi-phone-classic</v-icon>*@
                                     <v-text-field readonly :label="RoomInfo.cAphone"></v-text-field>
-                                </h3>
-                                <h3 style="margin-right: 120px; margin-left: 120px; margin-top: 60px; ">
+                                </h5>
+                                <h5 style="margin-right: 120px; margin-left: 120px; margin-top: 60px; ">
                                     <v-icon color="white">mdi-map-marker</v-icon>地址@*<v-icon>mdi-home</v-icon><v-icon>mdi-home-flood</v-icon>*@
                                     <v-text-field readonly :label="RoomInfo.cAaddress"></v-text-field>
-                                </h3>
+                                </h5>
                             </v-col>
 
                         </v-row>
@@ -149,7 +149,7 @@
                 <p>地址 : {{RoomInfo.cAaddress}}</p>*@
             <template>
                 <v-container fluid class="c">
-                    <h3 style="margin-left: 50px; margin-top: 30px; "><v-icon color="white">mdi-tooltip-text-outline</v-icon>概述@*<v-icon>mdi-tooltip-text</v-icon>*@@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h3>
+                    <h5 style="margin-left: 50px; margin-top: 30px; "><v-icon color="white">mdi-tooltip-text-outline</v-icon>概述@*<v-icon>mdi-tooltip-text</v-icon>*@@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h5>
                     <v-row style="padding-top: 10px; margin-left: 45px; margin-right: 120px; margin-bottom: 10px; ">
                         <v-col cols="12" md="12">
                             <v-textarea readonly outlined name="input-7-4" label="概述"
@@ -329,9 +329,9 @@
                     <v-row style="padding-top: 10px; margin-left: 45px; margin-right: 45px; margin-bottom: 10px; ">
                         <v-col cols="12" md="6">
                             <p>
-                                <div class="aaa" style="padding-top: 25px; padding-bottom: 50px; padding-left: 50px; padding-right:50px;">
+                                <div class="aaa" style="font-size: 15px; padding-top: 25px; padding-bottom: 50px; padding-left: 50px; padding-right: 50px;">
 
-                                    <h3 style="margin-bottom: 30px;"><v-icon large color="white">mdi-alert-octagram-outline</v-icon>入住守則@*<v-icon>mdi-tooltip-text</v-icon>*@@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h3>
+                                    <h4 style="margin-bottom: 30px;"><v-icon large color="white">mdi-alert-octagram-outline</v-icon>入住守則@*<v-icon>mdi-tooltip-text</v-icon>*@@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h4>
 
                                     入住時間<br>
                                     15:00 - 18:00<br>
@@ -349,8 +349,8 @@
                         </v-col>
                         <v-col cols="12" md="6">
                             <p>
-                                <div class="aaa" style="padding-top: 25px; padding-bottom: 50px; padding-left: 50px; padding-right:50px;">
-                                    <h3 style="margin-bottom: 30px;"><v-icon left large color="white">mdi-alert-octagram-outline</v-icon>住房守則@*<v-icon>mdi-tooltip-text</v-icon>*@@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h3>
+                                <div class="aaa" style=" font-size: 15px; padding-top: 25px; padding-bottom: 50px; padding-left: 50px; padding-right: 50px;">
+                                    <h4 style="margin-bottom: 30px;"><v-icon left large color="white">mdi-alert-octagram-outline</v-icon>住房守則@*<v-icon>mdi-tooltip-text</v-icon>*@@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h4>
 
                                     【露營注意事項】<br>
                                     ．禁止吸菸。<br>
@@ -366,9 +366,9 @@
                     <v-row style="padding-top: 10px; margin-left: 45px; margin-right: 45px; margin-bottom: 10px; ">
                         <v-col cols="12" md="12">
                             <p>
-                                <div class="aaa" style="padding-top: 25px; padding-bottom: 50px; padding-left: 50px; padding-right:50px;">
+                                <div class="aaa" style="font-size: 15px; padding-top: 25px; padding-bottom: 50px; padding-left: 50px; padding-right: 50px;">
 
-                                    <h3 style="margin-top: 30px; margin-bottom: 30px;"><v-icon left large color="white">mdi-campfire</v-icon>營地須知@*<v-icon>mdi-tooltip-text</v-icon>*@@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h3>
+                                    <h4 style="margin-top: 30px; margin-bottom: 30px;"><v-icon left large color="white">mdi-campfire</v-icon>營地須知@*<v-icon>mdi-tooltip-text</v-icon>*@@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h4>
 
                                     ．免搭帳懶人露營區禁寵，不開放攜帶寵物入住。若有發現偷渡情況，營區可立即要求離場，住宿費用將不予退款。<br>
                                     ．帳棚內全面禁止吸煙、禁止炊煮食物。若有發現上述行為，將會向你收取最少$100美元賠償費，屢勸不聽者營區可立即要求離場，住宿費用將不予退款。<br>
@@ -391,15 +391,15 @@
                     <v-row style="padding-top: 10px; margin-left: 45px; margin-right: 45px; margin-bottom: 10px; ">
                         <v-col cols="12" md="12">
                             <p>
-                                <div class="aaa" style="padding-top: 25px; padding-bottom: 50px; padding-left: 50px; padding-right:50px;">
+                                <div class="aaa" style="font-size: 15px; padding-top: 25px; padding-bottom: 50px; padding-left: 50px; padding-right: 50px;">
 
-                                    <h3 style="margin-top: 30px; margin-bottom: 20px;"><v-icon left large color="white">mdi-pin-outline</v-icon>退訂政策@*<v-icon>mdi-tooltip-text</v-icon>*@@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h3>
+                                    <h4 style="margin-top: 30px; margin-bottom: 20px;"><v-icon left large color="white">mdi-pin-outline</v-icon>退訂政策@*<v-icon>mdi-tooltip-text</v-icon>*@@*<v-icon>mdi-message</v-icon><v-icon>mdi-chat</v-icon>*@</h4>
 
-                                    <h5><v-icon left color="white">mdi-numeric-1-circle-outline</v-icon>如何知道該房型的退訂政策？</h5><br>
+                                    <h6><v-icon left color="white">mdi-numeric-1-circle-outline</v-icon>如何知道該房型的退訂政策？</h6><br>
                                     每個房型會有不同的取消規定，點擊房型資訊中的查看退訂政策或免費取消文字，可以看到詳細的相關規定。<br>
-                                    <h5 style="margin-top: 30px;"><v-icon left color="white">mdi-numeric-2-circle-outline</v-icon>如果我想要修改或取消這個預訂該怎麼辦？</h5><br>
+                                    <h6 style="margin-top: 30px;"><v-icon left color="white">mdi-numeric-2-circle-outline</v-icon>如果我想要修改或取消這個預訂該怎麼辦？</h6><br>
                                     預訂完成後，您所收到的訂房成功電子郵件上會附有直接前往會員中心的連結，在會員中心您可以自行查詢/列印訂單明細，或取消訂房。如需修改訂單內容，須先取消原訂單，再重新成立新訂單。<br>
-                                    <h5 style="margin-top: 30px;"><v-icon left color="white">mdi-numeric-3-circle-outline</v-icon>退款相關資訊</h5><br>
+                                    <h6 style="margin-top: 30px;"><v-icon left color="white">mdi-numeric-3-circle-outline</v-icon>退款相關資訊</h6><br>
                                     所有因取消預訂或提前退房所產生的退費，只要符合退款規定，AsiaYo將依照您原先選擇的付款方式進行退款 (包括 : 信用卡、ATM轉帳與電子支付)。退款皆採取人工流程，作業不含六日及國定假日。 信用卡退款約 3-14 工作天退至您原消費卡，實際仍依各發卡行工作日數為準。ATM 退款約 3-5 工作天退至您指定帳戶。電子錢包或其他支付方法，實際退款時間依各支付退款辦法辦理。<br>
                                 </div>
 

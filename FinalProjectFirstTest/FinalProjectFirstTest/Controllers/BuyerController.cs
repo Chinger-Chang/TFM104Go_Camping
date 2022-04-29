@@ -33,7 +33,7 @@ namespace FinalProjectFirstTest.Controllers
         // 拿首頁資訊
         public List<IndexInfo> getIndexInfo()
         {
-            var s = _db.Camping_Areas.Select(x => new IndexInfo
+            var s = _db.Camping_Areas.Where(x => x.IsAudit == true).Select(x => new IndexInfo
             {
                 CampingAreaId = x.Id,
                 CampingAreaName = x.Name,
