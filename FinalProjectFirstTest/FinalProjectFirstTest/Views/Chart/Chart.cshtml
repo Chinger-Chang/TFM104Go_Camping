@@ -1,23 +1,122 @@
-﻿
-<div id="c1"></div>
+﻿<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="container" id="c1">
+	<div class="row">
+		<div class="col-6">
+			
+				<canvas id="myChart"></canvas>
+			
+				<div class="text-center my-5">
+					<label for="selected" class="form-label">選擇露營區:</label>
+					<select v-model="selected" v-on:change="getroom">
+						<option value="" disabled selected>選擇露營區</option>
+						<option class="op" v-for="(item,index) in canamelist">{{ item }}</option>
+					</select>
+				</div>
+				<canvas id="myBar"></canvas>
+			</div>
+		</div>
+</div>
 
 
 <script>
 	var chart = new Vue({
 		el: '#c1',
 		data: {
-			roomlist: {}
+			roomnamelist: [],
+			roompricelist: [],
+			canamelist: [],
+			capricelist: [],
+			caidlist: [],
+			selected: "",
+			barColors: [],
+			barColors2: []
 		},
 		methods: {
-			
+			getroom: function () {
+				var self = this;
+				console.log(self.selected);
+				axios.get("/Chart/Cid/" + self.selected).then(function (res) {
+					if (res.data == true) {
+						window.location.reload();
+					}
+						
+					//	let chartStatus = Chart.getChart("myBar"); // <canvas> id
+					//	console.log(chartStatus);
+					//		chartStatus.destroy();
+					//	const ctx2 = document.getElementById("myBar");
+					//	const myBar = new Chart(ctx2, {
+					//		type: 'bar',
+					//		data: {
+					//			labels: self.roomnamelist,
+					//			datasets: [{
+					//				label: '銷售業績(百萬)',
+					//				data: self.roompricelist
+					//			}]
+					//		}
+					//	});
+					
 
+				});
+			}
 		},
 		mounted: function () {
 			var self = this;
 			axios.get("/Chart/RoomChart").then(function (res) {
+				for (item of res.data) {
+					self.roomnamelist.push(item.roomName);
+					self.roompricelist.push(item.price);
+					let color = Math.floor(Math.random() * 16777215).toString(16);
+
+					self.barColors2.push('#' + color);
+				}
 				self.roomlist = res.data;
 				console.log(res.data);
+				
+				axios.get("/Chart/Camping_AreaChart").then(function (res) {
+					
+					for (item of res.data) {
+						self.caidlist.push(item.camping_AreaId);
+						self.canamelist.push(item.camping_AreaName);
+						self.capricelist.push(item.price);
+						let color = Math.floor(Math.random() * 16777215).toString(16);
+					
+						self.barColors.push('#' + color);
+					}
+				});
 			});
+			
+			const ctx = document.getElementById("myChart");
+			const myChart = new Chart(ctx, {
+				type: "doughnut",
+				data: {
+					labels: self.canamelist,
+					datasets: [{
+						backgroundColor: self.barColors,
+						data: self.capricelist
+					}]
+				},
+				options: {
+					title: {
+						display: true,
+						text: "露營區總額"
+					}
+				}
+			});
+
+			const ctx2 = document.getElementById("myBar");
+			self.myBar = new Chart(ctx2, {
+				type: 'bar',
+				data: {
+					labels: self.roomnamelist,
+					datasets: [{
+						label: '房間總額',
+						data: self.roompricelist,
+						backgroundColor: self.barColors2
+					}]
+				}
+			});
+
 
 		}
 	});

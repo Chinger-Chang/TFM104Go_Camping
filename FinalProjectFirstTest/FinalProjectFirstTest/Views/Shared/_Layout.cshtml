@@ -138,57 +138,60 @@
 				<!-- 第二導航  頁面  使用VS預設 -->
 				<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 					<div class="mx-auto order-0">
-                        <ul class="navbar-nav ml-auto">
-                            <!-- #region Buyer Nav-->
-                            @{if (User.IsInRole("User"))
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" asp-area="" asp-controller="Buyer" asp-action="Index">首頁</a>
-                                    </li>
-                                    <li class="nav-item">
+						<ul class="navbar-nav ml-auto">
+							<!-- #region Buyer Nav-->
+							@{if (User.IsInRole("User"))
+								{
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Buyer" asp-action="Index">首頁</a>
+									</li>
+									<li class="nav-item">
 										<a class="nav-link text-white" asp-area="" asp-controller="Buyer" asp-action="BOrderDetail">訂單</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" asp-area="" asp-controller="Buyer" asp-action="myFav">收藏</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" asp-area="" asp-controller="Buyer" asp-action="userInfo">基本資料</a>
-                                    </li>
-                                }
-                                <!-- #endregion -->
-                                <!-- #region Admin Nav -->
-                                if (User.IsInRole("Manager"))
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" asp-area="" asp-controller="Manager" asp-action="ManagerOrderDetails">訂單管理</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" asp-area="" asp-controller="Manager" asp-action="Get_Unaudited_Campingarea">審核露營區</a>
-                                    </li>
-                                }
-                                <!-- #endregion-->
-                                <!-- #region Seller nav-->
-                                if (User.IsInRole("Seller"))
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" asp-area="" asp-controller="Order_Detail" asp-action="Seller_OrderDetail">訂單管理</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" asp-area="" asp-controller="Create_Camping_Area" asp-action="CampingArea">建露營區</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" asp-area="" asp-controller="Camping_Information" asp-action="CampingInformation">露營區/房型</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" asp-area="" asp-controller="Room_Condition" asp-action="RoomCondition">房況</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" asp-area="" asp-controller="Seller_Info" asp-action="SellerInfo">基本資料</a>
-                                    </li>
-                                }
-                                <!-- #endregion-->
-                            }
-                        </ul>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Buyer" asp-action="myFav">收藏</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Buyer" asp-action="userInfo">基本資料</a>
+									</li>
+								}
+								<!-- #endregion -->
+								<!-- #region Admin Nav -->
+								if (User.IsInRole("Manager"))
+								{
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Manager" asp-action="ManagerOrderDetails">訂單管理</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Manager" asp-action="Get_Unaudited_Campingarea">審核露營區</a>
+									</li>
+								}
+								<!-- #endregion-->
+								<!-- #region Seller nav-->
+								if (User.IsInRole("Seller"))
+								{
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Order_Detail" asp-action="Seller_OrderDetail">訂單管理</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Create_Camping_Area" asp-action="CampingArea">建露營區</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Camping_Information" asp-action="CampingInformation">露營區/房型</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Room_Condition" asp-action="RoomCondition">房況</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Seller_Info" asp-action="SellerInfo">基本資料</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-white" asp-area="" asp-controller="Chart" asp-action="Chart">金額報表</a>
+									</li>
+								}
+								<!-- #endregion-->
+							}
+						</ul>
 
 					</div>
 
