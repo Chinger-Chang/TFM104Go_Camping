@@ -49,6 +49,7 @@
 				<label for="description" class="form-label py-2">不通過原因:</label>
 				<textarea class="form-control py-2" id="description" v-model="productList.auditDescription" readonly style="background-color: #13439f; color: white; text-align: center;"></textarea>
 			</div>
+			<div class="mx-auto text-center " style="background-color: #292b2c;color:white;"><h3 class="p-1">露營區</h3></div>
 			<div class="card mb-5 mx-auto w-100 shadow" style="height:auto" v-if="productList.camping_AreaId !=null" id="productList.camping_AreaId">
 				<div class="row no-gutters">
 					<div class="col-md-5">
@@ -74,6 +75,7 @@
 					</div>
 				</div>
 			</div>
+			<div class="mx-auto text-center w-75" style="background-color: #292b2c; color: white;"><h3 class="p-1">房間</h3></div>
 			<div class="card mb-5 mx-auto w-75  shadow" style="height:auto" v-for="(item,index) of productList.myrooms" :id="item.roomId">
 				<div class="row no-gutters">
 					<div class="col-md-6">
