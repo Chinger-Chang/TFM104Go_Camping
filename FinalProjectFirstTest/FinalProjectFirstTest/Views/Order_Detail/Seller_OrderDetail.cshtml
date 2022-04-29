@@ -3,6 +3,9 @@
 	tbody > tr:nth-child(even) {
 		background-color: white;
 	}
+	.myleft {
+		padding-left: 2rem;
+	}
 </style>
 <div class="mt-5" id="mika">
 
@@ -14,7 +17,7 @@
 			<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false" style="color: white; background-color: #343a40">歷史訂單</a>
 		</li>
 		@*<a style="display:flex;justify-content:flex-end;">*@
-		<li class="nav-item" role="presentation">
+		<li class="nav-item myleft" role="presentation" >
 			<input class="search" type="text" v-model="search" placeholder="搜尋關鍵字" />
 		</li>
 

@@ -107,7 +107,7 @@ namespace FinalProjectFirstTest.Controllers
             var secretcodeMail = Encrypt(model.Email + "&y=true");
 
             var mailhelper = new MailHelper();
-            mailhelper.CreateMail(mails, "驗證信箱", "買家您好，點擊以下網址就能驗證成功喔~ : " + "https://localhost:5001/sendEmail/bget?d=" + secretcodeMail);
+            mailhelper.CreateMail(mails, "驗證信箱", "買家您好，點擊以下網址就能驗證成功喔~ : " + "https://gocamping.azurewebsites.net/sendEmail/bget?d=" + secretcodeMail);
             mailhelper.Send();
 
             return Content("信已寄出");
@@ -120,7 +120,7 @@ namespace FinalProjectFirstTest.Controllers
             var secretcodeMail = Encrypt(model.Email + "&y=true");
 
             var mailhelper = new MailHelper();
-            mailhelper.CreateMail(mails, "驗證信箱", "買家您好，點擊以下網址就能驗證成功喔~ : " + "https://localhost:5001/sendEmail/sget?d=" + secretcodeMail);
+            mailhelper.CreateMail(mails, "驗證信箱", "買家您好，點擊以下網址就能驗證成功喔~ : " + "https://gocamping.azurewebsites.net/sendEmail/sget?d=" + secretcodeMail);
             mailhelper.Send();
 
             return Content("信已寄出");

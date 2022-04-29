@@ -45,7 +45,7 @@
 					<option v-for="n in nameList" v-bind:value="n.id">{{ n.name }}</option>
 				</select>
 			</div>
-			<div class="my-5" v-if="productList.auditDescription != null" style="background-color: #808080; color: white; text-align:center;">
+			<div class="my-5" v-if="productList.auditDescription != null && productList.isAudit ===false" style="background-color: #808080; color: white; text-align:center;">
 				<label for="description" class="form-label py-2">不通過原因:</label>
 				<textarea class="form-control py-2" id="description" v-model="productList.auditDescription" readonly style="background-color: #13439f; color: white; text-align: center;"></textarea>
 			</div>
