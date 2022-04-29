@@ -212,9 +212,8 @@
                 }
             },
             phoneCheck: function () {
-                let self = this;
-                if (self.phone == '') {
-                    self.phone = '';
+                if (!(/^09[0-9]{8}$/.test(this.phone))) {
+                    this.phone = '';
                 }
             },
             LoginEmailCheck: function () {
@@ -252,7 +251,7 @@
                         if (response.data == true) {
                             axios({
                                 method: 'post',
-                                url: '/sendEmail/GetEmail',
+                                url: '/sendEmail/BGetEmail',
                                 //API要求的資料
                                 data: data,
                                 headers: { "Content-Type": 'multipart/form-data' }
@@ -340,7 +339,7 @@
 
                                     axios({
                                         method: 'post',
-                                        url: '/sendEmail/GetEmail',
+                                        url: '/sendEmail/BGetEmail',
                                         //API要求的資料
                                         data: data,
                                         headers: { "Content-Type": 'multipart/form-data' }

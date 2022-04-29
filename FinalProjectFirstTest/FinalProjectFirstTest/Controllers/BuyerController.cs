@@ -672,24 +672,45 @@ namespace FinalProjectFirstTest.Controllers
         {
             var newUser = _db.Users.Where(x => x.Id == model.Id).FirstOrDefault();
 
-            var oldPassword = newUser.Password;
-            if (model.Password != oldPassword)
+            if(newUser != null)
+            {
+                newUser.Name = model.Name;
+                //newUser.Email = model.Email;
+                newUser.Phone = model.Phone;
+
+                _db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+
+        }
+        [HttpPost]
+        public bool GetNewUserPW([FromBody] NewUserInfo model)
+        {
+            var newUser = _db.Users.Where(x => x.Id == model.Id).FirstOrDefault();
+
+            //var oldPassword = newUser.Password;
+            if (model.Password != null)
             {
                 string salt = newUser.Salt;
                 byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(model.Password + salt);
                 byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
                 string hashString = Convert.ToBase64String(hashBytes);
                 newUser.Password = hashString;
+
+                _db.SaveChanges();
+                return true;
             }
-            newUser.Name = model.Name;
-            newUser.Email = model.Email;
-            newUser.Phone = model.Phone;
-
-            _db.SaveChanges();
-            return true;
-
+            else
+            {
+                return false;
+            }
         }
-        
+
         //----------ViewModel-----------------------------------------------------
         public class NewUserInfo
         {

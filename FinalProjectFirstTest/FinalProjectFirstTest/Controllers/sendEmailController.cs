@@ -98,8 +98,8 @@ namespace FinalProjectFirstTest.Controllers
             }
 
         }
-        // 註冊 ==> 開通帳號 ==> 寄開通信
-        public ActionResult GetEmail(receiveEmailViewModel model)
+        // 註冊 ==> 開通帳號 ==> 寄開通信 (買家)
+        public ActionResult BGetEmail(receiveEmailViewModel model)
         {
             // 寄給誰
             var mails = new string[] { model.Email };
@@ -107,34 +107,71 @@ namespace FinalProjectFirstTest.Controllers
             var secretcodeMail = Encrypt(model.Email + "&y=true");
 
             var mailhelper = new MailHelper();
-            mailhelper.CreateMail(mails, "驗證信箱", "您好，請點擊以下網址註冊 : " + "https://gocamping.azurewebsites.net/sendEmail/get?d=" + secretcodeMail);
+            mailhelper.CreateMail(mails, "驗證信箱", "買家您好，點擊以下網址就能驗證成功喔~ : " + "https://localhost:5001/sendEmail/bget?d=" + secretcodeMail);
             mailhelper.Send();
 
             return Content("信已寄出");
         }
-        // 拿secretcodeMail回來解密 ==> email和帳號相同 ==> 同一人
+        public ActionResult SGetEmail(receiveEmailViewModel model)
+        {
+            // 寄給誰
+            var mails = new string[] { model.Email };
+            // 對email加密
+            var secretcodeMail = Encrypt(model.Email + "&y=true");
+
+            var mailhelper = new MailHelper();
+            mailhelper.CreateMail(mails, "驗證信箱", "買家您好，點擊以下網址就能驗證成功喔~ : " + "https://localhost:5001/sendEmail/sget?d=" + secretcodeMail);
+            mailhelper.Send();
+
+            return Content("信已寄出");
+        }
+        // 拿secretcodeMail回來解密 ==> email和帳號相同 ==> 同一人 (買家)
         [HttpGet()]
-        public async Task<IActionResult> Get([FromQuery] string d)
+        public async Task<IActionResult> BGet([FromQuery] string d)
         {
             // 對email解密
             string userMail = Decrypt(d);
             string[] sArray = userMail.Split("&");
             string mailString = sArray[0];
             var mail = mailString;
-            dynamic x;
 
-            if (User.IsInRole("User"))
+            var b = _db.Users.Where(x => x.Email == mail).FirstOrDefault();
+
+            if (b != null)
             {
-                x = _db.Users.Where(x => x.Email == mail).FirstOrDefault();
+                b.IsMailConfirm = true;
+                await _db.SaveChangesAsync();
+                return Content("帳號已開通");
             }
             else
             {
-                x = _db.Sellers.Where(x => x.Email == mail).FirstOrDefault();
+                return Content("帳號沒開通");
             }
-           
-            if (x != null)
+        }
+        public async Task<IActionResult> SGet([FromQuery] string d)
+        {
+            // 對email解密
+            string userMail = Decrypt(d);
+            string[] sArray = userMail.Split("&");
+            string mailString = sArray[0];
+            var mail = mailString;
+            //dynamic x;
+
+
+            //if (User.IsInRole("User"))
+            //{
+            //    x = _db.Users.Where(x => x.Email == mail).FirstOrDefault();
+            //}
+            //else
+            //{
+            //    x = _db.Sellers.Where(x => x.Email == mail).FirstOrDefault();
+            //}
+
+            var b = _db.Sellers.Where(x => x.Email == mail).FirstOrDefault();
+
+            if (b != null)
             {
-                x.IsMailConfirm = true;
+                b.IsMailConfirm = true;
                 await _db.SaveChangesAsync();
                 return Content("帳號已開通");
             }

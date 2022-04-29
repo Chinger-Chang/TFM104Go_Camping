@@ -13,6 +13,7 @@
             padding-top: 45px;
             padding-left: 90px;
             padding-right: 90px;
+            padding-bottom: 60px;
         }
 
         body {
@@ -64,7 +65,7 @@
                             <v-col cols="12" md="12">
                                 <v-text-field v-model="UsersList.name"
                                               :rules="nameRules"
-                                              :counter="10"
+                                              @*:counter="10"*@
                                               label="姓名"
                                               required></v-text-field>
                             </v-col>
@@ -116,7 +117,7 @@
 
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
-                                                <v-btn v-on:click="edit" color="primary" text>
+                                                <v-btn v-on:click="editPassword" color="primary" text>
                                                     確定@*@@click="dialog = false"*@
                                                 </v-btn>
                                             </v-card-actions>
@@ -125,30 +126,16 @@
                                 </div>
                             </v-col>
                         </v-row>
-                        <v-row>
-                            <v-col cols="12" md="4">
-                                <v-alert v-show="isShowEdit" type="success">
-                                    修改成功
-                                </v-alert>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col cols="12" md="4">
-                                <v-alert v-show="isShowNothing" type="error">
-                                    不可為空
-                                </v-alert>
-                            </v-col>
-                        </v-row>
                     </v-container>
                 </v-form>
             </template>
             <template>
                 <div class="text-center">
                     @*<v-btn dark
-                               color="red darken-2"
-                               @@click="snackbar = true">
-                            訂房<v-icon>mdi-cursor-pointer</v-icon>
-                        </v-btn>*@
+                   color="red darken-2"
+                   @@click="snackbar = true">
+                訂房<v-icon>mdi-cursor-pointer</v-icon>
+            </v-btn>*@
 
                     <v-snackbar v-model="snackbar"
                                 :multi-line="multiLine">
@@ -159,6 +146,67 @@
                                    text
                                    v-bind="attrs"
                                    @@click="snackbar = false">
+                                Close
+                            </v-btn>
+                        </template>
+                    </v-snackbar>
+                </div>
+                <div class="text-center">
+                    @*<v-btn dark
+                   color="red darken-2"
+                   @@click="snackbar = true">
+                訂房<v-icon>mdi-cursor-pointer</v-icon>
+            </v-btn>*@
+
+                    <v-snackbar v-model="newpw"
+                                :multi-line="multiLine">
+                        {{ textpw }}
+
+                        <template v-slot:action="{ attrs }">
+                            <v-btn color="red"
+                                   text
+                                   v-bind="attrs"
+                                   @@click="newpw = false">
+                                Close
+                            </v-btn>
+                        </template>
+                    </v-snackbar>
+                </div>
+                <div class="text-center">
+                    @*<v-btn dark
+                   color="red darken-2"
+                   @@click="snackbar = true">
+                訂房<v-icon>mdi-cursor-pointer</v-icon>
+            </v-btn>*@
+
+                    <v-snackbar v-model="all"
+                                :multi-line="multiLine">
+                        請填寫完全
+                        <template v-slot:action="{ attrs }">
+                            <v-btn color="red"
+                                   text
+                                   v-bind="attrs"
+                                   @@click="all = false">
+                                Close
+                            </v-btn>
+                        </template>
+                    </v-snackbar>
+                </div>
+                <div class="text-center">
+                    @*<v-btn dark
+                   color="red darken-2"
+                   @@click="snackbar = true">
+                訂房<v-icon>mdi-cursor-pointer</v-icon>
+            </v-btn>*@
+
+                    <v-snackbar v-model="pp"
+                                :multi-line="multiLine">
+                        手機格式錯誤
+                        <template v-slot:action="{ attrs }">
+                            <v-btn color="red"
+                                   text
+                                   v-bind="attrs"
+                                   @@click="pp = false">
                                 Close
                             </v-btn>
                         </template>
@@ -240,15 +288,23 @@
             data: {
                 UsersList: [],
                 pw: '',
-                isShowEdit: false,
-                isShowNothing: false,
+                
+                a: {
+                    id: '',
+                    name: '',
+                    phone: ''
+                },
+                b: {
+                    id: '',
+                    password: ''
+                },
                 //--------------------
                 valid: false,
                 firstname: '',
                 lastname: '',
                 nameRules: [
-                    v => !!v || 'Name is required',
-                    v => v.length <= 10 || 'Name must be less than 10 characters',
+                    v => !!v || '必填',
+                    v => v.length <= 10,
                 ],
                 email: '',
                 emailRules: [
@@ -263,49 +319,105 @@
                 //------------------------------------------------
                 multiLine: true,
                 snackbar: false,
-                text: '修改成功'
+                text: '修改成功',
+
+                newpw: false,
+                textpw: '請輸入新密碼',
+
+                all: false,
+                pp: false
             },
             methods: {
                 edit: function () {
 
-                    let self = this;
+                    if (this.UsersList.name.trim() == '') {
+                        //alert("name is nothing");
+                        this.all = true;
+                        return;
+                    } else {
+                        this.a.name = this.UsersList.name;
+                    }
 
-                    //alert(Object.keys(x));
-                    if (self.UsersList.name.trim() == '' || self.UsersList.phone.trim() == '') {
-                        //alert("不可為空");
-                        //self.isShowEdit = false;
-                        self.isShowNothing = true;
+                    if (this.UsersList.phone.trim() == '') {
+                        //alert("phone is nothing");
+                        this.all = true;
+                        return;
+                    } else if (!(/^09[0-9]{8}$/.test(this.UsersList.phone))) {
+                        //alert("手機格式錯誤");
+                        this.UsersList.phone = '';
+                        this.pp = true;
                         return;
                     }
-                    if (self.pw != '') {
-                        self.UsersList.password = self.pw;
-                        //alert(self.userslist.password);
+                    else {
+                        this.a.phone = this.UsersList.phone;
                     }
+                    this.a.id = this.UsersList.id;
 
-                    // || self.UsersList.password.trim() == ''
-
+                    let self = this;
                     //POST請求
                     axios({
                         method: 'post',
                         url: '/Buyer/GetNewUserInfo',
                         //API要求的資料
-                        data: self.UsersList,
+                        data: self.a,
                         headers: { "Content-Type": 'application/json' }
                     })
                         .then(function (response) {
                             if (response.data == true) {
                                 self.snackbar = true;
-                                //alert("修改成功");
-                                self.isShowNothing = false;
-                                //self.isShowEdit = true;
                                 self.dialog = false;
+                                //alert("修改成功");
                                 axios.get("/Buyer/GetUserInfo").then(function (res) {
                                     self.UsersList = res.data;
                                     console.log(res.data);
                                     self.pw = '';
                                 })
                             } else {
-                                alert("修改失敗");
+                                //alert("修改失敗");
+                            }
+
+                        })
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+
+                },
+                editPassword: function () {
+
+                    if (this.pw.trim() == '') {
+                        //alert("pw is nothing");
+                        this.newpw = true;
+                        return;
+                    } else {
+                        this.b.password = this.pw;
+                    }
+
+                    this.b.id = this.UsersList.id;
+
+                    let self = this;
+                    //POST請求
+                    axios({
+                        method: 'post',
+                        url: '/Buyer/GetNewUserPW',
+                        //API要求的資料
+                        data: self.b,
+                        headers: { "Content-Type": 'application/json' }
+                    })
+                        .then(function (response) {
+                            if (response.data == true) {
+                                self.snackbar = true;
+                                //alert("密碼修改成功");
+                                //self.isShowEdit = true;
+                                self.dialog = false;
+                                axios.get("/Buyer/GetUserInfo").then(function (res) {
+                                    //alert("密碼修改成功");
+                                    self.UsersList = res.data;
+                                    console.log(res.data);
+                                    self.pw = '';
+                                })
+                            } else {
+                                //alert("密碼修改失敗");
                             }
 
                         })
