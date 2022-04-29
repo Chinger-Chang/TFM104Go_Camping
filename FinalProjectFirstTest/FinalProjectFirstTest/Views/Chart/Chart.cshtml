@@ -1,25 +1,88 @@
-﻿
-<div id="c1"></div>
+﻿<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="container" id="c1">
+    <div class="row">
+        <div class="col-6">
+            <canvas id="myChart"></canvas>
+            <canvas id="myBar"></canvas>
+        </div>
+    </div>
+</div>
 
 
 <script>
-	var chart = new Vue({
-		el: '#c1',
-		data: {
-			roomlist: {}
-		},
-		methods: {
-			
+    var chart = new Vue({
+        el: '#c1',
+        data: {
+            roomnamelist: [],
+            roompricelist: [],
+            canamelist: [],
+            capricelist: []
+        },
+        methods: {
 
-		},
-		mounted: function () {
-			var self = this;
-			axios.get("/Chart/RoomChart").then(function (res) {
-				self.roomlist = res.data;
-				console.log(res.data);
-			});
 
-		}
-	});
+        },
+        mounted: function () {
+            var self = this;
+            axios.get("/Chart/RoomChart").then(function (res) {
+                for (item of res.data) {
+                    console.log(typeof (item.price));
+                    self.roomnamelist.push(item.roomName);
+                    self.roompricelist.push(item.price);
+                }
+                self.roomlist = res.data;
+                console.log(res.data);
+                axios.get("/Chart/Camping_AreaChart").then(function (res) {
+                    for (item of res.data) {
+                        console.log(typeof (item.price));
+                        self.canamelist.push(item.camping_AreaName);
+                        self.capricelist.push(item.price);
+                    }
+                    console.log(self.canamelist);
+                    console.log(self.capricelist);
+
+                    //self.canamelist = res.data;
+                    //console.log(res.data);
+                });
+            });
+
+            var xValues = self.canamelist;
+            var yValues = self.capricelist;
+            var barColors = [
+                "#b91d47",
+                "#00aba9"
+            ];
+
+            new Chart("myChart", {
+                type: "doughnut",
+                data: {
+                    labels: self.canamelist,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: self.capricelist
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "World Wide Wine Production 2018"
+                    }
+                }
+            });
+
+            new Chart("myBar", {
+                type: 'bar',
+                data: {
+                    labels: self.roomnamelist,
+                    datasets: [{
+                        label: '銷售業績(百萬)',
+                        data: self.roompricelist
+                    }]
+                }
+            });
+
+        }
+    });
 </script>
 

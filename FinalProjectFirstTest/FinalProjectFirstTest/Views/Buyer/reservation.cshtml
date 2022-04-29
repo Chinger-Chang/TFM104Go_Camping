@@ -42,8 +42,8 @@
                         <v-col cols="12" md="6">
                             <v-text-field v-model="name"
                                           :rules="nameRules"
-                                          :counter="10"
-                                          label="姓名"
+                                          @*:counter="10"*@
+                                          label="訂購人"
                                           required></v-text-field>
                         </v-col>
 
@@ -51,7 +51,7 @@
                             <v-text-field v-model="phone"
                                           :rules="phoneRules"
                                           :counter="10"
-                                          label="電話"
+                                          label="手機"
                                           required></v-text-field>
                         </v-col>
                     </v-row>
@@ -87,39 +87,71 @@
                     </div>
                 </v-container>
             </template>
+            <template>
+                <div class="text-center">
+                    <v-snackbar v-model="namedate"
+                                :multi-line="multiLine">
+                        {{ namedatetext }}
+
+                        <template v-slot:action="{ attrs }">
+                            <v-btn color="red"
+                                   text
+                                   v-bind="attrs"
+                                   @@click="namedate = false">
+                                Close
+                            </v-btn>
+                        </template>
+                    </v-snackbar>
+                </div>
+                <div class="text-center">
+                    <v-snackbar v-model="ph"
+                                :multi-line="phmultiLine">
+                        {{ phtext }}
+
+                        <template v-slot:action="{ attrs }">
+                            <v-btn color="red"
+                                   text
+                                   v-bind="attrs"
+                                   @@click="ph = false">
+                                Close
+                            </v-btn>
+                        </template>
+                    </v-snackbar>
+                </div>
+            </template>
             <!--v-container跟v-row都是bootstrap的用法只是Vuetify也有一套Layout方式 -->
             <!-- :allowed-dates的用法是允許哪一天可以選擇 -->
             <div class="form-row">
                 @*<div class="col-6">
-                        <div class="form-group">
-                            <h4>天數</h4>
-                            <input v-model="calDays" readonly type="number" class="form-control">
-                        </div>
-                    </div>*@
+                <div class="form-group">
+                    <h4>天數</h4>
+                    <input v-model="calDays" readonly type="number" class="form-control">
+                </div>
+            </div>*@
             </div>
             <div class="form-row">
                 @*<div class="col-6">
-                        <div class="form-group">
-                            <h4>總價</h4>
-                            <input readonly v-model="calPrice" type="text" class="form-control">
-                        </div>
-                    </div>*@
+                <div class="form-group">
+                    <h4>總價</h4>
+                    <input readonly v-model="calPrice" type="text" class="form-control">
+                </div>
+            </div>*@
             </div>
             @*<button v-on:click="send" type="button" class="btn btn-primary">下一步</button>*@
 
             @*<p>-----訂房資訊-----</p>
-                <p>name: {{name}}</p>
-                <p>tel: {{phone}}</p>
-                <p>startDate: {{ dates[0] }}</p>
-                <p>endDate: {{ dates[1] }}</p>
-                <p>range: {{ dates }}</p>
-                <p>{{reservationData.date1}}</p>
-                <p>{{reservationData.date2}}</p>
-                <p>-----getRoomIdtoView-----</p>
-                <p>{{getRoomIdtoView}}</p>
-                <p>weekDayPrice: {{getRoomIdtoView.weekDayPrice}}</p>
-                <p>-----ListString(不能選的日期)-----</p>
-                <p>{{ListString}}</p>*@
+        <p>name: {{name}}</p>
+        <p>tel: {{phone}}</p>
+        <p>startDate: {{ dates[0] }}</p>
+        <p>endDate: {{ dates[1] }}</p>
+        <p>range: {{ dates }}</p>
+        <p>{{reservationData.date1}}</p>
+        <p>{{reservationData.date2}}</p>
+        <p>-----getRoomIdtoView-----</p>
+        <p>{{getRoomIdtoView}}</p>
+        <p>weekDayPrice: {{getRoomIdtoView.weekDayPrice}}</p>
+        <p>-----ListString(不能選的日期)-----</p>
+        <p>{{ListString}}</p>*@
         </v-app>
     </div>
 
@@ -129,9 +161,14 @@
             el: '#mika',
             vuetify: new Vuetify(),
             data: {
+                multiLine: true,
+                namedate: false,
+                namedatetext: '請填完全',
+
+                phmultiLine: true,
+                ph: false,
+                phtext: '亂打 全部重填',
                 //------------------------------
-                phName: '姓名',
-                phTel: '電話號碼',
                 reservationData: {
                     name: '',
                     tel: '',
@@ -148,30 +185,14 @@
                 name: '',
                 phone: '',
                 nameRules: [
-                    v => !!v || 'Name is required',
-                    v => v.length <= 10 || 'Name must be less than 10 characters',
+                    v => !!v || '必填',
                 ],
                 phoneRules: [
-                    v => !!v || 'Phone is required',
-                    v => v.length == 10 || 'Phone must be equal to 10 characters',
-                ],
-                email: '',
-                emailRules: [
-                    v => !!v || 'E-mail is required',
-                    v => /.+@@.+/.test(v) || 'E-mail must be valid',
-                ],
+                    v => !!v || '必填',
+                    v => v.length == 10,
+                ]
             },
             methods: {
-                checkName: function () {
-                    if (this.reservationData.name === '') {
-                        this.phName = '不可為空';
-                    }
-                },
-                checkTel: function () {
-                    if (this.reservationData.tel === '') {
-                        this.phTel = '不可為空';
-                    }
-                },
                 send: function () {
                     var form = document.createElement("form");
                     form.method = "post";
@@ -186,15 +207,40 @@
                     var inpName = document.createElement("input");
                     inpName.type = "text";
                     inpName.name = "Name";
-                    inpName.value = this.name;
+                    if (this.name.trim() == '') {
+                        //alert("name is nothing");
+                        this.namedate = true;
+                        return;
+                    } else {
+                        inpName.value = this.name;
+                    }
                     form.appendChild(inpName);
 
                     var inpTel = document.createElement("input");
                     inpTel.type = "tel";
                     inpTel.name = "Tel";
-                    inpTel.value = this.phone;
+                    if (this.phone.trim() == '') {
+                        //alert("phone is nothing");
+                        this.namedate = true;
+                        return;
+                    } else if (!(/^09[0-9]{8}$/.test(this.phone))) {
+                        //alert("亂打 全部重填:)");
+                        this.name = '';
+                        this.phone = '';
+                        this.dates = [];
+                        this.ph = true;
+                        return;
+                    }
+                    else {
+                        inpTel.value = this.phone;
+                    }
                     form.appendChild(inpTel);
 
+                    if (this.dates.length == 0) {
+                        //alert("dates is nothing");
+                        this.namedate = true;
+                        return;
+                    }
                     var inpDate1 = document.createElement("input");
                     inpDate1.type = "text";
                     inpDate1.name = "CheckInDate";
