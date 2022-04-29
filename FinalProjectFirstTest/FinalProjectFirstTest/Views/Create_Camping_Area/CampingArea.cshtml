@@ -211,7 +211,7 @@
 			<div class="col-8 mx-auto my-2">
 				<div class="border p-5 shadow " style="background-color:#e6e4e4">
 					<div class="form-group row">
-						<input type="file" class="form-control" id="pic" v-on:change="up">
+						<input type="file" class="form-control" id="pic" v-on:change="up" multiple>
 						<p class="text-center">(最少三張，最多六張)</p>
 					</div>
 					<div class="form-group row">
@@ -281,7 +281,6 @@
 
 					if (input.files) {
 						while (count--) {
-							if (this.picture.preview_list.length < 6) {
 								var reader = new FileReader();
 								reader.onload = (e) => {
 									this.picture.preview_list.push(e.target.result);
@@ -289,12 +288,9 @@
 								this.picture.image_list.push(input.files[index]);
 								reader.readAsDataURL(input.files[index]);
 								index++;
-								alert("上傳了!!!");
+								//alert("上傳了!!!");
 								console.log(this.selected);
-							}
-							else {
-								alert("!!!");
-							}
+							
 						}
 
 					}
@@ -312,12 +308,12 @@
 
 				},
 				send: function () {
-					if (this.picture.preview_list.length < 3) {
+					if (this.picture.preview_list.length < 3 || this.picture.preview_list.length > 6 ) {
 						Swal.fire({
 							background: 'black',
 							color: 'white',
 							icon: 'warning',
-							title: '照片少於三張!!!',
+							title: '照片少於三張或大於六張!!!',
 							confirmButtonColor: '#3C6ECF',
 							confirmButtonText: '去加~',
 						});

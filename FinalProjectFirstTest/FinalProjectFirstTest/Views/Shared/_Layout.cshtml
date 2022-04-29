@@ -79,28 +79,15 @@
 		<!-- #region First navbar -->
 
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
-			@{
-				if (User.IsInRole("Seller"))
-				{
-					<div class="container">
-						<a class="navbar-brand" asp-area="" asp-controller="Order_Detail" asp-action="Seller_OrderDetail">賣家</a>
+			
+					
+						<a class="navbar-brand" asp-area="" asp-controller="Buyer" asp-action="Index"><img src="~/test/aaa.png" style="width:90px; height:65px ;padding:-3px"></a>
 						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
 								aria-expanded="false" aria-label="Toggle navigation">
 							<span class="navbar-toggler-icon"></span>
 						</button>
-					</div>
-				}
-				else
-				{
-					<div class="container">
-						<a class="navbar-brand" asp-area="" asp-controller="Buyer" asp-action="Index">買家</a>
-						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-								aria-expanded="false" aria-label="Toggle navigation">
-							<span class="navbar-toggler-icon"></span>
-						</button>
-					</div>
-				}
-			}
+					
+				
 
 			<!-- 這一行是靠右邊的-->
 			<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">

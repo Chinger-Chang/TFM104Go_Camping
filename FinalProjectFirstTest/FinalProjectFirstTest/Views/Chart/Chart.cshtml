@@ -1,21 +1,30 @@
 ﻿<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="container" id="c1">
-	<div class="row">
-		<div class="col-6">
-			
-				<canvas id="myChart"></canvas>
-			
-				<div class="text-center my-5">
-					<label for="selected" class="form-label">選擇露營區:</label>
-					<select v-model="selected" v-on:change="getroom">
-						<option value="" disabled selected>選擇露營區</option>
-						<option class="op" v-for="(item,index) in canamelist">{{ item }}</option>
-					</select>
-				</div>
-				<canvas id="myBar"></canvas>
+	<div class="row" style="justify-content:center;">
+		<div class="col-6 mx-auto">
+			<div class="text-center my-5">
+				<label for="selected" class="form-label">選擇露營區:</label>
+				<select v-model="selected" v-on:change="getroom">
+					<option value="" disabled selected>選擇露營區</option>
+					<option class="op" v-for="(item,index) in canamelist">{{ item }}</option>
+				</select>
 			</div>
+			
+
 		</div>
+		</div>
+</div>
+
+<div class="row">
+	
+		<span class="col-5">
+			<canvas id="myChart" style="display:inline;width:100px;height:100px;"></canvas>
+		</span>
+		<span class="col-7 mt-5">
+			<canvas id="myBar" style="display:inline;"></canvas>
+		</span>
+	
 </div>
 
 

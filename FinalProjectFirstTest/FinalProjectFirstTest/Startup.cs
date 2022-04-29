@@ -32,8 +32,8 @@ namespace FinalProjectFirstTest
 			services.AddSession();
 			services.AddDbContext<FinalProjectDbContext>(opt => 
 			{
-				opt.UseSqlServer(Configuration.GetConnectionString("FinalProjectTest"));
-				//opt.UseSqlServer(Configuration.GetConnectionString("TFM104Go_Camping"));
+				//opt.UseSqlServer(Configuration.GetConnectionString("FinalProjectTest"));
+				opt.UseSqlServer(Configuration.GetConnectionString("TFM104Go_Camping"));
 			});
 			// ¥[cookie
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -47,8 +47,8 @@ namespace FinalProjectFirstTest
 				opt.AppSecret = "02a8dd9f0001b321518d44662a985c1f";
 			}).AddGoogle(opt =>
 			{
-				opt.ClientId = "625568881968-fpuiuub4ggf313l9nc6nmsjqau7inu99.apps.googleusercontent.com";
-				opt.ClientSecret = "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";
+				opt.ClientId = "257467857848-vo6c2b5n7dvrrjuspvm6m1chqurjm5gl.apps.googleusercontent.com";
+				opt.ClientSecret = "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";
 			});
 
 		}

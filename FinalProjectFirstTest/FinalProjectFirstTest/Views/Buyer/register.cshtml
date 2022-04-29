@@ -55,50 +55,51 @@
                     <span class="underline"></span>
                 </button>
                 <!--form登入-->
-                <form class="form form-login" v-on:submit.prevent="login">
-                    <fieldset>
-                        <legend>Please, enter your email and password for login.</legend>
-                        <div class="input-block">
-                            <i class="bi bi-envelope-open-heart"></i>
+				<form class="form form-login" v-on:submit.prevent="login">
+					<fieldset>
+						<legend>Please, enter your email and password for login.</legend>
+						<div class="input-block">
+							<i class="bi bi-envelope-open-heart"></i>
 
-                            <label for="login-email">帳號(email)</label>
+							<label for="login-email">帳號(email)</label>
 
 
-                            <input id="login-email" type="email" required v-model.trim="LoginEmail" v-on:blur="LoginEmailCheck">
-                        </div>
-                        <div class="input-block">
-                            <i class="bi bi-lock"></i>
-                            <label for="login-password">密碼</label>
-                            <input id="login-password" type="password" required v-model.trim="LoginPassword"
-                                   v-on:blur="LoginPasswordCheck">
-                        </div>
-                    </fieldset>
-                    <div class="" style="display:flex;justify-content:center;">
-                        <div class="" style="position: relative; top:2.6rem">
-                            <a class="" v-on:click="forgetpassword" >忘記密碼</a>
-                            <a class="bi bi-question"></a>
-                        </div>
+							<input id="login-email" type="email" required v-model.trim="LoginEmail" v-on:blur="LoginEmailCheck">
+						</div>
+						<div class="input-block">
+							<i class="bi bi-lock"></i>
+							<label for="login-password">密碼</label>
+							<input id="login-password" type="password" required v-model.trim="LoginPassword"
+								   v-on:blur="LoginPasswordCheck">
+						</div>
+					</fieldset>
+					<div class="" style="display:flex;justify-content:center;">
+						<div class="" style="position: relative; top:2.6rem">
+							<a class="" v-on:click="forgetpassword">忘記密碼</a>
+							<a class="bi bi-question"></a>
+						</div>
 
-                        <button type="submit" class="btn-login">登入</button>
-                    </div>
-                    <a class="btn facebook-btn social-btn btn-primary" href="/Buyer/Facebook_Login"><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span></a>
-                        <br />
-                        <a class="btn google-btn social-btn btn-danger" href="/Buyer/Google_Login"><span><i class="fab fa-google-plus-g"></i> Sign in with Google+</span></a>
-                    @*<v-btn href="/Login_Register/Facebook_Login" color="#212121" dark>
-                            <i class="fab fa-facebook-f"></i>
-                        </v-btn>
-                        <v-btn href="/Login_Register/Google_Login" color="#212121" dark>
-                            <i class="fab fa-google-plus-g"></i>
-                        </v-btn>*@
+						<button type="submit" class="btn-login">登入</button>
+					</div>
+					<a class="btn facebook-btn social-btn btn-primary w-100" href="/Buyer/Facebook_Login"><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span></a>
+					<br />
+					<br />
+					<a class="btn google-btn social-btn btn-danger w-100" href="/Buyer/Google_Login"><span><i class="fab fa-google-plus-g"></i> Sign in with Google+</span></a>
+					@*<v-btn href="/Login_Register/Facebook_Login" color="#212121" dark>
+			<i class="fab fa-facebook-f"></i>
+		</v-btn>
+		<v-btn href="/Login_Register/Google_Login" color="#212121" dark>
+			<i class="fab fa-google-plus-g"></i>
+		</v-btn>*@
 
-                    <!--vue-->
-                    @*<div v-show="isFalse" class="alert alert-danger" role="alert">
-                        帳號或密碼錯誤
-                    </div>
-                    <div v-show="isLogin" class="alert alert-primary" role="alert">
-                        登入成功
-                    </div>*@
-                </form>
+					<!--vue-->
+					@*<div v-show="isFalse" class="alert alert-danger" role="alert">
+			帳號或密碼錯誤
+		</div>
+		<div v-show="isLogin" class="alert alert-primary" role="alert">
+			登入成功
+		</div>*@
+				</form>
             </div>
 
 
