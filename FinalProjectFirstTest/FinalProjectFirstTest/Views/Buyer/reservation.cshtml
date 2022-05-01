@@ -2,343 +2,361 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        .a {
-            background-color: #E0E0E0;
-        }
+	<style>
+		.a {
+			background-color: #E0E0E0;
+		}
 
-        body {
-            background-color: #212121;
-        }
+		body {
+			background-color: #212121;
+		}
 
-        .v-application--wrap {
-            background-color: #212121;
-        }
+		.v-application--wrap {
+			background-color: #212121;
+		}
 
-        .container a rounded-xl {
-            height: 70%;
-            width: 70%;
-        }
+		.container a rounded-xl {
+			height: 70%;
+			width: 70%;
+		}
 
-        #app {
-            width: 60% !important;
-        }
-        /*
-        .v-picker v-card v-picker--date theme--light {
-            width: 1000px;
-        }*/
-        .v-btn v-btn--has-bg theme--dark v-size--default {
-            height: 40px !important;
-        }
-    </style>
+		#app {
+			width: 60% !important;
+		}
+		/*
+		.v-picker v-card v-picker--date theme--light {
+			width: 1000px;
+		}*/
+		.v-btn v-btn--has-bg theme--dark v-size--default {
+			height: 40px !important;
+		}
+	</style>
 </head>
 <body>
 
-    <div id="mika" class="col d-flex justify-content-center ">
-        <v-app>
-            <template>
-                <v-container class="a rounded-xl" style="margin-top: 40px; padding-left: 50px; padding-right: 50px; ">
-                    <v-row style="padding-top: 45px;">
-                        <v-col cols="12" md="6">
-                            <v-text-field v-model="name"
-                                          :rules="nameRules"
-                                          @*:counter="10"*@
-                                          label="訂購人"
-                                          required></v-text-field>
-                        </v-col>
+	<div id="mika" class="col d-flex justify-content-center ">
+		<v-app>
+			<template>
+				<v-container class="a rounded-xl" style="margin-top: 40px; padding-left: 50px; padding-right: 50px; ">
+					<v-row style="padding-top: 45px;">
+						<v-col cols="12" md="6">
+							<v-text-field v-model="name"
+										  :rules="nameRules"
+										  @*:counter="10"*@
+										  label="訂購人"
+										  required></v-text-field>
+						</v-col>
 
-                        <v-col cols="12" md="6">
-                            <v-text-field v-model="phone"
-                                          :rules="phoneRules"
-                                          :counter="10"
-                                          label="手機"
-                                          required></v-text-field>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col cols="12" md="6">
-                            <div class="" style="display:flex;justify-content:center;">
-                                <div class="" style="width:90%;">
-                                    <v-date-picker width="100%" color="#616161" v-model="dates" range :allowed-dates="allowedDates">
-                                    </v-date-picker>
-                                </div>
-                            </div>
-                        </v-col>
-                        <v-col cols="12" md="6">
-                            <v-text-field v-model="dateRangeText" label="Date range" prepend-icon="mdi-calendar" readonly></v-text-field>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col cols="12" md="6">
-                            <v-text-field v-model="calDays"
-                                          label="天數"
-                                          required></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="6">
-                            <v-text-field v-model="calPrice"
-                                          label="總價"
-                                          required></v-text-field>
-                        </v-col>
-                    </v-row>
-                    <div style="display:flex;justify-content:flex-end; padding-bottom: 45px;">
-                        <v-btn large v-on:click="send" depressed color="#424242" dark class="">
-                            <v-icon left large>mdi-arrow-right-bold</v-icon>結帳
-                        </v-btn>
-                    </div>
-                </v-container>
-            </template>
-            <template>
-                <div class="text-center">
-                    <v-snackbar v-model="namedate"
-                                :multi-line="multiLine">
-                        {{ namedatetext }}
+						<v-col cols="12" md="6">
+							<v-text-field v-model="phone"
+										  :rules="phoneRules"
+										  :counter="10"
+										  label="手機"
+										  required></v-text-field>
+						</v-col>
+					</v-row>
+					<v-row>
+						<v-col cols="12" md="6">
+							<div class="" style="display:flex;justify-content:center;">
+								<div class="" style="width:90%;">
+									<v-date-picker width="100%" color="#616161" v-model="dates" range :allowed-dates="allowedDates">
+									</v-date-picker>
+								</div>
+							</div>
+						</v-col>
+						<v-col cols="12" md="6">
+							<v-text-field v-model="dateRangeText" label="Date range" prepend-icon="mdi-calendar" readonly></v-text-field>
+						</v-col>
+					</v-row>
+					<v-row>
+						<v-col cols="12" md="6">
+							<v-text-field v-model="calDays"
+										  label="天數"
+										  required readonly></v-text-field>
+						</v-col>
+						<v-col cols="12" md="6">
+							<v-text-field v-model="calPrice"
+										  label="總價"
+										  required readonly></v-text-field>
+						</v-col>
+					</v-row>
+					<div style="display:flex;justify-content:flex-end; padding-bottom: 45px;">
+						<v-btn large v-on:click="send" depressed color="#424242" dark class="">
+							<v-icon left large>mdi-arrow-right-bold</v-icon>結帳
+						</v-btn>
+					</div>
+				</v-container>
+			</template>
+			<template>
+				<div class="text-center">
+					<v-snackbar v-model="namedate"
+								:multi-line="multiLine">
+						{{ namedatetext }}
 
-                        <template v-slot:action="{ attrs }">
-                            <v-btn color="red"
-                                   text
-                                   v-bind="attrs"
-                                   @@click="namedate = false">
-                                Close
-                            </v-btn>
-                        </template>
-                    </v-snackbar>
-                </div>
-                <div class="text-center">
-                    <v-snackbar v-model="ph"
-                                :multi-line="phmultiLine">
-                        {{ phtext }}
+						<template v-slot:action="{ attrs }">
+							<v-btn color="red"
+								   text
+								   v-bind="attrs"
+								   @@click="namedate = false">
+								Close
+							</v-btn>
+						</template>
+					</v-snackbar>
+				</div>
+				<div class="text-center">
+					<v-snackbar v-model="ph"
+								:multi-line="phmultiLine">
+						{{ phtext }}
 
-                        <template v-slot:action="{ attrs }">
-                            <v-btn color="red"
-                                   text
-                                   v-bind="attrs"
-                                   @@click="ph = false">
-                                Close
-                            </v-btn>
-                        </template>
-                    </v-snackbar>
-                </div>
-            </template>
-            <!--v-container跟v-row都是bootstrap的用法只是Vuetify也有一套Layout方式 -->
-            <!-- :allowed-dates的用法是允許哪一天可以選擇 -->
-            <div class="form-row">
-                @*<div class="col-6">
-                <div class="form-group">
-                    <h4>天數</h4>
-                    <input v-model="calDays" readonly type="number" class="form-control">
-                </div>
-            </div>*@
-            </div>
-            <div class="form-row">
-                @*<div class="col-6">
-                <div class="form-group">
-                    <h4>總價</h4>
-                    <input readonly v-model="calPrice" type="text" class="form-control">
-                </div>
-            </div>*@
-            </div>
-            @*<button v-on:click="send" type="button" class="btn btn-primary">下一步</button>*@
+						<template v-slot:action="{ attrs }">
+							<v-btn color="red"
+								   text
+								   v-bind="attrs"
+								   @@click="ph = false">
+								Close
+							</v-btn>
+						</template>
+					</v-snackbar>
+				</div>
+				<div class="text-center">
+					<v-snackbar v-model="datedate"
+								:multi-line="phmultiLine">
+						請重新填寫
 
-            @*<p>-----訂房資訊-----</p>
-        <p>name: {{name}}</p>
-        <p>tel: {{phone}}</p>
-        <p>startDate: {{ dates[0] }}</p>
-        <p>endDate: {{ dates[1] }}</p>
-        <p>range: {{ dates }}</p>
-        <p>{{reservationData.date1}}</p>
-        <p>{{reservationData.date2}}</p>
-        <p>-----getRoomIdtoView-----</p>
-        <p>{{getRoomIdtoView}}</p>
-        <p>weekDayPrice: {{getRoomIdtoView.weekDayPrice}}</p>
-        <p>-----ListString(不能選的日期)-----</p>
-        <p>{{ListString}}</p>*@
-        </v-app>
-    </div>
+						<template v-slot:action="{ attrs }">
+							<v-btn color="red"
+								   text
+								   v-bind="attrs"
+								   @@click="datedate = false">
+								Close
+							</v-btn>
+						</template>
+					</v-snackbar>
+				</div>
+			</template>
+			<!--v-container跟v-row都是bootstrap的用法只是Vuetify也有一套Layout方式 -->
+			<!-- :allowed-dates的用法是允許哪一天可以選擇 -->
+			<div class="form-row">
+				@*<div class="col-6">
+						<div class="form-group">
+							<h4>天數</h4>
+							<input v-model="calDays" readonly type="number" class="form-control">
+						</div>
+					</div>*@
+			</div>
+			<div class="form-row">
+				@*<div class="col-6">
+						<div class="form-group">
+							<h4>總價</h4>
+							<input readonly v-model="calPrice" type="text" class="form-control">
+						</div>
+					</div>*@
+			</div>
+			@*<button v-on:click="send" type="button" class="btn btn-primary">下一步</button>*@
+
+			@*<p>-----訂房資訊-----</p>
+				<p>name: {{name}}</p>
+				<p>tel: {{phone}}</p>
+				<p>startDate: {{ dates[0] }}</p>
+				<p>endDate: {{ dates[1] }}</p>
+				<p>range: {{ dates }}</p>
+				<p>{{reservationData.date1}}</p>
+				<p>{{reservationData.date2}}</p>
+				<p>-----getRoomIdtoView-----</p>
+				<p>{{getRoomIdtoView}}</p>
+				<p>weekDayPrice: {{getRoomIdtoView.weekDayPrice}}</p>
+				<p>-----ListString(不能選的日期)-----</p>
+				<p>{{ListString}}</p>*@
+		</v-app>
+	</div>
 
 
-    <script>
-        var v = new Vue({
-            el: '#mika',
-            vuetify: new Vuetify(),
-            data: {
-                multiLine: true,
-                namedate: false,
-                namedatetext: '請填完全',
+	<script>
+		var v = new Vue({
+			el: '#mika',
+			vuetify: new Vuetify(),
+			data: {
+				multiLine: true,
+				namedate: false,
+				namedatetext: '請填完全',
 
-                phmultiLine: true,
-                ph: false,
-                phtext: '亂打 全部重填',
-                //------------------------------
-                reservationData: {
-                    name: '',
-                    tel: '',
-                    //date1: '',
-                    //date2: ''
-                },
-                getRoomIdtoView: [],
-                getCalDays: 0,
-                dates: [], //放開始,結束日期
-                ListString: [],
-                totalPrice: 0,
-                //-------------------------------
-                valid: false,
-                name: '',
-                phone: '',
-                nameRules: [
-                    v => !!v || '必填',
-                ],
-                phoneRules: [
-                    v => !!v || '必填',
-                    v => v.length == 10,
-                ]
-            },
-            methods: {
-                send: function () {
-                    var form = document.createElement("form");
-                    form.method = "post";
-                    form.action = "/Bank/SpgatewayPayBill";
+				phmultiLine: true,
+				ph: false,
+				phtext: '亂打 全部重填',
 
-                    var roomId = document.createElement("input");
-                    roomId.type = "text";
-                    roomId.name = "RoomId";
-                    roomId.value = this.getRoomIdtoView.roomId;
-                    form.appendChild(roomId);
+				datedate: false,
+				//------------------------------
+				reservationData: {
+					name: '',
+					tel: '',
+					//date1: '',
+					//date2: ''
+				},
+				getRoomIdtoView: [],
+				getCalDays: 0,
+				dates: [], //放開始,結束日期
+				ListString: [],
+				totalPrice: 0,
+				//-------------------------------
+				valid: false,
+				name: '',
+				phone: '',
+				nameRules: [
+					v => !!v || '必填',
+				],
+				phoneRules: [
+					v => !!v || '必填',
+					v => v.length == 10,
+				]
+			},
+			methods: {
+				send: function () {
+					var form = document.createElement("form");
+					form.method = "post";
+					form.action = "/Bank/SpgatewayPayBill";
 
-                    var inpName = document.createElement("input");
-                    inpName.type = "text";
-                    inpName.name = "Name";
-                    if (this.name.trim() == '') {
-                        //alert("name is nothing");
-                        this.namedate = true;
-                        return;
-                    } else {
-                        inpName.value = this.name;
-                    }
-                    form.appendChild(inpName);
+					var roomId = document.createElement("input");
+					roomId.type = "text";
+					roomId.name = "RoomId";
+					roomId.value = this.getRoomIdtoView.roomId;
+					form.appendChild(roomId);
 
-                    var inpTel = document.createElement("input");
-                    inpTel.type = "tel";
-                    inpTel.name = "Tel";
-                    if (this.phone.trim() == '') {
-                        //alert("phone is nothing");
-                        this.namedate = true;
-                        return;
-                    } else if (!(/^09[0-9]{8}$/.test(this.phone))) {
-                        //alert("亂打 全部重填:)");
-                        this.name = '';
-                        this.phone = '';
-                        this.dates = [];
-                        this.ph = true;
-                        return;
-                    }
-                    else {
-                        inpTel.value = this.phone;
-                    }
-                    form.appendChild(inpTel);
+					var inpName = document.createElement("input");
+					inpName.type = "text";
+					inpName.name = "Name";
+					if (this.name.trim() == '') {
+						//alert("name is nothing");
+						this.namedate = true;
+						return;
+					} else {
+						inpName.value = this.name;
+					}
+					form.appendChild(inpName);
 
-                    if (this.dates.length == 0) {
-                        //alert("dates is nothing");
-                        this.namedate = true;
-                        return;
-                    }
-                    var inpDate1 = document.createElement("input");
-                    inpDate1.type = "text";
-                    inpDate1.name = "CheckInDate";
-                    inpDate1.value = this.dates[0];
-                    form.appendChild(inpDate1);
+					var inpTel = document.createElement("input");
+					inpTel.type = "tel";
+					inpTel.name = "Tel";
+					if (this.phone.trim() == '') {
+						//alert("phone is nothing");
+						this.namedate = true;
+						return;
+					} else if (!(/^09[0-9]{8}$/.test(this.phone))) {
+						//alert("亂打 全部重填:)");
+						this.name = '';
+						this.phone = '';
+						this.dates = [];
+						this.ph = true;
+						return;
+					}
+					else {
+						inpTel.value = this.phone;
+					}
+					form.appendChild(inpTel);
 
-                    var inpDate2 = document.createElement("input");
-                    inpDate2.type = "text";
-                    inpDate2.name = "CheckOutDate";
-                    inpDate2.value = this.dates[1];
-                    form.appendChild(inpDate2);
+					if (this.dates.length == 0) {
+						//alert("dates is nothing");
+						this.namedate = true;
+						return;
+					}
+					var inpDate1 = document.createElement("input");
+					inpDate1.type = "text";
+					inpDate1.name = "CheckInDate";
+					inpDate1.value = this.dates[0];
+					form.appendChild(inpDate1);
 
-                    var total = document.createElement("input");
-                    total.type = "number";
-                    total.name = "Price";
-                    total.value = this.totalPrice;
-                    form.appendChild(total);
+					var inpDate2 = document.createElement("input");
+					inpDate2.type = "text";
+					inpDate2.name = "CheckOutDate";
+					inpDate2.value = this.dates[1];
+					form.appendChild(inpDate2);
 
-                    document.body.appendChild(form);
-                    form.submit();
-                },
-                allowedDates: function (x) {
-                    if (new Date(x) < new Date()) {
-                        return false;
-                    }
-                    for (let i = 0; i < this.ListString.length; i++) {
+					var total = document.createElement("input");
+					total.type = "number";
+					total.name = "Price";
+					total.value = this.totalPrice;
+					form.appendChild(total);
 
-                        if (this.ListString[i] == x) {
-                            return false;
-                        }
-                    }
-                    return true;
-                },
-                // 判斷日期不可為空
-                // 判斷不可選到xxDate
-            },
-            computed: {
-                calDays() {
-                    var d1 = new Date(this.dates[0]);
-                    var d2 = new Date(this.dates[1]);
-                    var sub = (d2.getTime() - d1.getTime()) / (1000 * 3600 * 24);
-                    if (sub > 0) {
-                        this.getCalDays = sub;
-                        return sub;
-                    } else if (sub <= 0) {
-                        //this.reservationData.date1 = '';
-                        //this.reservationData.date2 = '';
-                        this.dates = [];
-                        alert('請重新填寫');
-                    }
-                },
-                calPrice() {
-                    var d1GetDay = new Date(this.dates[0]).getDay(); // 星期幾0-6 // 型態:number
-                    var d2GetDay = new Date(this.dates[1]).getDay();
+					document.body.appendChild(form);
+					form.submit();
+				},
+				allowedDates: function (x) {
+					if (new Date(x) < new Date()) {
+						return false;
+					}
+					for (let i = 0; i < this.ListString.length; i++) {
 
-                    var d1Format = new Date(this.dates[0])
-                    var d2Format = new Date(this.dates[1])
+						if (this.ListString[i] == x) {
+							return false;
+						}
+					}
+					return true;
+				},
+				// 判斷日期不可為空
+				// 判斷不可選到xxDate
+			},
+			computed: {
+				calDays() {
+					var d1 = new Date(this.dates[0]);
+					var d2 = new Date(this.dates[1]);
+					var sub = (d2.getTime() - d1.getTime()) / (1000 * 3600 * 24);
+					if (sub > 0) {
+						this.getCalDays = sub;
+						return sub;
+					} else if (sub <= 0) {
+						//this.reservationData.date1 = '';
+						//this.reservationData.date2 = '';
+						this.dates = [];
+						//alert('請重新填寫');
+						this.datedate = true;
+					}
+				},
+				calPrice() {
+					var d1GetDay = new Date(this.dates[0]).getDay(); // 星期幾0-6 // 型態:number
+					var d2GetDay = new Date(this.dates[1]).getDay();
 
-                    var weekdayP = this.getRoomIdtoView.weekDayPrice; // 型態:number
-                    var weekendP = this.getRoomIdtoView.weekendPrice;
+					var d1Format = new Date(this.dates[0])
+					var d2Format = new Date(this.dates[1])
 
-                    var temp = d1GetDay; // 星期幾用
-                    var xxx = d1GetDay;  // addDay 算日期用
-                    var yyy = d1GetDay + this.getCalDays;
-                    var total = 0;
-                    while (xxx < yyy) {
-                        if (temp > 6) {
-                            temp = temp - 7;
-                        }
-                        if (temp == 0) {
-                            total = total + weekendP;
-                        } else if (temp == 6) {
-                            total = total + weekendP;
-                        } else {
-                            total = total + weekdayP;
-                        }
-                        temp = temp + 1; // 星期幾+1
-                        xxx = xxx + 1;   // 日期+1
-                    }
-                    this.totalPrice = total;
-                    return total;
-                },
-                dateRangeText: function () {
-                    return this.dates.join(' ~ ');
-                }
-            },
-            mounted: function () {
-                var self = this;
-                axios.get("/Buyer/getRoomIdtoView").then(function (res) {
-                    self.getRoomIdtoView = res.data;
+					var weekdayP = this.getRoomIdtoView.weekDayPrice; // 型態:number
+					var weekendP = this.getRoomIdtoView.weekendPrice;
 
-                })
-                axios.get("/Buyer/ListString").then(function (res) {
-                    self.ListString = res.data;
-                    console.log(res.data);
-                })
-            }
-        })
-    </script>
+					var temp = d1GetDay; // 星期幾用
+					var xxx = d1GetDay;  // addDay 算日期用
+					var yyy = d1GetDay + this.getCalDays;
+					var total = 0;
+					while (xxx < yyy) {
+						if (temp > 6) {
+							temp = temp - 7;
+						}
+						if (temp == 0) {
+							total = total + weekendP;
+						} else if (temp == 6) {
+							total = total + weekendP;
+						} else {
+							total = total + weekdayP;
+						}
+						temp = temp + 1; // 星期幾+1
+						xxx = xxx + 1;   // 日期+1
+					}
+					this.totalPrice = total;
+					return total;
+				},
+				dateRangeText: function () {
+					return this.dates.join(' ~ ');
+				}
+			},
+			mounted: function () {
+				var self = this;
+				axios.get("/Buyer/getRoomIdtoView").then(function (res) {
+					self.getRoomIdtoView = res.data;
+
+				})
+				axios.get("/Buyer/ListString").then(function (res) {
+					self.ListString = res.data;
+					console.log(res.data);
+				})
+			}
+		})
+	</script>
 </body>
 </html>

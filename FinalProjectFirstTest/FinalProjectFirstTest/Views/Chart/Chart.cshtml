@@ -10,23 +10,23 @@
 					<option class="op" v-for="(item,index) in canamelist">{{ item }}</option>
 				</select>
 			</div>
-			
+
 
 		</div>
-		</div>
-</div>
+	</div>
 
-<div class="row">
-	
+
+	<div class="row">
+
 		<span class="col-5">
 			<canvas id="myChart" style="display:inline;width:100px;height:100px;"></canvas>
 		</span>
 		<span class="col-7 mt-5">
 			<canvas id="myBar" style="display:inline;"></canvas>
 		</span>
-	
-</div>
 
+	</div>
+</div>
 
 <script>
 	var chart = new Vue({
@@ -72,6 +72,8 @@
 		mounted: function () {
 			var self = this;
 			axios.get("/Chart/RoomChart").then(function (res) {
+				self.selected = res.data[0].camping_AreaName;
+				console.log(self.caname);
 				for (item of res.data) {
 					self.roomnamelist.push(item.roomName);
 					self.roompricelist.push(item.price);
@@ -79,8 +81,6 @@
 
 					self.barColors2.push('#' + color);
 				}
-				self.roomlist = res.data;
-				console.log(res.data);
 				
 				axios.get("/Chart/Camping_AreaChart").then(function (res) {
 					
@@ -112,7 +112,6 @@
 					}
 				}
 			});
-
 			const ctx2 = document.getElementById("myBar");
 			self.myBar = new Chart(ctx2, {
 				type: 'bar',

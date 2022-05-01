@@ -13,6 +13,14 @@
 		position: fixed;
 		text-align: center;
 	}
+	.myImg {
+		transform: scale(1,1);
+		transition: all 1s ease-out;
+	}
+
+		.myImg:hover {
+			transform: scale(1.05,1.05);
+		}
 </style>
 <div class="float-right" style="display:flex;justify-content:center;">
 
@@ -50,6 +58,7 @@
 				<textarea class="form-control py-2" id="description" v-model="productList.auditDescription" readonly style="background-color: #13439f; color: white; text-align: center;"></textarea>
 			</div>
 			<div class="mx-auto text-center " style="background-color: #292b2c;color:white;"><h3 class="p-1">露營區</h3></div>
+			<div class="myImg">
 			<div class="card mb-5 mx-auto w-100 shadow" style="height:auto" v-if="productList.camping_AreaId !=null" id="productList.camping_AreaId">
 				<div class="row no-gutters">
 					<div class="col-md-5">
@@ -75,8 +84,10 @@
 					</div>
 				</div>
 			</div>
+				</div>
 			<div class="mx-auto text-center w-75" style="background-color: #292b2c; color: white;"><h3 class="p-1">房間</h3></div>
-			<div class="card mb-5 mx-auto w-75  shadow" style="height:auto" v-for="(item,index) of productList.myrooms" :id="item.roomId">
+			<div class="myImg" v-for="(item,index) of productList.myrooms">
+			<div class="card mb-5 mx-auto w-75  shadow" style="height:auto" :id="item.roomId">
 				<div class="row no-gutters">
 					<div class="col-md-6">
 						<img class="w-100 h-100" v-bind:src="item.room_Path">
@@ -101,6 +112,7 @@
 					</div>
 				</div>
 			</div>
+				</div>
 			@*<div class="col-4" v-if="productList.camping_AreaId !=null">
 			<div class="card" style="width: 18rem;" id="productList.camping_AreaId">
 				<img class="card-img-top" v-bind:src="productList.camping_Area_Path" alt="Card image cap">
