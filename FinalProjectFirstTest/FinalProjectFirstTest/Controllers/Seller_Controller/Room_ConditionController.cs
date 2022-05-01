@@ -65,7 +65,7 @@ namespace FinalProjectFirstTest.Controllers.Seller_Controller
 		{
 			// 拿roomId
 
-			var od = _db.OrderDetails.Where(x => x.RoomId == id && (x.Status == Status.Success || x.Status == Status.Refunding)).Select(x => new Get_Date
+			var od = _db.OrderDetails.Where(x => x.RoomId == id && (x.Status == Status.Success || x.Status == Status.Refunding)).OrderBy(o => o.StartDate).Select(x => new Get_Date
 			{
 				StartDate = x.StartDate,
 				EndDate = x.EndDate

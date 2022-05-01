@@ -58,11 +58,12 @@ namespace FinalProjectFirstTest.Controllers.Seller_Controller
 						where c.Id == campid
 						  select new RoomChartViewModel
 						{
+							Camping_AreaName = c.Name,
 							RoomName = r.Name,
 							Price = CalPrice.CalDaysPrice(od.StartDate, od.EndDate, r.Price_Of_Weekdays, r.Price_Of_Weekends),
 
 						}).ToList();
-			var gp = mydata.GroupBy(g => g.RoomName).Select(s => new RoomChartViewModel { RoomName = s.Key, Price = s.Sum(s => s.Price) });
+			var gp = mydata.GroupBy(g => g.RoomName).Select(s => new RoomChartViewModel { RoomName = s.Key, Price = s.Sum(s => s.Price) ,Camping_AreaName = s.FirstOrDefault().Camping_AreaName });
 
 			return gp;
 		}
@@ -89,6 +90,7 @@ namespace FinalProjectFirstTest.Controllers.Seller_Controller
 		}
 		public class RoomChartViewModel
 		{
+			public string Camping_AreaName { get; set; }
 			public string RoomName { get; set; }
 			public decimal Price { get; set; }
 

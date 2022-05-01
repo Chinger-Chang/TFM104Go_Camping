@@ -249,13 +249,11 @@ namespace FinalProjectFirstTest.Controllers
                 int odid = Convert.ToInt32(strOdid);
 
                 var o = _db.OrderDetails.Where(x => x.Id == odid).FirstOrDefault();
-                if(convertmodel.Message == "授權成功")
+                if (convertmodel.Message == "授權成功")
                 {
                     o.Status = Status.Success;
                     _db.SaveChanges();
                 }
-                
-                
 
                 return Content(JsonConvert.SerializeObject(convertmodel));
                 }

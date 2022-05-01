@@ -105,7 +105,7 @@ namespace FinalProjectFirstTest.Controllers.Seller_Controller
                         }
                         else
                         {
-                            return Json(Url.Action("Seller_OrderDetail", "Order_Detail"));
+                            return Json(Url.Action("CampingInformation", "Camping_Information"));
                         }
 
                     }
@@ -250,6 +250,7 @@ namespace FinalProjectFirstTest.Controllers.Seller_Controller
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
+            HttpContext.Session.Clear();
 
             return RedirectToAction("Index", "Buyer");//導至登入頁
         }

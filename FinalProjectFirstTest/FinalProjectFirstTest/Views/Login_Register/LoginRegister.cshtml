@@ -186,24 +186,13 @@
 					headers: { "Content-Type": 'multipart/form-data' }
 				})
 					.then(function (response) {
-						if (response.data === 400) {
+						if (response.data === 400 || response.data === 401) {
 							Swal.fire({
 								background: 'white',
 								color: 'black',
 								icon: 'error',
 								title: 'Oops...',
-								text: '沒有此使用者喔~是不是帳號錯了~',
-								confirmButtonColor: '#3C6ECF',
-								confirmButtonText: '重打!',
-							});
-						}
-						else if (response.data === 401) {
-							Swal.fire({
-								background: 'white',
-								color: 'black',
-								icon: 'error',
-								title: 'Oops...',
-								text: '密碼錯了喔~',
+								text: '帳號或密碼錯誤，請重新輸入~',
 								confirmButtonColor: '#3C6ECF',
 								confirmButtonText: '重打!',
 							});

@@ -36,13 +36,13 @@ namespace FinalProjectFirstTest.Controllers
             Console.WriteLine(res);
 
             // 新密碼加鹽雜湊存進此user密碼欄位
-            if (User.IsInRole("User"))
+            if (User.IsInRole("Seller"))
 			{
-                thisUser = _db.Users.FirstOrDefault(x => x.Email == model.Email);
+                thisUser = _db.Sellers.FirstOrDefault(x => x.Email == model.Email);
             }
             else
 			{
-                thisUser = _db.Sellers.FirstOrDefault(x => x.Email == model.Email);
+                thisUser = _db.Users.FirstOrDefault(x => x.Email == model.Email);
             }
             var thisUserSalt = thisUser.Salt;
             byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(res + thisUserSalt);
