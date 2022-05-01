@@ -123,7 +123,7 @@ namespace FinalProjectFirstTest.Controllers
                     // * 訂單金額
                     Amt = amount,
                     // * 商品資訊
-                    ItemDesc = "商品資訊(自行修改)",
+                    ItemDesc = "商品資訊",
                     // 繳費有效期限(適用於非即時交易)
                     ExpireDate = null,
                     // 支付完成 返回商店網址
@@ -249,8 +249,13 @@ namespace FinalProjectFirstTest.Controllers
                 int odid = Convert.ToInt32(strOdid);
 
                 var o = _db.OrderDetails.Where(x => x.Id == odid).FirstOrDefault();
-                o.Status = Status.Success;
-                _db.SaveChanges();
+                if(convertmodel.Message == "授權成功")
+                {
+                    o.Status = Status.Success;
+                    _db.SaveChanges();
+                }
+                
+                
 
                 return Content(JsonConvert.SerializeObject(convertmodel));
                 }

@@ -74,6 +74,7 @@
                             <v-col cols="12" md="12">
                                 <v-text-field v-model="UsersList.phone"
                                               :rules="PhoneRules"
+                                              :counter="10"
                                               label="電話"
                                               required></v-text-field>
                             </v-col>
@@ -312,8 +313,8 @@
                     v => /.+@@.+/.test(v) || 'E-mail must be valid',
                 ],
                 PhoneRules: [
-                    v => !!v || 'Phone is required',
-                    v => v.length == 10 || 'Phone must be less than 10 characters',
+                    v => !!v || '必填',
+                    v => v.length == 10 ,
                 ],
                 dialog: false,
                 //------------------------------------------------
