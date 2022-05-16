@@ -110,7 +110,7 @@
 							confirmButtonText: '確定',
 							preConfirm: () => {
 								var description = document.querySelector('.swal2-textarea').value;
-								console.log(description);
+								//console.log(description);
 								axios({
 									method: 'post',
 									url: '/Manager/NotPass',
@@ -141,7 +141,7 @@
 						var self = this;
 					axios.get("/Manager/Get_All_FromDB").then(function (res) {
 						self.alllist = res.data;
-						console.log(self.alllist);
+						//console.log(self.alllist);
 					});
 
 					}

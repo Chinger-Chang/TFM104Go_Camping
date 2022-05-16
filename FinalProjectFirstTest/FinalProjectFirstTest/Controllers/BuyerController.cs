@@ -459,6 +459,23 @@ namespace FinalProjectFirstTest.Controllers
             return View();
         }
         // 傳 roomID + room平日/假日價錢
+        //public getRoomIdandPrice getRoomIdtoView(getRoomIdandPrice model)
+        //{
+        //    // 拿roomId
+        //    string rid = HttpContext.Session.GetString("rid");
+        //    int Rid = Convert.ToInt32(rid);
+
+        //    var room = _db.Rooms.FirstOrDefault(x => x.Id == Rid);
+        //    var s = new getRoomIdandPrice
+        //    {
+        //        RoomId = room.Id,
+        //        WeekDayPrice = room.Price_Of_Weekdays,
+        //        WeekendPrice = room.Price_Of_Weekends
+        //    };
+        //    return s;
+        //}
+
+        // 傳 roomID + room平日/假日價錢
         public getRoomIdandPrice getRoomIdtoView(getRoomIdandPrice model)
         {
             // 拿roomId
@@ -469,6 +486,10 @@ namespace FinalProjectFirstTest.Controllers
             var s = new getRoomIdandPrice
             {
                 RoomId = room.Id,
+                CAName = _db.Camping_Areas.Where(x => x.Id == room.Camping_AreaId).Select(x => x.Name).FirstOrDefault(),
+                RoomName = room.Name,
+                RoomType = room.RoomType.GetType().GetMember(room.RoomType.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName(),
+                Room_Path = _db.Room_Pictures.Where(x => x.RoomId == room.Id).Select(x => x.Path).ToList(),
                 WeekDayPrice = room.Price_Of_Weekdays,
                 WeekendPrice = room.Price_Of_Weekends
             };
@@ -557,7 +578,7 @@ namespace FinalProjectFirstTest.Controllers
         {
             var userId = Int32.Parse(User.Claims.FirstOrDefault(x => x.Type == "User_Id").Value);
             //&& x.Status == Status.Success
-            var s = (from od in _db.OrderDetails.Where(x => x.UserId == userId && x.Status != Status.Cancel && x.EndDate >= DateTime.Now)
+            var s = (from od in _db.OrderDetails.Where(x => x.UserId == userId && x.Status != Status.Cancel && x.EndDate >= DateTime.Now && x.Status != Status.Favority) //0502
                      join r in _db.Rooms on od.RoomId equals r.Id
                      join ca in _db.Camping_Areas on r.Camping_AreaId equals ca.Id
                      orderby od.CreateDate descending
@@ -636,6 +657,13 @@ namespace FinalProjectFirstTest.Controllers
             if (od != null && od.Status == Status.Success)
             {
                 od.Status = Status.Refunding;
+                od.CancelDate = DateTime.Now;
+                _db.SaveChanges();
+                return true;
+            }
+            else if (od != null && od.Status == Status.Paying)
+            {
+                _db.OrderDetails.Remove(od);
                 _db.SaveChanges();
                 return true;
             }
@@ -821,6 +849,10 @@ namespace FinalProjectFirstTest.Controllers
         public class getRoomIdandPrice
         {
             public int RoomId { get; set; }
+            public string CAName { get; set; }
+            public string RoomName { get; set; }
+            public string RoomType { get; set; }
+            public List<string> Room_Path { get; set; }
             public decimal WeekDayPrice { get; set; }
             public decimal WeekendPrice { get; set; }
 

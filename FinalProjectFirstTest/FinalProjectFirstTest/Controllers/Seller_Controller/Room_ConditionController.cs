@@ -87,11 +87,11 @@ namespace FinalProjectFirstTest.Controllers.Seller_Controller
 			List<string> AllDate = new List<string>();
 			List<int> Remaining_Amount = new List<int>();
 			var Count = _db.Rooms.Where(x => x.Id == id).FirstOrDefault().Count;
-			Console.WriteLine("aaa");
+			//Console.WriteLine("aaa");
 			foreach (var x in mydata1)
 			{
-				Console.WriteLine(x.Date);
-				Console.WriteLine(x.Count);
+				//Console.WriteLine(x.Date);
+				//Console.WriteLine(x.Count);
 				AllDate.Add(x.Date.ToString());
 				Remaining_Amount.Add(Count - x.Count);
 

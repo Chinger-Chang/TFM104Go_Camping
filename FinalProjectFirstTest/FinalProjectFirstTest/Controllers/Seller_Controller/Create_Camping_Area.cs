@@ -37,7 +37,7 @@ namespace CampingAreaTest330.Controllers
 			var path = _environment.WebRootPath + "/Camping_Area_Picture";
 			var picsize = model.Path.Count;
 			var file = model.Path;
-			Console.WriteLine(model.Region);
+			//Console.WriteLine(model.Region);
 			//ProductType pt = (ProductType)Enum.Parse(typeof(ProductType),)
 			if (model != null)
 			{

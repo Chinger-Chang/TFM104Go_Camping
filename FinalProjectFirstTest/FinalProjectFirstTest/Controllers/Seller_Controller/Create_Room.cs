@@ -39,7 +39,7 @@ namespace CampingAreaTest330.Controllers
 		{
 			
 			var cid = HttpContext.Session.GetString("camping_area_id");
-			Console.WriteLine(cid);
+			//Console.WriteLine(cid);
 			var path = _environment.WebRootPath + "/Room_Picture";
 			var picsize = model.Path.Count;
 			var file = model.Path;

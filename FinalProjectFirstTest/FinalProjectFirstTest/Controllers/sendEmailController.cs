@@ -33,7 +33,7 @@ namespace FinalProjectFirstTest.Controllers
             var bytesarray = new byte[55 / 8];
             randomPassword.GetBytes(bytesarray);
             var res = Convert.ToBase64String(bytesarray);
-            Console.WriteLine(res);
+            //Console.WriteLine(res);
 
             // 新密碼加鹽雜湊存進此user密碼欄位
             if (User.IsInRole("Seller"))

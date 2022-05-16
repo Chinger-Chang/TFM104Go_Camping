@@ -225,11 +225,11 @@
             var self = this;
             axios.get("/Manager/GetAllOrderDetails").then(function (res) {
 				self.AllOrderDetailsList = res.data;
-				console.log(res.data);
+				//console.log(res.data);
             }),
                 axios.get("/Manager/GetReFundingOrderDetails").then(function (res) {
 					self.ReOrderDetailsList = res.data;
-					console.log(res.data);
+					//console.log(res.data);
             })
         }
     });

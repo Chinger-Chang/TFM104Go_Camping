@@ -165,7 +165,7 @@ namespace FinalProjectFirstTest.Controllers.Seller_Controller
                 });
                 _db.SaveChanges();
             }
-            Console.WriteLine(email);
+           // Console.WriteLine(email);
 
             var claims = new List<Claim>()
                     {
@@ -179,7 +179,7 @@ namespace FinalProjectFirstTest.Controllers.Seller_Controller
             await HttpContext.SignInAsync(claimPrincipal);
             //return RedirectToAction("login", "Account");
 
-            return RedirectToAction("Seller_OrderDetail", "Order_Detail");
+            return RedirectToAction("CampingInformation", "Camping_Information");
         }
 
         //[Route("google-login")]
@@ -228,7 +228,7 @@ namespace FinalProjectFirstTest.Controllers.Seller_Controller
                 });
                 _db.SaveChanges();
             }
-            Console.WriteLine(email);
+            //Console.WriteLine(email);
             //Console.WriteLine(name);
 
             var claims = new List<Claim>()
@@ -242,7 +242,7 @@ namespace FinalProjectFirstTest.Controllers.Seller_Controller
             await HttpContext.SignInAsync(claimPrincipal);
             //return RedirectToAction("login", "Account");
 
-            return RedirectToAction("Seller_OrderDetail", "Order_Detail");
+            return RedirectToAction("CampingInformation", "Camping_Information");
 
             //return Json(claims);
         }

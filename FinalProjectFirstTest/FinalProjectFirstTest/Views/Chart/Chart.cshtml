@@ -44,7 +44,7 @@
 		methods: {
 			getroom: function () {
 				var self = this;
-				console.log(self.selected);
+				//console.log(self.selected);
 				axios.get("/Chart/Cid/" + self.selected).then(function (res) {
 					if (res.data == true) {
 						window.location.reload();
@@ -73,7 +73,7 @@
 			var self = this;
 			axios.get("/Chart/RoomChart").then(function (res) {
 				self.selected = res.data[0].camping_AreaName;
-				console.log(self.caname);
+				//console.log(self.caname);
 				for (item of res.data) {
 					self.roomnamelist.push(item.roomName);
 					self.roompricelist.push(item.price);

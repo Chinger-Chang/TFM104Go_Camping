@@ -46,7 +46,7 @@
 				/*alert(self.camplist.camping_AreaId[self.selectcamp]);*/
 				axios.get("/Room_Condition/Get_Room/" + self.camplist.camping_AreaId[self.selectcamp]).then(function (res) {
 					self.roomlist = res.data;
-					console.log(res.data);
+					//console.log(res.data);
 					self.selectroom = "";
 
 
@@ -63,11 +63,11 @@
 				var dates = [];
 				/*alert(self.roomlist.roomId[self.selectroom]);*/
 				axios.get("/Room_Condition/ListString/" + self.roomlist.roomId[self.selectroom]).then(function (res) {
-					console.log(res.data);
+					//console.log(res.data);
 					self.getalldate = res.data.getAllDate;
-					console.log(self.getalldate);
+					//console.log(self.getalldate);
 					self.getremaining_amount = res.data.getRemaining_Amount;
-					console.log(self.getremaining_amount);
+					//console.log(self.getremaining_amount);
 					self.totalamount = res.data.total_Amount;
 					//console.log(self.totalamount);
 
@@ -76,14 +76,14 @@
 					//console.log(TodayDate);
 
 					em = EndDate.getMonth();
-					d = TodayDate.getDate(); console.log(em);
-					m = TodayDate.getMonth(); console.log(m);
+					d = TodayDate.getDate(); //console.log(em);
+					m = TodayDate.getMonth(); //console.log(m);
 					y = TodayDate.getFullYear();
 					ev = [];
-					console.log(d, m, y);
+					//console.log(d, m, y);
 					date = new Date(y, m, 1);
 					enddate = new Date(y, m, 1);
-					console.log(date);
+					//console.log(date);
 					dates = [];
 
 					while (date.getMonth() <= em) {
@@ -127,14 +127,14 @@
 						}
 					}
 					for (let e of ev) {
-						console.log(e);
+						//console.log(e);
 					}
 					var calendarEl = document.getElementById('calendar');
 					var calendar = new FullCalendar.Calendar(calendarEl, {
 						initialView: 'dayGridMonth',
 						eventTextColor: "black",
 						eventContent: function (arg) {
-							console.log(arg);
+							//console.log(arg);
 							if (arg.event.title.includes('間')) {
 								return {
 									html: ' <span class="material-icons">bedroom_parent</span >' + arg.event.title
@@ -153,11 +153,11 @@
 			var self = this;
 			axios.get("/Room_Condition/Get_Camping_Area").then(function (res) {
 				self.camplist = res.data;
-				console.log(self.camplist);
+				//console.log(self.camplist);
 
 				axios.get("/Room_Condition/Get_Room").then(function (res) {
 					self.roomlist = res.data;
-					console.log(self.roomlist);
+					//console.log(self.roomlist);
 
 
 				});

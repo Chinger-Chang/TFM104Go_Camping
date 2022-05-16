@@ -165,7 +165,7 @@
 					})
 					.catch(function (response) {
 						//handle error
-						console.log(response);
+						//console.log(response);
 					});
 
 			},
@@ -250,7 +250,7 @@
 					confirmButtonText: '寄信',
 					preConfirm: () => {
 						var email = document.querySelector('.swal2-input').value;
-						console.log(email);
+						//console.log(email);
 						axios({
 							method: 'post',
 							url: '/sendEmail/forgetPassword',

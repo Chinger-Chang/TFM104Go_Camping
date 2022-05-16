@@ -62,7 +62,7 @@ namespace CampingAreaTest330.Controllers
 			}
 			HttpContext.Session.SetString("camping_area_id", id.ToString());
 			//id = Convert.ToInt32(HttpContext.Session.GetString("camping_area_id"));
-			Console.WriteLine(id);
+			//Console.WriteLine(id);
 			var camp = _db.Camping_Areas.FirstOrDefault(x => x.Id == id);
 			if (camp == null)
 			{

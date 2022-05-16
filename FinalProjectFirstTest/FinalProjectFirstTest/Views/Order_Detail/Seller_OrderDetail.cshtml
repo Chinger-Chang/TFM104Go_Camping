@@ -104,7 +104,7 @@
 				cancle: function (a) {
 					let self = this;
 					self.odID = self.OrderDetailsList[a].orderDetailId;
-					console.log(self.odID);
+					//console.log(self.odID);
 					Swal.fire({
 						title: '確定取消???',
 						icon: 'warning',
@@ -143,7 +143,7 @@
 								})
 								.catch(function (response) {
 									//handle error
-									console.log(response.data);
+									//console.log(response.data);
 									// window.location.href = response.data
 								});
 						}
@@ -194,7 +194,7 @@
 				var self = this;
 				axios.get("/Order_Detail/Get_Order_Details").then(function (res) {
 					self.OrderDetailsList = res.data;
-					console.log(self.OrderDetailsList);
+					//console.log(self.OrderDetailsList);
 
 				});
 				axios.get("/Order_Detail/Get_Cancel_Order_Details").then(function (res) {

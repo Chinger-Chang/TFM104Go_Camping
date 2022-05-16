@@ -27,10 +27,10 @@
 	<div class="border-right "></div>
 	<img src="~/test/tent2.png" class="dot">
 	@*<button class="dot btn-info"></button>*@
-	<p style="margin-top: 50px; position: fixed;">編輯露營區</p>
+<p style="margin-top: 50px; position: fixed;">露營區</p>
 	<img src="~/test/tent2.png" class="dot" style="margin-top:125px">
 	@*<button class="dot btn-outline-info" style="margin-top:125px"></button>*@
-	<p style="margin-top: 175px; position: fixed;">編輯房型</p>
+	<p style="margin-top: 175px; position: fixed;">房型</p>
 	<img src="~/test/tent2.png" class="dot" style="margin-top:250px">
 	@*<button class="dot btn-outline-info" style="margin-top:275px"></button>*@
 	<p style="margin-top: 300px; position: fixed;">完成</p>
@@ -78,14 +78,14 @@
 							<h5 class="card-title" v-if="productList.isAudit ===true">已審核</h5>
 							<h5 class="card-title" v-else>審核中</h5>
 							<div class="d-flex justify-content-end">
-								<a href="#" class="btn btn-dark" v-on:click="editcamping">編輯露營區</a>
+								<a href="#" class="btn btn-dark" v-on:click="editcamping">編輯/查看露營區</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 				</div>
-			<div class="mx-auto text-center w-75" style="background-color: #292b2c; color: white;"><h3 class="p-1">房間</h3></div>
+			<div class="mx-auto text-center w-75" style="background-color: #292b2c; color: white;"><h3 class="p-1">房型</h3></div>
 			<div class="myImg" v-for="(item,index) of productList.myrooms">
 			<div class="card mb-5 mx-auto w-75  shadow" style="height:auto" :id="item.roomId">
 				<div class="row no-gutters">
@@ -101,12 +101,12 @@
 							</button>
 						</div>
 						<div class="card-body">
-							<h5 class="card-title">房間名稱: </h5>
+							<h5 class="card-title">房型名稱: </h5>
 							<p class="card-text">{{item.roomName}}</p>
-							<h5 class="card-title">房間數量: </h5>
+							<h5 class="card-title">房型數量: </h5>
 							<p class="card-text">{{ item.roomCount}}</p>
 							<div class="d-flex justify-content-end">
-								<a href="#" class="btn btn-dark" v-on:click="editroom(index)">編輯房型</a>
+								<a href="#" class="btn btn-dark" v-on:click="editroom(index)">編輯/查看房型</a>
 							</div>
 						</div>
 					</div>
@@ -167,7 +167,7 @@
 						productList = {};
 						axios.get("/Camping_Information/GetAllInformation/" + this.selected).then(function (res) {
 							self.productList = res.data;
-							console.log(self.productList);
+							//console.log(self.productList);
 						})
 					},
 
@@ -263,7 +263,7 @@
 						var self = this;
 					axios.get("/Camping_Information/GetAllCamping_Area").then(function (res) {
 						self.nameList = res.data;
-						console.log("111" + self.selected);
+						//console.log("111" + self.selected);
 						axios.get("/Camping_Information/GetAllInformation/" + self.selected).then(function (res) {
 							if (res.data == false) {
 								Swal.fire({
@@ -275,8 +275,8 @@
 							}
 							else {
 								self.productList = res.data;
-								console.log(self.productList);
-								console.log("222" + self.selected);
+								//console.log(self.productList);
+								//console.log("222" + self.selected);
 							}
 							
 						})

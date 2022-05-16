@@ -48,7 +48,7 @@
 			<div class="col-8 mx-auto my-2">
 				<div class="border p-5 shadow " style="background-color:#e6e4e4">
 					<div class=" form-group row mb-4">
-						<label for="name" class="form-label">房間名稱</label>
+						<label for="name" class="form-label">房型名稱</label>
 						<input type="text" class="form-control" id="name" v-model="hello.name" required>
 					</div>
 					<div class="form-group row mb-4">
@@ -190,7 +190,7 @@
 								reader.readAsDataURL(input.files[index]);
 								index++;
 								//alert("上傳了!!!");
-								console.log(this.selected);
+								//console.log(this.selected);
 							
 						}
 
@@ -254,7 +254,7 @@
 							})
 							.catch(function (response) {
 								//handle error
-								console.log(response);
+								//console.log(response);
 							});
 					}
 

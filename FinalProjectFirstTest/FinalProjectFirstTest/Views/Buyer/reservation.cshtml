@@ -37,13 +37,86 @@
 	<div id="mika" class="col d-flex justify-content-center ">
 		<v-app>
 			<template>
-				<v-container class="a rounded-xl" style="margin-top: 40px; padding-left: 50px; padding-right: 50px; ">
-					<v-row style="padding-top: 45px;">
+				<v-container class="a rounded-xl">
+					<v-row style="margin-top:25px">
+						<v-col>
+							<v-col>
+								<v-card color="#BDBDBD" class="mx-auto" max-width="300">
+									<v-carousel :continuous="false"
+												:cycle="cycle"
+												:show-arrows="false"
+												hide-delimiter-background
+												delimiter-icon="mdi-minus"
+												height="250">
+										<v-carousel-item v-for="x in getRoomIdtoView.room_Path" :key="i" :src="'/Room_Picture/'+ x">
+
+										</v-carousel-item>
+									</v-carousel>
+
+									<v-card-title class="text-black text-h5 font-weight-bold" style="color:#60656C;">
+										<v-icon left color="">mdi-clipboard-text-outline</v-icon>訂購資訊
+									</v-card-title>
+									<v-card-subtitle class="text-black text-h6 font-weight-bold">
+										露營區 : {{getRoomIdtoView.caName}}<br />
+										名稱 : {{getRoomIdtoView.roomName}}<br />
+										房型 : {{getRoomIdtoView.roomType}}<br />
+										平日:TWD {{getRoomIdtoView.weekDayPrice}}<br />
+										假日:TWD {{getRoomIdtoView.weekendPrice}}
+									</v-card-subtitle>
+								</v-card>
+							</v-col>
+							<v-col cols="12" md="12">
+								<v-text-field v-model="calDays"
+											  label="天數"
+											  required readonly></v-text-field>
+							</v-col>
+							<v-col cols="12" md="12">
+								<v-text-field v-model="calPrice"
+											  label="總價"
+											  required readonly></v-text-field>
+							</v-col>
+						</v-col>
+						<v-col>
+							<v-col cols="12" md="12">
+								<v-text-field v-model="name"
+											  :rules="nameRules"
+											  @*:counter="10"*@
+											  label="訂購人"
+											  required></v-text-field>
+							</v-col>
+
+							<v-col cols="12" md="12">
+								<v-text-field v-model="phone"
+											  :rules="phoneRules"
+											  :counter="10"
+											  label="手機"
+											  required></v-text-field>
+							</v-col>
+
+							<v-col cols="12" md="12">
+								<div class="" style="display:flex;justify-content:center;">
+									<div class="" style="width:90%;">
+										<v-date-picker width="100%" color="#616161" v-model="dates" range :allowed-dates="allowedDates">
+										</v-date-picker>
+									</div>
+								</div>
+							</v-col>
+							<v-col cols="12" md="12">
+								<v-text-field v-model="dateRangeText" label="Date range" prepend-icon="mdi-calendar" readonly></v-text-field>
+							</v-col>
+							<div style="display:flex;justify-content:flex-end; padding-bottom: 45px;">
+								<v-btn large v-on:click="send" depressed color="#424242" dark class="">
+									<v-icon left large>mdi-arrow-right-bold</v-icon>結帳
+								</v-btn>
+							</div>
+						</v-col>
+					</v-row>
+					<!--<v-row style="padding-top: 45px;">
 						<v-col cols="12" md="6">
 							<v-text-field v-model="name"
-										  :rules="nameRules"
-										  @*:counter="10"*@
-										  label="訂購人"
+										  :rules="nameRules"-->
+					@*:counter="10"*@
+					<!--label="訂購人"
 										  required></v-text-field>
 						</v-col>
 
@@ -84,7 +157,7 @@
 						<v-btn large v-on:click="send" depressed color="#424242" dark class="">
 							<v-icon left large>mdi-arrow-right-bold</v-icon>結帳
 						</v-btn>
-					</div>
+					</div>-->
 				</v-container>
 			</template>
 			<template>
@@ -185,6 +258,7 @@
 				phtext: '亂打 全部重填',
 
 				datedate: false,
+				cycle: true,
 				//------------------------------
 				reservationData: {
 					name: '',
